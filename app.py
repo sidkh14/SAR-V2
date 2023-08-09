@@ -617,7 +617,7 @@ with st.spinner('Summarization ...'):
         llm=llm, 
         memory = memory,
         verbose=True)
-        st.session_state["tmp_summary"] = conversation.predict(input="Give me a detailed summary of the above texts.")
+        st.session_state["tmp_summary"] = conversation.predict(input="Give me a detailed summary of the above texts in paragraphs")
         # showing the text in a textbox
         # usr_review = st.text_area("", value=st.session_state["tmp_summary"])
         # if st.button("Update Summary"):
