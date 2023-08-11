@@ -656,6 +656,39 @@ with st.spinner("Downloading...."):
     doc = docx.Document()
     # doc.add_section(WD_SECTION.NEW_PAGE)
     doc.add_heading(f"Case No.: {st.session_state.case_num}",0)
+
+    # Add a subheader for customer info to the document ->>
+    subheader_paragraph = doc.add_paragraph("Customer's Info")
+    subheader_paragraph.style = "Heading 2"
+
+    # Add the customer information
+    customer_info = {
+        "Name": "John Brown",
+        "Address": "California, US",
+        "Phone": "XXXXXXXXX",
+        "A/c No.": "XXXXXXXXX",
+        "SSN No.": "XXXXXXXXX"
+    }
+
+    for key, value in customer_info.items():
+        doc.add_paragraph(f"{key}- {value}")
+    paragraph = doc.add_paragraph()
+    # Add a subheader for Suspect infor to the document ->>
+    subheader_paragraph = doc.add_paragraph("Suspect's Info")
+    subheader_paragraph.style = "Heading 2"
+
+    # Add the customer information
+    suspect_info = {
+        "Name": "XXXXXXXXXX",
+        "Address": "XXXXXXXXX",
+        "Phone": "XXXXXXXXX",
+        "A/c No.": "XXXXXXXXX",
+        "SSN No.": "XXXXXXXXX"
+    }
+
+    for key, value in suspect_info.items():
+        doc.add_paragraph(f"{key}- {value}")
+    
     doc.add_heading('Summary', level=2)
     doc.add_paragraph(st.session_state["tmp_summary"])
     doc.add_heading('Summary', level=2)
