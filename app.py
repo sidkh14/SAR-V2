@@ -240,7 +240,12 @@ if selected_option == "SAR-2023-24680":
 
     # Upload PDF files
     # st.subheader("Upload Case Files")
-    st.markdown(f"**Case No: {st.session_state.case_num}**")
+    # st.markdown(f"**Case No: {st.session_state.case_num}**")
+    st.markdown("""
+        | Case No.                  | Case Type                 | Customer Name             | Case Status             | Open Date              |
+        | ------------------------  | ------------------------- | ------------------------- | ------------------------|------------------------|
+        | SAR-2023-24680            | Fraud Transaction Dispute | John Brown                | In Progress             | 12/10/2020             |
+        """)
     st.header("Upload Evidence")
     pdf_files = st.file_uploader("", type=["pdf"], accept_multiple_files=True)
 
