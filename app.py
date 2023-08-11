@@ -241,11 +241,31 @@ if selected_option == "SAR-2023-24680":
     # Upload PDF files
     # st.subheader("Upload Case Files")
     # st.markdown(f"**Case No: {st.session_state.case_num}**")
-    st.markdown("""
-        | Case No.                  | Case Type                 | Customer Name             | Case Status             | Open Date              |
-        | ------------------------  | ------------------------- | ------------------------- | ------------------------|------------------------|
-        | SAR-2023-24680            | Fraud Transaction Dispute | John Brown                | In Progress             | 12/10/2020             |
-        """)
+    # st.markdown("""
+    #     | Case No.                  | Case Type                 | Customer Name             | Case Status             | Open Date              |
+    #     | ------------------------  | ------------------------- | ------------------------- | ------------------------|------------------------|
+    #     | SAR-2023-24680            | Fraud Transaction Dispute | John Brown                | In Progress             | 12/10/2020             |
+    #     """)
+
+    col1,col2 = st.columns(2)
+    # Row 1
+    with col1:
+        st.markdown("**Case number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:** SAR-2023-24680")
+        st.markdown("**Customer name  :** John Brown")
+
+
+    with col2:
+        st.markdown("**Case open date&nbsp;&nbsp;&nbsp;&nbsp;:** Jun 10, 2023")
+        st.markdown("**Case type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:** Fraud transaction")
+
+
+    # Row 2
+    with col1:
+        st.markdown("**Customer ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:** 9659754")
+
+
+    with col2:
+        st.markdown("**Case Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:** Open")
     st.header("Upload Evidence")
     pdf_files = st.file_uploader("", type=["pdf"], accept_multiple_files=True)
 
