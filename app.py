@@ -662,15 +662,15 @@ with st.spinner("Downloading...."):
     subheader_case.style = "Heading 2"
     # Addition of case details
     case_info = {
-        "Case Number                   :": "SAR-2023-24680",
-        "Customer Name                 :": "John Brown",
-        "Customer ID                   :": "9659754",
-        "Case open date                :": "Jun 10, 2023",
-        "Case Type                     :": "Fraud Transaction",
-        "Case Status                   :": "Open"
+        "Case Number                   ": "SAR-2023-24680",
+        "Customer Name                 ": "John Brown",
+        "Customer ID                   ": "9659754",
+        "Case open date                ": "Jun 10, 2023",
+        "Case Type                     ": "Fraud Transaction",
+        "Case Status                   ": "Open"
     }
     for key_c, value_c in case_info.items():
-        doc.add_paragraph(f"{key_c}: {value_c}")
+        doc.add_paragraph(f"{key_c}:{value_c}")
     paragraph = doc.add_paragraph(" ")
 
     # Add a subheader for customer info to the document ->>
