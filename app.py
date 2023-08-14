@@ -663,12 +663,12 @@ with st.spinner("Downloading...."):
     # Addition of case details
     paragraph = doc.add_paragraph(" ")
     case_info = {
-        "Case Number                            ": "SAR-2023-24680",
-        "Customer Name                       ": "John Brown",
-        "Customer ID                              ": "9659754",
-        "Case open date                         ": "Jun 10, 2023",
-        "Case Type                                  ": "Fraud Transaction",
-        "Case Status                                ": "Open"
+        "Case Number                            ": " SAR-2023-24680",
+        "Customer Name                       ": " John Brown",
+        "Customer ID                              ": " 9659754",
+        "Case open date                         ": " Jun 10, 2023",
+        "Case Type                                  ": " Fraud Transaction",
+        "Case Status                                ": " Open"
     }
     for key_c, value_c in case_info.items():
         doc.add_paragraph(f"{key_c}: {value_c}")
@@ -681,11 +681,11 @@ with st.spinner("Downloading...."):
 
     # Add the customer information
     customer_info = {
-        "Name                                           ": "John Brown",
-        "Address                                      ": "858 3rd Ave, Chula Vista, California, 91911 US",
-        "Phone                                          ": "(619) 425-2972",
-        "A/C No.                                        ": "4587236908230087",
-        "SSN                                               ": "653-30-9562"
+        "Name                                           ": " John Brown",
+        "Address                                      ": " 858 3rd Ave, Chula Vista, California, 91911 US",
+        "Phone                                          ": " (619) 425-2972",
+        "A/C No.                                        ": " 4587236908230087",
+        "SSN                                               ": " 653-30-9562"
     }
 
     for key, value in customer_info.items():
