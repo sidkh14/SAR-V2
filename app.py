@@ -657,8 +657,21 @@ with st.spinner("Downloading...."):
     # doc.add_section(WD_SECTION.NEW_PAGE)
     doc.add_heading(f"Case No.: {st.session_state.case_num}",0)
 
+    # Add a subheader for case details
+    subheader_case = doc.add_paragraph("Case Details")
+    subheader_case.style = "Heading 2"
     # Addition of case details
-
+    case_info = {
+        "Case Number                   :": "SAR-2023-24680",
+        "Customer Name                 :": "John Brown",
+        "Customer ID                   :": "9659754",
+        "Case open date                :": "Jun 10, 2023",
+        "Case Type                     :": "Fraud Transaction",
+        "Case Status                   :": "Open"
+    }
+    for key_c, value_c in case_info.items():
+        doc.add_paragraph(f"{key_c}: {value_c}")
+    paragraph = doc.add_paragraph(" ")
 
     # Add a subheader for customer info to the document ->>
     subheader_paragraph = doc.add_paragraph("Customer Information")
