@@ -255,7 +255,7 @@ if selected_option == "SAR-2023-24680":
 
 
     with col2:
-        st.markdown("**Case open date&nbsp;&nbsp;&nbsp;&nbsp;:** Jun 10, 2023")
+        st.markdown("**Case open date&nbsp;&nbsp;&nbsp;&nbsp;:** Feb 02, 2021")
         st.markdown("**Case type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:** Fraud transaction")
 
 
