@@ -666,7 +666,7 @@ with st.spinner("Downloading...."):
         "Case Number                            ": " SAR-2023-24680",
         "Customer Name                       ": " John Brown",
         "Customer ID                              ": " 9659754",
-        "Case open date                         ": " Jun 10, 2023",
+        "Case open date                         ": " Feb 02, 2021",
         "Case Type                                  ": " Fraud Transaction",
         "Case Status                                ": " Open"
     }
