@@ -663,15 +663,15 @@ with st.spinner("Downloading...."):
     # Addition of case details
     paragraph = doc.add_paragraph(" ")
     case_info = {
-        "Case Number                   ": "SAR-2023-24680",
-        "Customer Name              ": "John Brown",
-        "Customer ID                     ": "9659754",
-        "Case open date                ": "Jun 10, 2023",
-        "Case Type                         ": "Fraud Transaction",
-        "Case Status                       ": "Open"
+        "Case Number                            ": "SAR-2023-24680",
+        "Customer Name                       ": "John Brown",
+        "Customer ID                              ": "9659754",
+        "Case open date                         ": "Jun 10, 2023",
+        "Case Type                                  ": "Fraud Transaction",
+        "Case Status                                ": "Open"
     }
     for key_c, value_c in case_info.items():
-        doc.add_paragraph(f"{key_c}:{value_c}")
+        doc.add_paragraph(f"{key_c}: {value_c}")
     paragraph = doc.add_paragraph(" ")
 
     # Add a subheader for customer info to the document ->>
@@ -681,15 +681,15 @@ with st.spinner("Downloading...."):
 
     # Add the customer information
     customer_info = {
-        "Name                                  ": "John Brown",
-        "Address                             ": "858 3rd Ave, Chula Vista, California, 91911 US",
-        "Phone                                 ": "(619) 425-2972",
-        "A/c No.                               ": "4587236908230087",
-        "SSN                                      ": "653-30-9562"
+        "Name                                           ": "John Brown",
+        "Address                                      ": "858 3rd Ave, Chula Vista, California, 91911 US",
+        "Phone                                          ": "(619) 425-2972",
+        "A/C No.                                        ": "4587236908230087",
+        "SSN                                               ": "653-30-9562"
     }
 
     for key, value in customer_info.items():
-        doc.add_paragraph(f"{key}:{value}")
+        doc.add_paragraph(f"{key}: {value}")
     paragraph = doc.add_paragraph()
     # Add a subheader for Suspect infor to the document ->>
     subheader_paragraph = doc.add_paragraph("Suspect's Info")
@@ -704,7 +704,7 @@ with st.spinner("Downloading...."):
     runner.bold = True
     runner.italic = True
     suspect_info = {
-        "Name                                          ": "",
+        "Name                                           ": "",
         "Address                                      ": "",
         "Phone                                          ": "",
         "SSN                                               ": "",
@@ -712,11 +712,12 @@ with st.spinner("Downloading...."):
     }
 
     for key, value in suspect_info.items():
-        doc.add_paragraph(f"{key}:{value}")
+        doc.add_paragraph(f"{key}: {value}")
     
     doc.add_heading('Summary', level=2)
     paragraph = doc.add_paragraph()
     doc.add_paragraph(st.session_state["tmp_summary"])
+    paragraph = doc.add_paragraph()
     doc.add_heading('Key Insights', level=2)
     paragraph = doc.add_paragraph()
     st.session_state.tmp_table.drop_duplicates(inplace=True)
