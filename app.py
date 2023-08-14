@@ -699,6 +699,8 @@ with st.spinner("Downloading...."):
 
     # Add the customer information
     paragraph = doc.add_paragraph("No suspect has been reported.")
+    paragraph.bold = True
+    paragraph.italic = True
     suspect_info = {
         "Name                                          ": "",
         "Address                                      ": "",
