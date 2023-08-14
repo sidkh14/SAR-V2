@@ -657,17 +657,20 @@ with st.spinner("Downloading...."):
     # doc.add_section(WD_SECTION.NEW_PAGE)
     doc.add_heading(f"Case No.: {st.session_state.case_num}",0)
 
+    # Addition of case details
+
+
     # Add a subheader for customer info to the document ->>
-    subheader_paragraph = doc.add_paragraph("Customer's Info")
+    subheader_paragraph = doc.add_paragraph("Customer Information")
     subheader_paragraph.style = "Heading 2"
 
     # Add the customer information
     customer_info = {
-        "Name": "John Brown",
+        "Name   ": "John Brown",
         "Address": "858 3rd Ave, Chula Vista, California, 91911 US",
-        "Phone": "(619) 425-2972",
-        "A/c No.": "4587236908230087",
-        "SSN No.": "653-30-9562"
+        "Phone  ": "(619) 425-2972",
+        "A/C No.": "4587236908230087",
+        "SSN    ": "653-30-9562"
     }
 
     for key, value in customer_info.items():
@@ -677,7 +680,7 @@ with st.spinner("Downloading...."):
     subheader_paragraph = doc.add_paragraph("Suspect's Info")
     subheader_paragraph.style = "Heading 2"
 
-    """ Addition of a checkbox where unticked box imply unavailability of suspect info"""
+    #""" Addition of a checkbox where unticked box imply unavailability of suspect info"""
 
     # Add the customer information
     suspect_info = {
