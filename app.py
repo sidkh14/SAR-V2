@@ -664,18 +664,20 @@ with st.spinner("Downloading...."):
     # Add the customer information
     customer_info = {
         "Name": "John Brown",
-        "Address": "California, US",
-        "Phone": "XXXXXXXXX",
-        "A/c No.": "XXXXXXXXX",
-        "SSN No.": "XXXXXXXXX"
+        "Address": "858 3rd Ave, Chula Vista, California, 91911 US",
+        "Phone": "(619) 425-2972",
+        "A/c No.": "4587236908230087",
+        "SSN No.": "653-30-9562"
     }
 
     for key, value in customer_info.items():
-        doc.add_paragraph(f"{key}- {value}")
+        doc.add_paragraph(f"{key}: {value}")
     paragraph = doc.add_paragraph()
     # Add a subheader for Suspect infor to the document ->>
     subheader_paragraph = doc.add_paragraph("Suspect's Info")
     subheader_paragraph.style = "Heading 2"
+
+    """ Addition of a checkbox where unticked box imply unavailability of suspect info"""
 
     # Add the customer information
     suspect_info = {
@@ -687,11 +689,11 @@ with st.spinner("Downloading...."):
     }
 
     for key, value in suspect_info.items():
-        doc.add_paragraph(f"{key}- {value}")
+        doc.add_paragraph(f"{key}: {value}")
     
     doc.add_heading('Summary', level=2)
     doc.add_paragraph(st.session_state["tmp_summary"])
-    doc.add_heading('Summary', level=2)
+    doc.add_heading('Key Insights', level=2)
     columns = list(st.session_state.tmp_table.columns)
     table = doc.add_table(rows=1, cols=len(columns), style="Table Grid")
     table.autofit = True
