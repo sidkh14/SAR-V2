@@ -698,9 +698,11 @@ with st.spinner("Downloading...."):
     #""" Addition of a checkbox where unticked box imply unavailability of suspect info"""
 
     # Add the customer information
-    paragraph = doc.add_paragraph("No suspect has been reported.")
-    paragraph.bold = True
-    paragraph.italic = True
+    sent_val = "No suspect has been reported."
+    paragraph = doc.add_paragraph()
+    runner = paragraph.add_run(sent_val)
+    runner.bold = True
+    runner.italic = True
     suspect_info = {
         "Name                                          ": "",
         "Address                                      ": "",
@@ -713,8 +715,11 @@ with st.spinner("Downloading...."):
         doc.add_paragraph(f"{key}:{value}")
     
     doc.add_heading('Summary', level=2)
+    paragraph = doc.add_paragraph()
     doc.add_paragraph(st.session_state["tmp_summary"])
     doc.add_heading('Key Insights', level=2)
+    paragraph = doc.add_paragraph()
+    st.session_state.tmp_table.drop_duplicates(inplace=True)
     columns = list(st.session_state.tmp_table.columns)
     table = doc.add_table(rows=1, cols=len(columns), style="Table Grid")
     table.autofit = True
