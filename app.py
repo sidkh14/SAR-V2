@@ -39,7 +39,10 @@ from usellm import Message, Options, UseLLM
 #from scipy.io.wavfile import write
 
 # Setting Env
-os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+if st.secrets["OPENAI_API_KEY"] not None:
+    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+else:
+    os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY")
 
 
 @st.cache_data
