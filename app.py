@@ -458,7 +458,10 @@ with col2:
     # Show the table if the checkbox is ticked
     if show_table:
         # st.write(df_fixed)
-        st.dataframe(df_fixed, width=1000)
+        # st.dataframe(df_fixed, width=1000)
+        df_fixed["S.No."] = df_fixed.index
+        df_fixed = df_fixed.loc[:,['S.No.','Questions']]
+        st.markdown(df_fixed.style.hide(axis="index").to_html(), unsafe_allow_html=True)
 
 with st.spinner('Wait for it...'):
     if st.button("Generate Insights",disabled=st.session_state.disabled):
