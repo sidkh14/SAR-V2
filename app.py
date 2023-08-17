@@ -276,7 +276,7 @@ if selected_option == "SAR-2023-24680":
     if pdf_files:
         st.subheader("Uploaded Files")
         file_names = [file.name for file in pdf_files]
-        selected_file = st.selectbox("Select a file", file_names)
+        selected_file = st.selectbox(":blue[Select a file]", file_names)
         # Enabling the button
         st.session_state.disabled = False
         # Display selected PDF contents
@@ -530,8 +530,9 @@ except Exception:
 
 # Text Input
 
+
 st.subheader("Ask Additional Questions")
-query = st.text_input('Please ask below the additional case questions.',disabled=st.session_state.disabled)
+query = st.text_input(':blue[Please ask below the additional case questions.]',disabled=st.session_state.disabled)
 text_dict = {}
 @st.cache_data
 def LLM_Response():
@@ -784,7 +785,8 @@ st.markdown(
             """,
         unsafe_allow_html=True
     )
-selected_rad = st.radio("Is SAR filing required?", ["opt1","Yes", "No", "Refer for review"], horizontal=True,disabled=st.session_state.disabled)
+st.markdown("##### Is SAR filing required?")
+selected_rad = st.radio(":blue[Please select your choice]", ["opt1","Yes", "No", "Refer for review"], horizontal=True,disabled=st.session_state.disabled)
 if selected_rad == "Refer for review":
     email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     email_id = st.text_input("Enter your email ID")
