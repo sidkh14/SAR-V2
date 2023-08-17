@@ -659,7 +659,8 @@ with st.spinner('Summarization ...'):
         llm=llm, 
         memory = memory,
         verbose=True)
-        st.session_state["tmp_summary"] = conversation.predict(input="Give me a detailed summary of the above texts in a single paragraph without anything additional other than the overall content")
+        st.session_state["tmp_summary"] = conversation.predict(input="Give me a detailed summary of the above texts in a single paragraph without anything additional other than the overall content.\
+                                            Please don't include keywords like: chat summary includes information, the chat summary is etc. ")
         # showing the text in a textbox
         # usr_review = st.text_area("", value=st.session_state["tmp_summary"])
         # if st.button("Update Summary"):
