@@ -298,11 +298,11 @@ if selected_option == "SAR-2023-24680":
         st.markdown("**Case Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:** Open")
     st.header("Upload Evidence")
     # Create two columns
-    col1_up, col2_up = st.tabs(["Upload Evidence", "Fetch Evidence"])
-    with col1_up:
+    col2_up, col1_up = st.tabs(["Upload Evidence", "Fetch Evidence"])
+    with col2_up:
         pdf_files = st.file_uploader("", type=["pdf"], accept_multiple_files=True)
         st.session_state.pdf_files = pdf_files
-    with col2_up:
+    with col1_up:
         # Set the color
         st.markdown(
             """
