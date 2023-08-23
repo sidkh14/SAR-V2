@@ -298,7 +298,7 @@ if selected_option == "SAR-2023-24680":
         st.markdown("**Case Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:** Open")
     st.header("Upload Evidence")
     # Create two columns
-    col2_up, col1_up = st.tabs(["Upload Evidence", "Fetch Evidence"])
+    col1_up, col2_up = st.tabs(["Fetch Evidence", "Upload Evidence"])
     with col1_up:
         # Set the color
         st.markdown(
