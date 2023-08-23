@@ -711,17 +711,20 @@ with st.spinner('Summarization ...'):
 
 with st.spinner("Downloading...."):
 # if st.button("Download Response", disabled=st.session_state.disabled):
+    # Create a Word document with the table and some text
     if st.session_state.pdf_files:
+        # Create a temporary directory
         temp_dir = tempfile.mkdtemp()
         if file_names:
             file_paths = [os.path.join(temp_dir,file) for file in file_names]
-        else:
-            pass
-                
+        else: pass
+        
+
+        # initiate the doc file
         doc = docx.Document()
         # doc.add_section(WD_SECTION.NEW_PAGE)
         doc.add_heading(f"Case No.: {st.session_state.case_num}",0)
-    
+
         # Add a subheader for case details
         subheader_case = doc.add_paragraph("Case Details")
         subheader_case.style = "Heading 2"
@@ -738,12 +741,12 @@ with st.spinner("Downloading...."):
         for key_c, value_c in case_info.items():
             doc.add_paragraph(f"{key_c}: {value_c}")
         paragraph = doc.add_paragraph(" ")
-    
+
         # Add a subheader for customer info to the document ->>
         subheader_paragraph = doc.add_paragraph("Customer Information")
         subheader_paragraph.style = "Heading 2"
         paragraph = doc.add_paragraph(" ")
-    
+
         # Add the customer information
         customer_info = {
             "Name                                           ": " John Brown",
@@ -752,7 +755,7 @@ with st.spinner("Downloading...."):
             "A/C No.                                        ": " 4587236908230087",
             "SSN                                               ": " 653-30-9562"
         }
-    
+
         for key, value in customer_info.items():
             doc.add_paragraph(f"{key}: {value}")
         paragraph = doc.add_paragraph()
@@ -761,7 +764,7 @@ with st.spinner("Downloading...."):
         subheader_paragraph.style = "Heading 2"
         paragraph = doc.add_paragraph()
         #""" Addition of a checkbox where unticked box imply unavailability of suspect info"""
-    
+
         # Add the customer information
         sent_val = "No suspect has been reported."
         paragraph = doc.add_paragraph()
@@ -775,7 +778,7 @@ with st.spinner("Downloading...."):
             "SSN                                               ": "",
             "Relationship with Customer ": ""
         }
-    
+
         for key, value in suspect_info.items():
             doc.add_paragraph(f"{key}: {value}")
         
@@ -801,21 +804,20 @@ with st.spinner("Downloading...."):
         # save document
         # output_bytes = docx.Document.save(doc, 'output.docx')
         # st.download_button(label='Download Report', data=output_bytes, file_name='evidence.docx', mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-    
+
         # Save the combined document as a Word file
         combined_doc_path = os.path.join(temp_dir, "resulting_document.docx")
         doc.save(combined_doc_path)
-    
+
         # Create a zip file with the uploaded PDF files and the combined document
         zip_file_name = "master_files.zip"
         try:
             create_zip_file(file_paths + [combined_doc_path], zip_file_name)
         except FileNotFoundError:
             pass
-        
+
         bio = io.BytesIO()
         doc.save(bio)
-        # Applying to download button -> download_button
         # col_d1, col_d2 = st.columns(2)
         col_d1, col_d2 = st.tabs(["Download Report", "Download Case Package"])
         with col_d1:
@@ -843,8 +845,7 @@ with st.spinner("Downloading...."):
                     data=file, 
                     file_name=zip_file_name,
                     disabled=st.session_state.disabled)
-else: pass
-
+    else: pass
 # Adding Radio button
 st.header("Make Decision")
 st.markdown(
