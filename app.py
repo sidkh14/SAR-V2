@@ -299,9 +299,6 @@ if selected_option == "SAR-2023-24680":
     st.header("Upload Evidence")
     # Create two columns
     col2_up, col1_up = st.tabs(["Upload Evidence", "Fetch Evidence"])
-    with col2_up:
-        pdf_files = st.file_uploader("", type=["pdf"], accept_multiple_files=True)
-        st.session_state.pdf_files = pdf_files
     with col1_up:
         # Set the color
         st.markdown(
@@ -312,6 +309,10 @@ if selected_option == "SAR-2023-24680":
             """,
             unsafe_allow_html=True
         )
+    with col2_up:
+        pdf_files = st.file_uploader("", type=["pdf"], accept_multiple_files=True)
+        st.session_state.pdf_files = pdf_files
+    
 
     # Show uploaded files in a dropdown
     if pdf_files:
