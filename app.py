@@ -135,7 +135,7 @@ if "fin_opt" not in st.session_state:
     st.session_state.fin_opt = ''
 if "pdf_files" not in st.session_state:
     st.session_state.pdf_files =  []
-if "context_1" not st.session_state:
+if "context_1" not in st.session_state:
     st.session_state.context_1 = ''
 
 # Apply CSS styling to resize the buttons
@@ -592,7 +592,7 @@ with st.spinner('Getting you information...'):
         #st.write(text_input)
 
         context_1 = docsearch.similarity_search(query, k=5)
-
+        st.session_state.context_1 = context_1
         if query.lower() == "what is the victim's name?":
             prompt_1 = f'''Perform Name Enitity Recognition to identify the Customer name as accurately as possible, given the context. The Customer can also be referenced as the Victim or the person with whom the Fraud has taken place.\n\n\
                         Question: {query}\n\
