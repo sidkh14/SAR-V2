@@ -711,13 +711,11 @@ with st.spinner('Summarization ...'):
 
 with st.spinner("Downloading...."):
 # if st.button("Download Response", disabled=st.session_state.disabled):
-    # Create a Word document with the table and some text
-
     temp_dir = tempfile.mkdtemp()
-        if file_names:
-            file_paths = [os.path.join(temp_dir,file) for file in file_names]
-        else:
-            pass
+    if file_names:
+        file_paths = [os.path.join(temp_dir,file) for file in file_names]
+    else:
+        pass
             
     doc = docx.Document()
     # doc.add_section(WD_SECTION.NEW_PAGE)
