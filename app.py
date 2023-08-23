@@ -842,7 +842,7 @@ with st.spinner("Downloading...."):
                 data=file, 
                 file_name=zip_file_name,
                 disabled=st.session_state.disabled)
-else: pass
+# else: pass
 
 # Adding Radio button
 st.header("Make Decision")
