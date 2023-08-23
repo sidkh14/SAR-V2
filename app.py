@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import random,os,json,io,re
+import random,os,json,io,re,zipfile,tempfile
 import pandas as pd
 import streamlit as st
 import  streamlit_toggle as tog
@@ -133,6 +133,8 @@ if "case_num" not in st.session_state:
     st.session_state.case_num = ''
 if "fin_opt" not in st.session_state:
     st.session_state.fin_opt = ''
+if "pdf_files" not in st.session_state:
+    st.session_state.pdf_files =  []
 
 # Apply CSS styling to resize the buttons
 st.markdown("""
@@ -164,6 +166,17 @@ def add_footer_with_fixed_text(doc, footer_text):
     # Set the alignment of the footer text
     paragraph.alignment = docx.enum.text.WD_PARAGRAPH_ALIGNMENT.CENTER
 
+@st.cache_data
+def create_filled_box_with_text(color, text):
+    box_html = f'<div style="flex: 1; height: 100px; background-color: {color}; display: flex; align-items: center; justify-content: center;">{text}</div>'
+    st.markdown(box_html, unsafe_allow_html=True)
+
+@st.cache_data
+def create_zip_file(file_paths, zip_file_name):
+    with zipfile.ZipFile(zip_file_name, 'w') as zipf:
+        for file_path in file_paths:
+            zipf.write(file_path, os.path.basename(file_path))
+
 
 # Set Sidebar
 st.markdown("""
@@ -175,7 +188,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("Suspicious Activity Reporting Assistant")
-st.markdown('---')
 with st.sidebar:
     # st.sidebar.write("This is :blue[test]")
     # Navbar
@@ -229,11 +241,26 @@ with st.sidebar:
     # Add the app name
     st.sidebar.markdown('<p class="big-font">SARA</p>', unsafe_allow_html=True)
     # st.sidebar.header("SARA")
+
+    # Add a drop-down for case type
+    options = ["Select Case Type", "Fraud transaction dispute", "AML"]
+    selected_option_case_type = st.sidebar.selectbox("", options)
+    
     # Add a single dropdown
     options = ["Select Case ID", "SAR-2023-24680", "SAR-2023-13579", "SAR-2023-97531", "SAR-2023-86420", "SAR-2023-24681"]
     selected_option = st.sidebar.selectbox("", options)
     # Add the image to the sidebar below options
     st.sidebar.image("MicrosoftTeams-image (7).png", use_column_width=True)
+
+    
+# Assing action to the main section
+if selected_option_case_type == "Select Case Type":
+    st.header("")
+elif selected_option_case_type == "Fraud transaction dispute":
+    st.markdown("### :blue[Fraud transaction dispute]")
+elif selected_option_case_type == "AML":
+    st.markdown("### :red[Anti-Money Laundering]")
+st.markdown('---')
 
 # Redirect to Merge PDFs page when "Merge PDFs" is selected
 if selected_option == "SAR-2023-24680":
@@ -270,12 +297,26 @@ if selected_option == "SAR-2023-24680":
     with col2:
         st.markdown("**Case Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:** Open")
     st.header("Upload Evidence")
-    pdf_files = st.file_uploader("", type=["pdf"], accept_multiple_files=True)
+    # Create two columns
+    col1_up, col2_up = st.tabs(["Upload Evidence", "Fetch Evidence"])
+    with col1_up:
+        pdf_files = st.file_uploader("", type=["pdf"], accept_multiple_files=True)
+        st.session_state.pdf_files = pdf_files
+    with col2_up:
+        # Set the color
+        st.markdown(
+            """
+            <div style="display: flex; justify-content: center; align-items: center; height: 48px; border: 1px solid #ccc; border-radius: 5px; background-color: #f2f2f2;">
+                <span style="font-size: 16px;  ">Fetch Evidence</span>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
     # Show uploaded files in a dropdown
     if pdf_files:
         st.subheader("Uploaded Files")
-        file_names = [file.name for file in pdf_files]
+        file_names = [file.name for file in st.session_state.pdf_files]
         selected_file = st.selectbox(":blue[Select a file]", file_names)
         # Enabling the button
         st.session_state.disabled = False
@@ -671,6 +712,13 @@ with st.spinner('Summarization ...'):
 with st.spinner("Downloading...."):
 # if st.button("Download Response", disabled=st.session_state.disabled):
     # Create a Word document with the table and some text
+
+    temp_dir = tempfile.mkdtemp()
+        if file_names:
+            file_paths = [os.path.join(temp_dir,file) for file in file_names]
+        else:
+            pass
+            
     doc = docx.Document()
     # doc.add_section(WD_SECTION.NEW_PAGE)
     doc.add_heading(f"Case No.: {st.session_state.case_num}",0)
@@ -755,25 +803,48 @@ with st.spinner("Downloading...."):
     # output_bytes = docx.Document.save(doc, 'output.docx')
     # st.download_button(label='Download Report', data=output_bytes, file_name='evidence.docx', mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
 
+    # Save the combined document as a Word file
+    combined_doc_path = os.path.join(temp_dir, "resulting_document.docx")
+    doc.save(combined_doc_path)
+
+    # Create a zip file with the uploaded PDF files and the combined document
+    zip_file_name = "master_files.zip"
+    try:
+        create_zip_file(file_paths + [combined_doc_path], zip_file_name)
+    except FileNotFoundError:
+        pass
+    
     bio = io.BytesIO()
     doc.save(bio)
     # Applying to download button -> download_button
-    st.markdown("""
-        <style>
-            .stButton download_button {
-                width: 100%;
-                height: 70%;
-            }
-        </style>
-    """, unsafe_allow_html=True)
-    if doc:
-        st.download_button(
-            label="Download Report",
-            data=bio.getvalue(),
-            file_name="Report.docx",
-            mime="docx",
-            disabled=st.session_state.disabled
-        )
+    # col_d1, col_d2 = st.columns(2)
+    col_d1, col_d2 = st.tabs(["Download Report", "Download Case Package"])
+    with col_d1:
+    # Applying to download button -> download_button
+        st.markdown("""
+            <style>
+                .stButton download_button {
+                    width: 100%;
+                    height: 70%;
+                }
+            </style>
+        """, unsafe_allow_html=True)
+        if doc:
+            st.download_button(
+                label="Download Report",
+                data=bio.getvalue(),
+                file_name="Report.docx",
+                mime="docx",
+                disabled=st.session_state.disabled
+            )
+    with col_d2:
+        with open(zip_file_name, "rb") as file:
+            st.download_button(
+                label="Download Case Package", 
+                data=file, 
+                file_name=zip_file_name,
+                disabled=st.session_state.disabled)
+else: pass
 
 # Adding Radio button
 st.header("Make Decision")
