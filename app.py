@@ -711,138 +711,139 @@ with st.spinner('Summarization ...'):
 
 with st.spinner("Downloading...."):
 # if st.button("Download Response", disabled=st.session_state.disabled):
-    temp_dir = tempfile.mkdtemp()
-    if file_names:
-        file_paths = [os.path.join(temp_dir,file) for file in file_names]
-    else:
-        pass
-            
-    doc = docx.Document()
-    # doc.add_section(WD_SECTION.NEW_PAGE)
-    doc.add_heading(f"Case No.: {st.session_state.case_num}",0)
-
-    # Add a subheader for case details
-    subheader_case = doc.add_paragraph("Case Details")
-    subheader_case.style = "Heading 2"
-    # Addition of case details
-    paragraph = doc.add_paragraph(" ")
-    case_info = {
-        "Case Number                            ": " SAR-2023-24680",
-        "Customer Name                       ": " John Brown",
-        "Customer ID                              ": " 9659754",
-        "Case open date                         ": " Feb 02, 2021",
-        "Case Type                                  ": " Fraud Transaction",
-        "Case Status                                ": " Open"
-    }
-    for key_c, value_c in case_info.items():
-        doc.add_paragraph(f"{key_c}: {value_c}")
-    paragraph = doc.add_paragraph(" ")
-
-    # Add a subheader for customer info to the document ->>
-    subheader_paragraph = doc.add_paragraph("Customer Information")
-    subheader_paragraph.style = "Heading 2"
-    paragraph = doc.add_paragraph(" ")
-
-    # Add the customer information
-    customer_info = {
-        "Name                                           ": " John Brown",
-        "Address                                      ": " 858 3rd Ave, Chula Vista, California, 91911 US",
-        "Phone                                          ": " (619) 425-2972",
-        "A/C No.                                        ": " 4587236908230087",
-        "SSN                                               ": " 653-30-9562"
-    }
-
-    for key, value in customer_info.items():
-        doc.add_paragraph(f"{key}: {value}")
-    paragraph = doc.add_paragraph()
-    # Add a subheader for Suspect infor to the document ->>
-    subheader_paragraph = doc.add_paragraph("Suspect's Info")
-    subheader_paragraph.style = "Heading 2"
-    paragraph = doc.add_paragraph()
-    #""" Addition of a checkbox where unticked box imply unavailability of suspect info"""
-
-    # Add the customer information
-    sent_val = "No suspect has been reported."
-    paragraph = doc.add_paragraph()
-    runner = paragraph.add_run(sent_val)
-    runner.bold = True
-    runner.italic = True
-    suspect_info = {
-        "Name                                           ": "",
-        "Address                                      ": "",
-        "Phone                                          ": "",
-        "SSN                                               ": "",
-        "Relationship with Customer ": ""
-    }
-
-    for key, value in suspect_info.items():
-        doc.add_paragraph(f"{key}: {value}")
+    if st.session_state.pdf_files:
+        temp_dir = tempfile.mkdtemp()
+        if file_names:
+            file_paths = [os.path.join(temp_dir,file) for file in file_names]
+        else:
+            pass
+                
+        doc = docx.Document()
+        # doc.add_section(WD_SECTION.NEW_PAGE)
+        doc.add_heading(f"Case No.: {st.session_state.case_num}",0)
     
-    doc.add_heading('Summary', level=2)
-    paragraph = doc.add_paragraph()
-    doc.add_paragraph(st.session_state["tmp_summary"])
-    paragraph = doc.add_paragraph()
-    doc.add_heading('Key Insights', level=2)
-    paragraph = doc.add_paragraph()
-    st.session_state.tmp_table.drop_duplicates(inplace=True)
-    columns = list(st.session_state.tmp_table.columns)
-    table = doc.add_table(rows=1, cols=len(columns), style="Table Grid")
-    table.autofit = True
-    for col in range(len(columns)):
-        # set_cell_margins(table.cell(0, col), top=100, start=100, bottom=100, end=50) # set cell margin
-        table.cell(0, col).text = columns[col]
-    # doc.add_table(st.session_state.tmp_table.shape[0]+1, st.session_state.tmp_table.shape[1], style='Table Grid')
+        # Add a subheader for case details
+        subheader_case = doc.add_paragraph("Case Details")
+        subheader_case.style = "Heading 2"
+        # Addition of case details
+        paragraph = doc.add_paragraph(" ")
+        case_info = {
+            "Case Number                            ": " SAR-2023-24680",
+            "Customer Name                       ": " John Brown",
+            "Customer ID                              ": " 9659754",
+            "Case open date                         ": " Feb 02, 2021",
+            "Case Type                                  ": " Fraud Transaction",
+            "Case Status                                ": " Open"
+        }
+        for key_c, value_c in case_info.items():
+            doc.add_paragraph(f"{key_c}: {value_c}")
+        paragraph = doc.add_paragraph(" ")
     
-    for i, row in enumerate(st.session_state.tmp_table.itertuples()):
-        table_row = table.add_row().cells # add new row to table
-        for col in range(len(columns)): # iterate over each column in row and add text
-            table_row[col].text = str(row[col+1]) # avoid index by adding col+1
-    # save document
-    # output_bytes = docx.Document.save(doc, 'output.docx')
-    # st.download_button(label='Download Report', data=output_bytes, file_name='evidence.docx', mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-
-    # Save the combined document as a Word file
-    combined_doc_path = os.path.join(temp_dir, "resulting_document.docx")
-    doc.save(combined_doc_path)
-
-    # Create a zip file with the uploaded PDF files and the combined document
-    zip_file_name = "master_files.zip"
-    try:
-        create_zip_file(file_paths + [combined_doc_path], zip_file_name)
-    except FileNotFoundError:
-        pass
+        # Add a subheader for customer info to the document ->>
+        subheader_paragraph = doc.add_paragraph("Customer Information")
+        subheader_paragraph.style = "Heading 2"
+        paragraph = doc.add_paragraph(" ")
     
-    bio = io.BytesIO()
-    doc.save(bio)
-    # Applying to download button -> download_button
-    # col_d1, col_d2 = st.columns(2)
-    col_d1, col_d2 = st.tabs(["Download Report", "Download Case Package"])
-    with col_d1:
-    # Applying to download button -> download_button
-        st.markdown("""
-            <style>
-                .stButton download_button {
-                    width: 100%;
-                    height: 70%;
-                }
-            </style>
-        """, unsafe_allow_html=True)
-        if doc:
-            st.download_button(
-                label="Download Report",
-                data=bio.getvalue(),
-                file_name="Report.docx",
-                mime="docx",
-                disabled=st.session_state.disabled
-            )
-    with col_d2:
-        with open(zip_file_name, "rb") as file:
-            st.download_button(
-                label="Download Case Package", 
-                data=file, 
-                file_name=zip_file_name,
-                disabled=st.session_state.disabled)
-# else: pass
+        # Add the customer information
+        customer_info = {
+            "Name                                           ": " John Brown",
+            "Address                                      ": " 858 3rd Ave, Chula Vista, California, 91911 US",
+            "Phone                                          ": " (619) 425-2972",
+            "A/C No.                                        ": " 4587236908230087",
+            "SSN                                               ": " 653-30-9562"
+        }
+    
+        for key, value in customer_info.items():
+            doc.add_paragraph(f"{key}: {value}")
+        paragraph = doc.add_paragraph()
+        # Add a subheader for Suspect infor to the document ->>
+        subheader_paragraph = doc.add_paragraph("Suspect's Info")
+        subheader_paragraph.style = "Heading 2"
+        paragraph = doc.add_paragraph()
+        #""" Addition of a checkbox where unticked box imply unavailability of suspect info"""
+    
+        # Add the customer information
+        sent_val = "No suspect has been reported."
+        paragraph = doc.add_paragraph()
+        runner = paragraph.add_run(sent_val)
+        runner.bold = True
+        runner.italic = True
+        suspect_info = {
+            "Name                                           ": "",
+            "Address                                      ": "",
+            "Phone                                          ": "",
+            "SSN                                               ": "",
+            "Relationship with Customer ": ""
+        }
+    
+        for key, value in suspect_info.items():
+            doc.add_paragraph(f"{key}: {value}")
+        
+        doc.add_heading('Summary', level=2)
+        paragraph = doc.add_paragraph()
+        doc.add_paragraph(st.session_state["tmp_summary"])
+        paragraph = doc.add_paragraph()
+        doc.add_heading('Key Insights', level=2)
+        paragraph = doc.add_paragraph()
+        st.session_state.tmp_table.drop_duplicates(inplace=True)
+        columns = list(st.session_state.tmp_table.columns)
+        table = doc.add_table(rows=1, cols=len(columns), style="Table Grid")
+        table.autofit = True
+        for col in range(len(columns)):
+            # set_cell_margins(table.cell(0, col), top=100, start=100, bottom=100, end=50) # set cell margin
+            table.cell(0, col).text = columns[col]
+        # doc.add_table(st.session_state.tmp_table.shape[0]+1, st.session_state.tmp_table.shape[1], style='Table Grid')
+        
+        for i, row in enumerate(st.session_state.tmp_table.itertuples()):
+            table_row = table.add_row().cells # add new row to table
+            for col in range(len(columns)): # iterate over each column in row and add text
+                table_row[col].text = str(row[col+1]) # avoid index by adding col+1
+        # save document
+        # output_bytes = docx.Document.save(doc, 'output.docx')
+        # st.download_button(label='Download Report', data=output_bytes, file_name='evidence.docx', mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    
+        # Save the combined document as a Word file
+        combined_doc_path = os.path.join(temp_dir, "resulting_document.docx")
+        doc.save(combined_doc_path)
+    
+        # Create a zip file with the uploaded PDF files and the combined document
+        zip_file_name = "master_files.zip"
+        try:
+            create_zip_file(file_paths + [combined_doc_path], zip_file_name)
+        except FileNotFoundError:
+            pass
+        
+        bio = io.BytesIO()
+        doc.save(bio)
+        # Applying to download button -> download_button
+        # col_d1, col_d2 = st.columns(2)
+        col_d1, col_d2 = st.tabs(["Download Report", "Download Case Package"])
+        with col_d1:
+        # Applying to download button -> download_button
+            st.markdown("""
+                <style>
+                    .stButton download_button {
+                        width: 100%;
+                        height: 70%;
+                    }
+                </style>
+            """, unsafe_allow_html=True)
+            if doc:
+                st.download_button(
+                    label="Download Report",
+                    data=bio.getvalue(),
+                    file_name="Report.docx",
+                    mime="docx",
+                    disabled=st.session_state.disabled
+                )
+        with col_d2:
+            with open(zip_file_name, "rb") as file:
+                st.download_button(
+                    label="Download Case Package", 
+                    data=file, 
+                    file_name=zip_file_name,
+                    disabled=st.session_state.disabled)
+else: pass
 
 # Adding Radio button
 st.header("Make Decision")
