@@ -135,6 +135,8 @@ if "fin_opt" not in st.session_state:
     st.session_state.fin_opt = ''
 if "pdf_files" not in st.session_state:
     st.session_state.pdf_files =  []
+if "context_1" not st.session_state:
+    st.session_state.context_1 = ''
 
 # Apply CSS styling to resize the buttons
 st.markdown("""
