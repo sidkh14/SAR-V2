@@ -851,7 +851,6 @@ with st.spinner("Downloading...."):
                 st.write(file_paths)
                 files =  [combined_doc_path] +file_paths 
                 st.write(files)
-                test_cont = fitz.open(file_paths[1])
                 st.write(test_cont)
                 # create_zip_file(files, zip_file_name)
                 create_zip_file(combined_doc_path, zip_file_name)
