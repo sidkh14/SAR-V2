@@ -172,7 +172,6 @@ if "context_1" not in st.session_state:
     st.session_state.context_1 = ''
 
 
-tmp_dir = tempfile.mkdtemp()
 # Apply CSS styling to resize the buttons
 st.markdown("""
     <style>
@@ -353,7 +352,7 @@ if selected_option == "SAR-2023-24680":
 
         file_paths = []
         for uploaded_file in pdf_files:
-            file_path = os.path.join(st.session_state.tmp_dir, uploaded_file.name)
+            file_path = os.path.join(tmp_dir, uploaded_file.name)
             file_paths.append(file_path)
     
 
@@ -839,11 +838,11 @@ with st.spinner("Downloading...."):
                 )
         with col_d2:
 
-            combined_doc_path = os.path.join(st.session_state.tmp_dir, "resulting_document.docx")
+            combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
             doc.save(combined_doc_path)
 
             # if file_names:
-            #     file_paths = [os.path.join(st.session_state.tmp_dir,file) for file in file_names]
+            #     file_paths = [os.path.join(tmp_dir,file) for file in file_names]
             # else: pass
 
             # Create a zip file with the uploaded PDF files and the combined document
