@@ -314,6 +314,12 @@ if selected_option == "SAR-2023-24680":
     with col2_up:
         pdf_files = st.file_uploader("", type=["pdf"], accept_multiple_files=True)
         st.session_state.pdf_files = pdf_files
+        st.session_state.tmp_dir = tempfile.mkdtemp()
+
+        file_paths = []
+        for uploaded_file in pdf_files:
+            file_path = os.path.join(st.session_state.tmp_dir, uploaded_file.name)
+            file_paths.append(file_path)
     
 
     # Show uploaded files in a dropdown
@@ -808,17 +814,6 @@ with st.spinner("Downloading...."):
         # output_bytes = docx.Document.save(doc, 'output.docx')
         # st.download_button(label='Download Report', data=output_bytes, file_name='evidence.docx', mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
 
-        # Save the combined document as a Word file
-        combined_doc_path = os.path.join(temp_dir, "resulting_document.docx")
-        doc.save(combined_doc_path)
-
-        # Create a zip file with the uploaded PDF files and the combined document
-        zip_file_name = "master_files.zip"
-        try:
-            create_zip_file(file_paths + [combined_doc_path], zip_file_name)
-        except FileNotFoundError:
-            pass
-
         bio = io.BytesIO()
         doc.save(bio)
         # col_d1, col_d2 = st.columns(2)
@@ -842,6 +837,25 @@ with st.spinner("Downloading...."):
                     disabled=st.session_state.disabled
                 )
         with col_d2:
+
+            combined_doc_path = os.path.join(st.session_state.tmp_dir, "resulting_document.docx")
+            doc.save(combined_doc_path)
+
+            if file_names:
+                file_paths = [os.path.join(st.session_state.tmp_dir,file) for file in file_names]
+            else: pass
+
+            # Create a zip file with the uploaded PDF files and the combined document
+            zip_file_name = "package_files.zip"
+            if pdf_files:
+                st.write(file_paths)
+                files = file_paths + [combined_doc_path]
+                st.write(file_paths)
+                create_zip_file(files, zip_file_name)
+                # create_zip_file(file_paths + [combined_doc_path], zip_file_name)
+            else:
+                pass
+            # Download the package
             with open(zip_file_name, "rb") as file:
                 st.download_button(
                     label="Download Case Package", 
