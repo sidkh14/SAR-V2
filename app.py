@@ -853,8 +853,8 @@ with st.spinner("Downloading...."):
                 st.write(files)
                 test_cont = fitz.open(file_paths[1])
                 st.write(test_cont)
-                create_zip_file(files, zip_file_name)
-                # create_zip_file(file_paths + [combined_doc_path], zip_file_name)
+                # create_zip_file(files, zip_file_name)
+                create_zip_file(combined_doc_path, zip_file_name)
             else:
                 pass
             # Download the package
