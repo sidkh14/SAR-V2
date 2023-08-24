@@ -849,8 +849,8 @@ with st.spinner("Downloading...."):
             zip_file_name = "package_files.zip"
             if pdf_files:
                 st.write(file_paths)
-                files = file_paths + [combined_doc_path]
-                st.write(file_paths)
+                files =  [combined_doc_path] +file_paths 
+                st.write(files)
                 create_zip_file(files, zip_file_name)
                 # create_zip_file(file_paths + [combined_doc_path], zip_file_name)
             else:
