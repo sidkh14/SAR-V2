@@ -839,31 +839,99 @@ with st.spinner("Downloading...."):
                 )
         with col_d2:
 
-            combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
-            doc.save(combined_doc_path)
+            # combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
+            # doc.save(combined_doc_path)
 
-            # if file_names:
-            #     file_paths = [os.path.join(tmp_dir,file) for file in file_names]
-            # else: pass
+            # # if file_names:
+            # #     file_paths = [os.path.join(tmp_dir,file) for file in file_names]
+            # # else: pass
 
-            # Create a zip file with the uploaded PDF files and the combined document
-            zip_file_name = "package_files.zip"
-            if pdf_files:
-                st.write(file_paths)
-                # files =  [combined_doc_path] +file_paths 
-                # st.write(files)
+            # # Create a zip file with the uploaded PDF files and the combined document
+            # zip_file_name = "package_files.zip"
+            # if pdf_files:
+            #     st.write(file_paths)
+            #     # files =  [combined_doc_path] +file_paths 
+            #     # st.write(files)
                 
-                # create_zip_file(file, zip_file_name)
-                create_zip_file(file_paths, zip_file_name)
-            else:
-                pass
-            # Download the package
-            with open(zip_file_name, "rb") as file:
-                st.download_button(
-                    label="Download Case Package", 
-                    data=file, 
-                    file_name=zip_file_name,
-                    disabled=st.session_state.disabled)
+            #     # create_zip_file(file, zip_file_name)
+            #     create_zip_file(file_paths, zip_file_name)
+            # else:
+            #     pass
+            # # Download the package
+            # with open(zip_file_name, "rb") as file:
+            #     st.download_button(
+            #         label="Download Case Package", 
+            #         data=file, 
+            #         file_name=zip_file_name,
+            #         disabled=st.session_state.disabled)
+
+
+
+            def create_zip_file(file_paths, zip_file_name):
+                with zipfile.ZipFile(zip_file_name, 'w') as zipf:
+                    for file_path in file_paths:
+                        zipf.write(file_path, os.path.basename(file_path))
+            
+            # Page title
+            st.title("PDF Upload and Zip")
+            
+            # Upload the PDF files
+            st.header("Upload PDF Files")
+            uploaded_files = st.file_uploader("Choose PDF files (up to 3)", accept_multiple_files=True, type="pdf")
+            
+            # Check if any files were uploaded
+            if uploaded_files:
+                # Create a temporary directory
+                temp_dir = tempfile.mkdtemp()
+            
+                # Display the uploaded file names
+                st.subheader("Uploaded Files:")
+                file_paths = []
+                for uploaded_file in uploaded_files:
+                    file_path = os.path.join(temp_dir, uploaded_file.name)
+                    with open(file_path, "wb") as file:
+                        file.write(uploaded_file.getbuffer())
+                    file_paths.append(file_path)
+                    st.write(uploaded_file.name)
+            
+                # Read PDF contents and create a Word document
+                st.subheader("Combined Document:")
+                combined_doc = Document()
+                for file_path in file_paths:
+                    doc = fitz.open(file_path)
+                    for page in doc:
+                        page_content = page.get_text()
+                        combined_doc.add_paragraph(page_content)
+                    doc.close()  # Close the PDF file
+            
+                # Save the combined document as a Word file
+                combined_doc_path = os.path.join(temp_dir, "combined_document.docx")
+                combined_doc.save(combined_doc_path)
+                st.write("Combined document created.")
+            
+                # Create a zip file with the uploaded PDF files and the combined document
+                zip_file_name = "pdf_files.zip"
+                st.write(file_paths)
+                st.write([combined_doc_path])
+                create_zip_file(file_paths + [combined_doc_path], zip_file_name)
+                st.success(f"Zip file '{zip_file_name}' created successfully!")
+            
+                # Provide a download link for the zip file
+                st.subheader("Download Zip File:")
+                with open(zip_file_name, "rb") as file:
+                    st.download_button(label="Download", data=file, file_name=zip_file_name)
+            
+                # Cleanup: Delete the temporary directory and its contents
+                for file_path in file_paths + [combined_doc_path]:
+                    os.remove(file_path)
+                os.rmdir(temp_dir)
+
+            
+
+
+
+            
+            
     else: pass
 # Adding Radio button
 st.header("Make Decision")
