@@ -865,7 +865,12 @@ with st.spinner("Downloading...."):
             #         file_name=zip_file_name,
             #         disabled=st.session_state.disabled)
 
-
+            import streamlit as st
+            import zipfile
+            import os
+            import tempfile
+            import fitz
+            from docx import Document
 
             def create_zip_file(file_paths, zip_file_name):
                 with zipfile.ZipFile(zip_file_name, 'w') as zipf:
