@@ -843,7 +843,7 @@ with st.spinner("Downloading...."):
             # doc.save(combined_doc_path)
 
             # # if file_names:
-            # #     file_paths = [os.path.join(tmp_dir,file) for file in file_names]
+            # #      = [os.path.join(tmp_dir,file) for file in file_names]
             # # else: pass
 
             # # Create a zip file with the uploaded PDF files and the combined document
