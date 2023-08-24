@@ -61,6 +61,41 @@ def merge_pdfs(pdf_list):
 
 
 @st.cache_data
+def usellm(prompt):
+
+    service = UseLLM(service_url="https://usellm.org/api/llm")
+    messages = [
+      Message(role="system", content="You are a fraud analyst, who is an expert at finding out suspicious activities"),
+      Message(role="user", content=f"{prompt}"),
+      ]
+    options = Options(messages=messages)
+    response = service.chat(options)
+    return response.content
+
+@st.cache_data
+def process_text(text):
+    # Add your custom text processing logic here
+    processed_text = text
+    return processed_text
+
+@st.cache_resource
+def embed(model_name):
+    hf_embeddings = HuggingFaceEmbeddings(model_name=model_name)
+    return hf_embeddings
+
+@st.cache_data
+def embedding_store(pdf_files):
+    merged_pdf = merge_pdfs(pdf_files)
+    final_pdf = PyPDF2.PdfReader(merged_pdf)
+    text = ""
+    for page in final_pdf.pages:
+        text += page.extract_text()
+    texts =  text_splitter.split_text(text)
+    docs = text_to_docs(texts)
+    docsearch = FAISS.from_documents(docs, hf_embeddings)
+    return docs, docsearch
+    
+@st.cache_data
 def merge_and_extract_text(pdf_list):
     """
     Helper function to merge PDFs and extract text
@@ -137,6 +172,10 @@ if "pdf_files" not in st.session_state:
     st.session_state.pdf_files =  []
 if "context_1" not in st.session_state:
     st.session_state.context_1 = ''
+if "pdf_files" not in st.session_state:
+    st.session_state.pdf_files =  []
+if "tmp_dir" not in st.session_state:
+    st.session_state.tmp_dir = ''
 
 # Apply CSS styling to resize the buttons
 st.markdown("""
@@ -351,29 +390,6 @@ memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=500)
 conversation = ConversationChain(llm=llm, memory =memory,verbose=False)
 
 
-@st.cache_data
-def usellm(prompt):
-
-    service = UseLLM(service_url="https://usellm.org/api/llm")
-    messages = [
-      Message(role="system", content="You are a fraud analyst, who is an expert at finding out suspicious activities"),
-      Message(role="user", content=f"{prompt}"),
-      ]
-    options = Options(messages=messages)
-    response = service.chat(options)
-    return response.content
-
-@st.cache_data
-def process_text(text):
-    # Add your custom text processing logic here
-    processed_text = text
-    return processed_text
-
-@st.cache_resource
-def embed(model_name):
-    hf_embeddings = HuggingFaceEmbeddings(model_name=model_name)
-    return hf_embeddings
-
 # Adding condition on embedding
 try:
     if pdf_files:
@@ -472,17 +488,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-@st.cache_data
-def embedding_store(pdf_files):
-    merged_pdf = merge_pdfs(pdf_files)
-    final_pdf = PyPDF2.PdfReader(merged_pdf)
-    text = ""
-    for page in final_pdf.pages:
-        text += page.extract_text()
-    texts =  text_splitter.split_text(text)
-    docs = text_to_docs(texts)
-    docsearch = FAISS.from_documents(docs, hf_embeddings)
-    return docs, docsearch
 
 # Creating header
 col1,col2 = st.columns(2)
@@ -841,9 +846,9 @@ with st.spinner("Downloading...."):
             combined_doc_path = os.path.join(st.session_state.tmp_dir, "resulting_document.docx")
             doc.save(combined_doc_path)
 
-            if file_names:
-                file_paths = [os.path.join(st.session_state.tmp_dir,file) for file in file_names]
-            else: pass
+            # if file_names:
+            #     file_paths = [os.path.join(st.session_state.tmp_dir,file) for file in file_names]
+            # else: pass
 
             # Create a zip file with the uploaded PDF files and the combined document
             zip_file_name = "package_files.zip"
