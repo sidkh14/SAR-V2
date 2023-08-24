@@ -168,15 +168,11 @@ if "case_num" not in st.session_state:
     st.session_state.case_num = ''
 if "fin_opt" not in st.session_state:
     st.session_state.fin_opt = ''
-if "pdf_files" not in st.session_state:
-    st.session_state.pdf_files =  []
 if "context_1" not in st.session_state:
     st.session_state.context_1 = ''
-if "pdf_files" not in st.session_state:
-    st.session_state.pdf_files =  []
-if "tmp_dir" not in st.session_state:
-    st.session_state.tmp_dir = tempfile.mkdtemp()
 
+
+tmp_dir = tempfile.mkdtemp()
 # Apply CSS styling to resize the buttons
 st.markdown("""
     <style>
@@ -352,8 +348,8 @@ if selected_option == "SAR-2023-24680":
         )
     with col2_up:
         pdf_files = st.file_uploader("", type=["pdf"], accept_multiple_files=True)
-        st.session_state.pdf_files = pdf_files
-        st.session_state.tmp_dir = tempfile.mkdtemp()
+        # initiating a temp file
+        tmp_dir = tempfile.mkdtemp()
 
         file_paths = []
         for uploaded_file in pdf_files:
@@ -364,7 +360,7 @@ if selected_option == "SAR-2023-24680":
     # Show uploaded files in a dropdown
     if pdf_files:
         st.subheader("Uploaded Files")
-        file_names = [file.name for file in st.session_state.pdf_files]
+        file_names = [file.name for file in pdf_files]
         selected_file = st.selectbox(":blue[Select a file]", file_names)
         # Enabling the button
         st.session_state.disabled = False
