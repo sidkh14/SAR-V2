@@ -175,7 +175,7 @@ if "context_1" not in st.session_state:
 if "pdf_files" not in st.session_state:
     st.session_state.pdf_files =  []
 if "tmp_dir" not in st.session_state:
-    st.session_state.tmp_dir = ''
+    st.session_state.tmp_dir = tempfile.mkdtemp()
 
 # Apply CSS styling to resize the buttons
 st.markdown("""
