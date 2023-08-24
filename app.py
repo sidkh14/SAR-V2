@@ -640,7 +640,7 @@ with st.spinner('Getting you information...'):
                         Context: {context_1}\n\
                         Response: '''
 
-            
+        
         elif query.lower() == "when did the fraud occur?":
             prompt_1 = f''' You need to act as a Financial analyst to identify the when the did the fraud occur i.e., the Transaction Date. Given the context, provide a relevant and concise response.\n\n\
                         Question: {query}\n\
@@ -851,6 +851,8 @@ with st.spinner("Downloading...."):
                 st.write(file_paths)
                 files =  [combined_doc_path] +file_paths 
                 st.write(files)
+                test_cont = fitz.open(file_paths[1])
+                st.write(test_cont)
                 create_zip_file(files, zip_file_name)
                 # create_zip_file(file_paths + [combined_doc_path], zip_file_name)
             else:
