@@ -721,7 +721,7 @@ with st.spinner('Summarization ...'):
 with st.spinner("Downloading...."):
 # if st.button("Download Response", disabled=st.session_state.disabled):
     # Create a Word document with the table and some text
-    if st.session_state.pdf_files:
+    st.session_state["tmp_summary"]:
         # Create a temporary directory
         temp_dir = tempfile.mkdtemp()
         if file_names:
