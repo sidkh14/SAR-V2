@@ -213,6 +213,15 @@ def create_zip_file(file_paths, zip_file_name):
         for file_path in file_paths:
             zipf.write(file_path, os.path.basename(file_path))
 
+# Addding markdown styles(Global)
+st.markdown("""
+<style>
+.big-font {
+    font-size:60px !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 
 # Set Sidebar
 st.markdown("""
@@ -363,133 +372,71 @@ if selected_option == "SAR-2023-24680":
                 file_paths.append(file_path)
 
 
-# Show uploaded files in a dropdown
-if pdf_files:
-    st.subheader("Uploaded Files")
-    file_names = [file.name for file in pdf_files]
-    selected_file = st.selectbox(":blue[Select a file]", file_names)
-    # Enabling the button
-    st.session_state.disabled = False
-    # Display selected PDF contents
-    if selected_file:
-        selected_pdf = [pdf for pdf in pdf_files if pdf.name == selected_file][0]
-        pdf_images = render_pdf_as_images(selected_pdf)
-        st.subheader(f"Contents of {selected_file}")
-        for img_bytes in pdf_images:
-            st.image(img_bytes, use_column_width=True)
+    # Show uploaded files in a dropdown
+    if pdf_files:
+        st.subheader("Uploaded Files")
+        file_names = [file.name for file in pdf_files]
+        selected_file = st.selectbox(":blue[Select a file]", file_names)
+        # Enabling the button
+        st.session_state.disabled = False
+        # Display selected PDF contents
+        if selected_file:
+            selected_pdf = [pdf for pdf in pdf_files if pdf.name == selected_file][0]
+            pdf_images = render_pdf_as_images(selected_pdf)
+            st.subheader(f"Contents of {selected_file}")
+            for img_bytes in pdf_images:
+                st.image(img_bytes, use_column_width=True)
+
+
+
+    model_name = "sentence-transformers/all-MiniLM-L6-v2"
+    # model_name = "hkunlp/instructor-large"
+    
+    # Memory setup
+    llm = ChatOpenAI(temperature=0.0)
+    memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=500)
+    conversation = ConversationChain(llm=llm, memory =memory,verbose=False)
+    
+    
+    # Adding condition on embedding
+    try:
+        if pdf_files:
+            hf_embeddings = embed(model_name) 
+        else:
+            pass
+    except NameError:
+        pass
+    
+    # Chunking with overlap
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size = 1000,
+        chunk_overlap  = 100,
+        length_function = len,
+        separators=["\n\n", "\n", " ", ""]
+    )
+    #text_splitter = CharacterTextSplitter.from_tiktoken_encoder(chunk_size=100, chunk_overlap=0)
+    #texts = ''
+    
+    # @st.cache_data
+    # def embedding_store(file):
+    #     # save file
+    #     pdf_reader = PdfReader(file)
+    #     text = ""
+    #     for page in pdf_reader.pages:
+    #         text += page.extract_text()
+    #     #st.write(text)
+    #     texts =  text_splitter.split_text(text)
+    #     docs = text_to_docs(texts)
+    #     #st.write(texts)
+    #     docsearch = FAISS.from_documents(docs, hf_embeddings)
+    #     return docs, docsearch
+    
+    
+
 else:
     # Disabling the button
     st.session_state.disabled = True
-    st.session_state.case_num = selected_option
-
-
-model_name = "sentence-transformers/all-MiniLM-L6-v2"
-# model_name = "hkunlp/instructor-large"
-
-# Memory setup
-llm = ChatOpenAI(temperature=0.0)
-memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=500)
-conversation = ConversationChain(llm=llm, memory =memory,verbose=False)
-
-
-# Adding condition on embedding
-try:
-    if pdf_files:
-        hf_embeddings = embed(model_name) 
-    else:
-        pass
-except NameError:
-    pass
-
-
-# Vizualising the files
-# st.header("Welcome to the PDF Merger App")
-# st.write("Use the navigation sidebar to merge PDF files.")
-
-# # Add a single dropdown
-# st.sidebar.markdown(" ")
-# st.sidebar.markdown("---")
-# options = ["Select a Case", "Case 1", "Case 2", "Case 3", "Case 4", "Case 5"]
-# selected_option = st.sidebar.selectbox("Select a Case No.", options)
-
-# # Redirect to Merge PDFs page when "Merge PDFs" is selected
-# if selected_option == "Case 1":
-#     # st.header("Merge Documents")
-#     # st.write("Upload multiple document files and merge them into one doc.")
-
-#     # Upload PDF files
-#     # st.subheader("Upload Case Files")
-#     pdf_files = st.file_uploader("Choose files", type=["pdf"], accept_multiple_files=True)
-    
-#     # Show uploaded files in a dropdown
-#     if pdf_files:
-#         st.subheader("Uploaded Files:")
-#         file_names = [file.name for file in pdf_files]
-#         selected_file = st.selectbox("Select a file", file_names)
-
-#         # Display selected PDF contents
-#         if selected_file:
-#             selected_pdf = [pdf for pdf in pdf_files if pdf.name == selected_file][0]
-#             pdf_images = render_pdf_as_images(selected_pdf)
-#             st.subheader(f"Contents of {selected_file}")
-#             for img_bytes in pdf_images:
-#                 st.image(img_bytes, use_column_width=True)              
-                
-    # Merge PDFs extract text
-    # if st.button("Merge and Download"):
-    #     if pdf_files:
-    #         merged_pdf = merge_pdfs(pdf_files)
-    #         # Extract text from merged PDF
-    #         final_pdf = PyPDF2.PdfReader(merged_pdf)
-    #         all_text = []
-    #         global final_txt
-    #         for page in final_pdf.pages:
-    #             text = page.extract_text()
-    #             all_text.append(text)
-    #         final_txt = ' '.join(all_text)
-
-            # downloading content
-            # st.download_button(
-            #     label="Download Merged PDF",
-            #     data=merged_pdf.getvalue(),
-            #     file_name="merged_pdf.pdf",
-            #     mime="application/pdf",
-            # )
-
-
-
-text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size = 1000,
-    chunk_overlap  = 100,
-    length_function = len,
-    separators=["\n\n", "\n", " ", ""]
-)
-#text_splitter = CharacterTextSplitter.from_tiktoken_encoder(chunk_size=100, chunk_overlap=0)
-#texts = ''
-
-# @st.cache_data
-# def embedding_store(file):
-#     # save file
-#     pdf_reader = PdfReader(file)
-#     text = ""
-#     for page in pdf_reader.pages:
-#         text += page.extract_text()
-#     #st.write(text)
-#     texts =  text_splitter.split_text(text)
-#     docs = text_to_docs(texts)
-#     #st.write(texts)
-#     docsearch = FAISS.from_documents(docs, hf_embeddings)
-#     return docs, docsearch
-
-# Addding markdown styles(Global)
-st.markdown("""
-<style>
-.big-font {
-    font-size:60px !important;
-}
-</style>
-""", unsafe_allow_html=True)
-
+    st.session_state.case_num = selected_option    
 
 # Creating header
 col1,col2 = st.columns(2)
