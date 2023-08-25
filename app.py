@@ -667,7 +667,7 @@ with st.spinner("Downloading...."):
     if st.session_state["tmp_summary"]:
         st.session_state.disabled=False
         
-    if pdf_files:
+    if 1:
         # initiate the doc file
         doc = docx.Document()
         # doc.add_section(WD_SECTION.NEW_PAGE)
