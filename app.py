@@ -804,11 +804,11 @@ with st.spinner("Downloading...."):
             file_paths= []
 
             for uploaded_file in pdf_files:
-                file_p = os.path.join(temp_dir, uploaded_file.name)
-                st.write(file_p)
-                with open(file_p, "wb") as file:
+                file_pth = os.path.join(temp_dir, uploaded_file.name)
+                st.write(file_pth)
+                with open(file_pth, "wb") as file_opn:
                     pass
-                file_paths.append(file_p)
+                file_paths.append(file_pth)
             
             combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
             doc.save(combined_doc_path)
@@ -824,28 +824,6 @@ with st.spinner("Downloading...."):
                 # create_zip_file(file_paths, zip_file_name)
             else:
                 pass
-
-            # Get the current directory
-            current_directory = os.getcwd()
-            
-            # List the files in the current directory
-            files = os.listdir()
-            
-            # Display the files
-            st.write("Files in the current directory:")
-            for file in files:
-                st.write(file)
-
-            # testing
-            if pdf_files:
-                st.write("Uploaded Files:")
-                for file in pdf_files:
-                    file_path = os.path.join(os.getcwd(), file.name)
-                    st.write(file_path)
-
-
-
-
 
 
             
