@@ -804,7 +804,7 @@ with st.spinner("Downloading...."):
             file_paths= []
             
             for uploaded_file in pdf_files:
-                file_path = os.path.join(tmp_dir), uploaded_file.name)
+                file_path = os.path.join(tmp_dir, uploaded_file.name)
                 file_paths.append(file_path)
             
             combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
