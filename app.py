@@ -527,10 +527,10 @@ with st.spinner('Wait for it...'):
 st.markdown("---")
 
 # For input box outside of template
-if pdf_files:
-    docs, docsearch = embedding_store(pdf_files)
-else:
-    pass
+# try:
+#     docs, docsearch = embedding_store(pdf_files)
+# except:
+#     pass
 
 
 # Text Input
