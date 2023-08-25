@@ -667,7 +667,7 @@ with st.spinner("Downloading...."):
     if st.session_state["tmp_summary"]:
         st.session_state.disabled=False
         
-    if 1:
+    try:
         # initiate the doc file
         doc = docx.Document()
         # doc.add_section(WD_SECTION.NEW_PAGE)
@@ -840,7 +840,8 @@ with st.spinner("Downloading...."):
                 #     os.remove(file_path)
                 # os.rmdir(temp_dir)
             
-    else: pass
+    except NameError:
+        pass
         
 # Adding Radio button
 st.header("Make Decision")
