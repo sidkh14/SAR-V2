@@ -333,48 +333,56 @@ if selected_option == "SAR-2023-24680":
 
     with col2:
         st.markdown("**Case Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:** Open")
-    st.header("Upload Evidence")
-    # Create two columns
-    col1_up, col2_up = st.tabs(["Fetch Evidence", "Upload Evidence"])
-    with col1_up:
-        # Set the color
-        st.markdown(
-            """
-            <div style="display: flex; justify-content: center; align-items: center; height: 48px; border: 1px solid #ccc; border-radius: 5px; background-color: #f2f2f2;">
-                <span style="font-size: 16px;  ">Fetch Evidence</span>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-    with col2_up:
-        pdf_files = st.file_uploader("", type=["pdf"], accept_multiple_files=True)
-        # initiating a temp file
-        tmp_dir = tempfile.mkdtemp()
 
-        file_paths = []
-        for uploaded_file in pdf_files:
-            file_path = os.path.join(tmp_dir, uploaded_file.name)
-            file_paths.append(file_path)
-    
-
-    # Show uploaded files in a dropdown
-    if pdf_files:
-        st.subheader("Uploaded Files")
-        file_names = [file.name for file in pdf_files]
-        selected_file = st.selectbox(":blue[Select a file]", file_names)
-        # Enabling the button
-        st.session_state.disabled = False
-        # Display selected PDF contents
-        if selected_file:
-            selected_pdf = [pdf for pdf in pdf_files if pdf.name == selected_file][0]
-            pdf_images = render_pdf_as_images(selected_pdf)
-            st.subheader(f"Contents of {selected_file}")
-            for img_bytes in pdf_images:
-                st.image(img_bytes, use_column_width=True)
 else:
     # Disabling the button
     st.session_state.disabled = True
     st.session_state.case_num = selected_option
+
+
+# Evidence uploader/Fetch    
+st.header("Upload Evidence")
+# Create two columns
+col1_up, col2_up = st.tabs(["Fetch Evidence", "Upload Evidence"])
+with col1_up:
+    # Set the color
+    st.markdown(
+        """
+        <div style="display: flex; justify-content: center; align-items: center; height: 48px; border: 1px solid #ccc; border-radius: 5px; background-color: #f2f2f2;">
+            <span style="font-size: 16px;  ">Fetch Evidence</span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+with col2_up:
+    pdf_files = st.file_uploader("", type=["pdf"], accept_multiple_files=True)
+    # initiating a temp file
+    tmp_dir = tempfile.mkdtemp()
+
+    file_paths = []
+    for uploaded_file in pdf_files:
+        file_path = os.path.join(tmp_dir, uploaded_file.name)
+        file_paths.append(file_path)
+
+
+# Show uploaded files in a dropdown
+if pdf_files:
+    st.subheader("Uploaded Files")
+    file_names = [file.name for file in pdf_files]
+    selected_file = st.selectbox(":blue[Select a file]", file_names)
+    # Enabling the button
+    st.session_state.disabled = False
+    # Display selected PDF contents
+    if selected_file:
+        selected_pdf = [pdf for pdf in pdf_files if pdf.name == selected_file][0]
+        pdf_images = render_pdf_as_images(selected_pdf)
+        st.subheader(f"Contents of {selected_file}")
+        for img_bytes in pdf_images:
+            st.image(img_bytes, use_column_width=True)
+# else:
+#     # Disabling the button
+#     st.session_state.disabled = True
+#     st.session_state.case_num = selected_option
 
 
 model_name = "sentence-transformers/all-MiniLM-L6-v2"
@@ -839,98 +847,31 @@ with st.spinner("Downloading...."):
                 )
         with col_d2:
 
-            # combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
-            # doc.save(combined_doc_path)
+            combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
+            doc.save(combined_doc_path)
 
-            # # if file_names:
-            # #      = [os.path.join(tmp_dir,file) for file in file_names]
-            # # else: pass
+            # if file_names:
+            #      = [os.path.join(tmp_dir,file) for file in file_names]
+            # else: pass
 
-            # # Create a zip file with the uploaded PDF files and the combined document
-            # zip_file_name = "package_files.zip"
-            # if pdf_files:
-            #     st.write(file_paths)
-            #     # files =  [combined_doc_path] +file_paths 
-            #     # st.write(files)
-                
-            #     # create_zip_file(file, zip_file_name)
-            #     create_zip_file(file_paths, zip_file_name)
-            # else:
-            #     pass
-            # # Download the package
-            # with open(zip_file_name, "rb") as file:
-            #     st.download_button(
-            #         label="Download Case Package", 
-            #         data=file, 
-            #         file_name=zip_file_name,
-            #         disabled=st.session_state.disabled)
-
-            import streamlit as st
-            import zipfile
-            import os
-            import tempfile
-            import fitz
-            from docx import Document
-
-            def create_zip_file(file_paths, zip_file_name):
-                with zipfile.ZipFile(zip_file_name, 'w') as zipf:
-                    for file_path in file_paths:
-                        zipf.write(file_path, os.path.basename(file_path))
-            
-            # Page title
-            st.title("PDF Upload and Zip")
-            
-            # Upload the PDF files
-            st.header("Upload PDF Files")
-            uploaded_files = st.file_uploader("Choose PDF files (up to 3)", accept_multiple_files=True, type="pdf")
-            
-            # Check if any files were uploaded
-            if uploaded_files:
-                # Create a temporary directory
-                temp_dir = tempfile.mkdtemp()
-            
-                # Display the uploaded file names
-                st.subheader("Uploaded Files:")
-                file_paths = []
-                for uploaded_file in uploaded_files:
-                    file_path = os.path.join(temp_dir, uploaded_file.name)
-                    with open(file_path, "wb") as file:
-                        file.write(uploaded_file.getbuffer())
-                    file_paths.append(file_path)
-                    st.write(uploaded_file.name)
-            
-                # Read PDF contents and create a Word document
-                st.subheader("Combined Document:")
-                combined_doc = Document()
-                for file_path in file_paths:
-                    doc = fitz.open(file_path)
-                    for page in doc:
-                        page_content = page.get_text()
-                        combined_doc.add_paragraph(page_content)
-                    doc.close()  # Close the PDF file
-            
-                # Save the combined document as a Word file
-                combined_doc_path = os.path.join(temp_dir, "combined_document.docx")
-                combined_doc.save(combined_doc_path)
-                st.write("Combined document created.")
-            
-                # Create a zip file with the uploaded PDF files and the combined document
-                zip_file_name = "pdf_files.zip"
+            # Create a zip file with the uploaded PDF files and the combined document
+            zip_file_name = "package_files.zip"
+            if pdf_files:
                 st.write(file_paths)
-                st.write([combined_doc_path])
-                create_zip_file(file_paths + [combined_doc_path], zip_file_name)
-                st.success(f"Zip file '{zip_file_name}' created successfully!")
-            
-                # Provide a download link for the zip file
-                st.subheader("Download Zip File:")
-                with open(zip_file_name, "rb") as file:
-                    st.download_button(label="Download", data=file, file_name=zip_file_name)
-            
-                # Cleanup: Delete the temporary directory and its contents
-                for file_path in file_paths + [combined_doc_path]:
-                    os.remove(file_path)
-                os.rmdir(temp_dir)
-
+                # files =  [combined_doc_path] +file_paths 
+                # st.write(files)
+                
+                # create_zip_file(file, zip_file_name)
+                create_zip_file(file_paths, zip_file_name)
+            else:
+                pass
+            # Download the package
+            with open(zip_file_name, "rb") as file:
+                st.download_button(
+                    label="Download Case Package", 
+                    data=file, 
+                    file_name=zip_file_name,
+                    disabled=st.session_state.disabled)
             
 
 
