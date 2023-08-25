@@ -365,9 +365,9 @@ if selected_option == "SAR-2023-24680":
             tmp_dir = tempfile.mkdtemp()
         
             file_paths= []
-            main_path = "/mount/src/ui_test_ptr/"
+            
             for uploaded_file in pdf_files:
-                file_path = os.path.join(main_path, uploaded_file.name)
+                file_path = os.path.join(os.getcwd(), uploaded_file.name)
                 file_paths.append(file_path)
 
 
