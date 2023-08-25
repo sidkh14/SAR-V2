@@ -2,7 +2,7 @@
 import random,os,json,io,re,zipfile,tempfile
 import pandas as pd
 import streamlit as st
-import  streamlit_toggle as tog
+import streamlit_toggle as tog
 from langchain.llms import OpenAI
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import HuggingFaceEmbeddings
@@ -811,7 +811,7 @@ with st.spinner("Downloading...."):
             zip_file_name = "package_files.zip"
             if file_paths:
                 st.write(file_paths)
-                files =  [combined_doc_path] + file_paths
+                files =  [combined_doc_path] #+ file_paths
                 st.write(files)
                 
                 create_zip_file(files, zip_file_name)
@@ -826,13 +826,13 @@ with st.spinner("Downloading...."):
                     file_name=zip_file_name,
                     disabled=st.session_state.disabled)
 
-            # Cleanup: Delete the temporary directory and its contents
-            for file_path in file_paths + [combined_doc_path]:
-                os.remove(file_path)
-            os.rmdir(temp_dir)
-  
+                # # Cleanup: Delete the temporary directory and its contents
+                # for file_path in file_paths + [combined_doc_path]:
+                #     os.remove(file_path)
+                # os.rmdir(temp_dir)
             
     else: pass
+        
 # Adding Radio button
 st.header("Make Decision")
 st.markdown(
