@@ -365,8 +365,9 @@ if selected_option == "SAR-2023-24680":
             tmp_dir = tempfile.mkdtemp()
         
             file_paths= []
+            main_path = "/mount/src/ui_test_ptr/"
             for uploaded_file in pdf_files:
-                file_path = os.path.join(tmp_dir, uploaded_file.name)
+                file_path = os.path.join(main_path, uploaded_file.name)
                 file_paths.append(file_path)
 
 
@@ -811,7 +812,7 @@ with st.spinner("Downloading...."):
             zip_file_name = "package_files.zip"
             if file_paths:
                 st.write(file_paths)
-                files =  [combined_doc_path] #+ file_paths
+                files =  [combined_doc_path] + file_paths
                 st.write(files)
                 
                 create_zip_file(files, zip_file_name)
