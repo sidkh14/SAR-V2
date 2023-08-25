@@ -829,6 +829,20 @@ with st.spinner("Downloading...."):
             st.write("Files in the current directory:")
             for file in files:
                 st.write(file)
+
+            # testing
+            if pdf_files:
+                st.write("Uploaded Files:")
+                for file in pdf_files:
+                    file_path = os.path.join(os.getcwd(), file.name)
+                    st.write(file_path)
+
+
+
+
+
+
+            
             # Download the package
             with open(zip_file_name, "rb") as file:
                 st.download_button(
