@@ -170,6 +170,8 @@ if "fin_opt" not in st.session_state:
     st.session_state.fin_opt = ''
 if "context_1" not in st.session_state:
     st.session_state.context_1 = ''
+if "file_paths" not in st.session_state:
+    st.session_state.file_paths = []
 
 
 # Apply CSS styling to resize the buttons
@@ -364,10 +366,10 @@ if selected_option == "SAR-2023-24680":
             # initiating a temp file
             tmp_dir = tempfile.mkdtemp()
         
-            file_paths = []
+            
             for uploaded_file in pdf_files:
                 file_path = os.path.join(tmp_dir, uploaded_file.name)
-                file_paths.append(file_path)
+                st.session_state.file_paths.append(file_path)
 
 
     # Show uploaded files in a dropdown
@@ -809,9 +811,9 @@ with st.spinner("Downloading...."):
 
             # Create a zip file with the uploaded PDF files and the combined document
             zip_file_name = "package_files.zip"
-            if file_paths:
-                st.write(file_paths)
-                files =  [combined_doc_path] + file_paths 
+            if st.session_state.file_paths:
+                st.write(st.session_state.file_paths)
+                files =  [combined_doc_path] + st.session_state.file_paths
                 st.write(files)
                 
                 create_zip_file(files, zip_file_name)
