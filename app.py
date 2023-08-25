@@ -802,10 +802,12 @@ with st.spinner("Downloading...."):
             tmp_dir = tempfile.mkdtemp()
         
             file_paths= []
-            
+
             for uploaded_file in pdf_files:
-                file_path = os.path.join(tmp_dir, uploaded_file.name)
-                file_paths.append(file_path)
+                file_p = os.path.join(temp_dir, uploaded_file.name)
+                with open(file_p, "wb") as file:
+                    pass
+                file_paths.append(file_p)
             
             combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
             doc.save(combined_doc_path)
