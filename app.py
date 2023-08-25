@@ -805,6 +805,7 @@ with st.spinner("Downloading...."):
 
             for uploaded_file in pdf_files:
                 file_p = os.path.join(temp_dir, uploaded_file.name)
+                st.write(file_p)
                 with open(file_p, "wb") as file:
                     pass
                 file_paths.append(file_p)
