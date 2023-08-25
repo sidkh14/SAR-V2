@@ -803,7 +803,7 @@ with st.spinner("Downloading...."):
                     disabled=st.session_state.disabled
                 )
         with col_d2:
-
+            
             combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
             doc.save(combined_doc_path)
 
@@ -811,7 +811,7 @@ with st.spinner("Downloading...."):
             zip_file_name = "package_files.zip"
             if pdf_files:
                 st.write(file_paths)
-                files =  [combined_doc_path] + file_paths 
+                files =  [combined_doc_path]        #+ file_paths 
                 st.write(files)
                 
                 create_zip_file(files, zip_file_name)
