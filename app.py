@@ -527,15 +527,13 @@ with st.spinner('Wait for it...'):
 st.markdown("---")
 
 # For input box outside of template
-try:
+if pdf_files:
     docs, docsearch = embedding_store(pdf_files)
-except Exception:
+else:
     pass
 
 
 # Text Input
-
-
 st.subheader("Ask Additional Questions")
 query = st.text_input(':blue[Please ask below the additional case questions.]',disabled=st.session_state.disabled)
 text_dict = {}
