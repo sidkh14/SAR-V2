@@ -805,7 +805,6 @@ with st.spinner("Downloading...."):
 
             for uploaded_file in pdf_files:
                 file_pth = os.path.join(tmp_dir, uploaded_file.name)
-                st.write(file_pth)
                 with open(file_pth, "wb") as file_opn:
                     file_opn.write(uploaded_file.getbuffer())
                 file_paths.append(file_pth)
@@ -816,9 +815,7 @@ with st.spinner("Downloading...."):
             # Create a zip file with the uploaded PDF files and the combined document
             zip_file_name = "package_files.zip"
             if file_paths:
-                st.write(file_paths)
                 files =  [combined_doc_path] + file_paths
-                st.write(files)
                 
                 create_zip_file(files, zip_file_name)
                 # create_zip_file(file_paths, zip_file_name)
