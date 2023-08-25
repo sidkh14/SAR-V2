@@ -344,8 +344,6 @@ if selected_option == "SAR-2023-24680":
         st.markdown("**Case Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:** Open")
 
 
-
-
     # Evidence uploader/Fetch    
     st.header("Upload Evidence")
     if selected_option:
@@ -386,7 +384,6 @@ if selected_option == "SAR-2023-24680":
             st.subheader(f"Contents of {selected_file}")
             for img_bytes in pdf_images:
                 st.image(img_bytes, use_column_width=True)
-
 
 
     model_name = "sentence-transformers/all-MiniLM-L6-v2"
@@ -786,19 +783,15 @@ with st.spinner("Downloading...."):
             combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
             doc.save(combined_doc_path)
 
-            # if file_names:
-            #      = [os.path.join(tmp_dir,file) for file in file_names]
-            # else: pass
-
             # Create a zip file with the uploaded PDF files and the combined document
             zip_file_name = "package_files.zip"
             if pdf_files:
                 st.write(file_paths)
-                # files =  [combined_doc_path] +file_paths 
-                # st.write(files)
+                files =  [combined_doc_path] +file_paths 
+                st.write(files)
                 
-                # create_zip_file(file, zip_file_name)
-                create_zip_file(file_paths, zip_file_name)
+                create_zip_file(files, zip_file_name)
+                # create_zip_file(file_paths, zip_file_name)
             else:
                 pass
             # Download the package
@@ -808,11 +801,7 @@ with st.spinner("Downloading...."):
                     data=file, 
                     file_name=zip_file_name,
                     disabled=st.session_state.disabled)
-            
-
-
-
-            
+  
             
     else: pass
 # Adding Radio button
