@@ -823,7 +823,7 @@ with st.spinner("Downloading...."):
             current_directory = os.getcwd(tmp_dir)
             
             # List the files in the current directory
-            files = os.listdir(current_directory)
+            files = os.listdir()
             
             # Display the files
             st.write("Files in the current directory:")
