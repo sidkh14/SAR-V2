@@ -170,8 +170,6 @@ if "fin_opt" not in st.session_state:
     st.session_state.fin_opt = ''
 if "context_1" not in st.session_state:
     st.session_state.context_1 = ''
-if "file_paths" not in st.session_state:
-    st.session_state.file_paths = []
 
 
 # Apply CSS styling to resize the buttons
@@ -366,10 +364,10 @@ if selected_option == "SAR-2023-24680":
             # initiating a temp file
             tmp_dir = tempfile.mkdtemp()
         
-            
+            file_paths= []
             for uploaded_file in pdf_files:
                 file_path = os.path.join(tmp_dir, uploaded_file.name)
-                st.session_state.file_paths.append(file_path)
+                file_paths.append(file_path)
 
 
     # Show uploaded files in a dropdown
@@ -811,9 +809,9 @@ with st.spinner("Downloading...."):
 
             # Create a zip file with the uploaded PDF files and the combined document
             zip_file_name = "package_files.zip"
-            if st.session_state.file_paths:
-                st.write(st.session_state.file_paths)
-                files =  [combined_doc_path] + st.session_state.file_paths
+            if file_paths:
+                st.write(file_paths)
+                files =  [combined_doc_path] + file_paths
                 st.write(files)
                 
                 create_zip_file(files, zip_file_name)
@@ -827,6 +825,11 @@ with st.spinner("Downloading...."):
                     data=file, 
                     file_name=zip_file_name,
                     disabled=st.session_state.disabled)
+
+            # Cleanup: Delete the temporary directory and its contents
+            for file_path in file_paths + [combined_doc_path]:
+                os.remove(file_path)
+            os.rmdir(temp_dir)
   
             
     else: pass
@@ -858,6 +861,7 @@ if st.button("Submit"):
 
     else:
         st.info("Thanks for your review, Case has been assigned to the next reviewer")
+
 
 # Allow the user to clear all stored conversation sessions
 # if st.button("Reset Session"):
