@@ -665,6 +665,9 @@ with st.spinner("Downloading...."):
 # if st.button("Download Response", disabled=st.session_state.disabled):
     # Create a Word document with the table and some text
     if st.session_state["tmp_summary"]:
+        st.session_state.disabled=False
+        
+    if pdf_files:
         # initiate the doc file
         doc = docx.Document()
         # doc.add_section(WD_SECTION.NEW_PAGE)
