@@ -818,6 +818,17 @@ with st.spinner("Downloading...."):
                 # create_zip_file(file_paths, zip_file_name)
             else:
                 pass
+
+            # Get the current directory
+            current_directory = os.getcwd()
+            
+            # List the files in the current directory
+            files = os.listdir(current_directory)
+            
+            # Display the files
+            st.write("Files in the current directory:")
+            for file in files:
+                st.write(file)
             # Download the package
             with open(zip_file_name, "rb") as file:
                 st.download_button(
