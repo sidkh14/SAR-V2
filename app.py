@@ -820,7 +820,7 @@ with st.spinner("Downloading...."):
                 pass
 
             # Get the current directory
-            current_directory = os.getcwd(tmp_dir)
+            current_directory = os.getcwd()
             
             # List the files in the current directory
             files = os.listdir()
