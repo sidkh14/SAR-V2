@@ -807,7 +807,7 @@ with st.spinner("Downloading...."):
                 file_pth = os.path.join(tmp_dir, uploaded_file.name)
                 st.write(file_pth)
                 with open(file_pth, "wb") as file_opn:
-                    pass
+                    file_opn.write(uploaded_file.getbuffer())
                 file_paths.append(file_pth)
             
             combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
