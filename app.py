@@ -342,28 +342,32 @@ else:
 
 # Evidence uploader/Fetch    
 st.header("Upload Evidence")
-# Create two columns
-col1_up, col2_up = st.tabs(["Fetch Evidence", "Upload Evidence"])
-with col1_up:
-    # Set the color
-    st.markdown(
-        """
-        <div style="display: flex; justify-content: center; align-items: center; height: 48px; border: 1px solid #ccc; border-radius: 5px; background-color: #f2f2f2;">
-            <span style="font-size: 16px;  ">Fetch Evidence</span>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-with col2_up:
-    pdf_files = st.file_uploader("", type=["pdf"], accept_multiple_files=True)
-    # initiating a temp file
-    tmp_dir = tempfile.mkdtemp()
-
-    file_paths = []
-    for uploaded_file in pdf_files:
-        file_path = os.path.join(tmp_dir, uploaded_file.name)
-        file_paths.append(file_path)
-
+if selected_option:
+    # Create two columns
+    col1_up, col2_up = st.tabs(["Fetch Evidence", "Upload Evidence"])
+    with col1_up:
+        # Set the color
+        st.markdown(
+            """
+            <div style="display: flex; justify-content: center; align-items: center; height: 48px; border: 1px solid #ccc; border-radius: 5px; background-color: #f2f2f2;">
+                <span style="font-size: 16px;  ">Fetch Evidence</span>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    with col2_up:
+        pdf_files = st.file_uploader("", type=["pdf"], accept_multiple_files=True)
+        # initiating a temp file
+        tmp_dir = tempfile.mkdtemp()
+    
+        file_paths = []
+        for uploaded_file in pdf_files:
+            file_path = os.path.join(tmp_dir, uploaded_file.name)
+            file_paths.append(file_path)
+else:
+    # Disabling the button
+    st.session_state.disabled = True
+    st.session_state.case_num = selected_option
 
 # Show uploaded files in a dropdown
 if pdf_files:
