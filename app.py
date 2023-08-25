@@ -809,9 +809,9 @@ with st.spinner("Downloading...."):
 
             # Create a zip file with the uploaded PDF files and the combined document
             zip_file_name = "package_files.zip"
-            if pdf_files:
+            if file_paths:
                 st.write(file_paths)
-                files =  [combined_doc_path]     #+ file_paths 
+                files =  [combined_doc_path] + file_paths 
                 st.write(files)
                 
                 create_zip_file(files, zip_file_name)
