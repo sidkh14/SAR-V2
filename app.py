@@ -772,27 +772,27 @@ with st.spinner("Downloading...."):
             """, unsafe_allow_html=True)
 
 
-            combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
-            doc.save(combined_doc_path)
+            # combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
+            # doc.save(combined_doc_path)
 
-            # Create a zip file with the uploaded PDF files and the combined document
-            zip_file_name = "package_files.zip"
-            if pdf_files:
-                st.write(file_paths)
-                files =  [combined_doc_path]
-                st.write(files)
+            # # Create a zip file with the uploaded PDF files and the combined document
+            # zip_file_name = "package_files.zip"
+            # if pdf_files:
+            #     st.write(file_paths)
+            #     files =  [combined_doc_path]
+            #     st.write(files)
                 
-                create_zip_file(files, zip_file_name)
-                # create_zip_file(file_paths, zip_file_name)
-            else:
-                pass
-            # Download the package
-            with open(zip_file_name, "rb") as file:
-                st.download_button(
-                    label="Download Case Package", 
-                    data=file, 
-                    file_name=zip_file_name,
-                    disabled=st.session_state.disabled)
+            #     create_zip_file(files, zip_file_name)
+            #     # create_zip_file(file_paths, zip_file_name)
+            # else:
+            #     pass
+            # # Download the package
+            # with open(zip_file_name, "rb") as file:
+            #     st.download_button(
+            #         label="Download Case Package", 
+            #         data=file, 
+            #         file_name=zip_file_name,
+            #         disabled=st.session_state.disabled)
             
             if doc:
                 st.download_button(
@@ -811,7 +811,7 @@ with st.spinner("Downloading...."):
             zip_file_name = "package_files.zip"
             if pdf_files:
                 st.write(file_paths)
-                files =  [combined_doc_path] +file_paths 
+                files =  [combined_doc_path] + file_paths 
                 st.write(files)
                 
                 create_zip_file(files, zip_file_name)
