@@ -361,14 +361,7 @@ if selected_option == "SAR-2023-24680":
             )
         with col2_up:
             pdf_files = st.file_uploader("", type=["pdf"], accept_multiple_files=True)
-            # initiating a temp file
-            tmp_dir = tempfile.mkdtemp()
-        
-            file_paths= []
             
-            for uploaded_file in pdf_files:
-                file_path = os.path.join(os.getcwd(), uploaded_file.name)
-                file_paths.append(file_path)
 
 
     # Show uploaded files in a dropdown
@@ -804,6 +797,15 @@ with st.spinner("Downloading...."):
                     disabled=st.session_state.disabled
                 )
         with col_d2:
+
+            # initiating a temp file
+            tmp_dir = tempfile.mkdtemp()
+        
+            file_paths= []
+            
+            for uploaded_file in pdf_files:
+                file_path = os.path.join(tmp_dir), uploaded_file.name)
+                file_paths.append(file_path)
             
             combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
             doc.save(combined_doc_path)
