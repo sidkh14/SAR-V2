@@ -360,7 +360,7 @@ if selected_option == "SAR-2023-24680":
                 unsafe_allow_html=True
             )
         with col2_up:
-            pdf_files = st.file_uploader("", type=["pdf"], accept_multiple_files=True)
+            pdf_files = st.file_uploader("", accept_multiple_files=True)
             
 
 
