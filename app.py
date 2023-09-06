@@ -478,32 +478,32 @@ if selected_option == "SAR-2023-24680":
                     for img_bytes in pdf_images:
                         st.image(img_bytes, use_column_width=True)
 
-        tmp_dir_ = tempfile.mkdtemp()
-        temp_file_path= []
+    tmp_dir_ = tempfile.mkdtemp()
+    temp_file_path= []
 
-        for uploaded_file in pdf_files:
-            file_pth = os.path.join(tmp_dir_, uploaded_file.name)
-            with open(file_pth, "wb") as file_opn:
-                file_opn.write(uploaded_file.getbuffer())
-                temp_file_path.append(file_pth)
+    for uploaded_file in pdf_files:
+        file_pth = os.path.join(tmp_dir_, uploaded_file.name)
+        with open(file_pth, "wb") as file_opn:
+            file_opn.write(uploaded_file.getbuffer())
+            temp_file_path.append(file_pth)
 
 
-        for fetched_pdf in fetched_files:
-            file_pth = os.path.join('data/', fetched_pdf)
-            # st.write(file_pth)
-            temp_file_path.append(file_pth) 
+    for fetched_pdf in fetched_files:
+        file_pth = os.path.join('data/', fetched_pdf)
+        # st.write(file_pth)
+        temp_file_path.append(file_pth) 
 
-        #combining files in fetch evidence and upload evidence
-        if temp_file_path:
-            if pdf_files and fetched_files:
-                file_names = [file.name for file in pdf_files]
-                file_names = file_names + fetched_files
-                pdf_files_ = file_names
-            elif fetched_files:
-                pdf_files_ = fetched_files
-            elif pdf_files:
-                pdf_files_ = pdf_files
-            else: pass
+    #combining files in fetch evidence and upload evidence
+    if temp_file_path:
+        if pdf_files and fetched_files:
+            file_names = [file.name for file in pdf_files]
+            file_names = file_names + fetched_files
+            pdf_files_ = file_names
+        elif fetched_files:
+            pdf_files_ = fetched_files
+        elif pdf_files:
+            pdf_files_ = pdf_files
+        else: pass
 
     model_name = "sentence-transformers/all-MiniLM-L6-v2"
     # model_name = "hkunlp/instructor-large"
