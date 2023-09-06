@@ -426,19 +426,19 @@ if selected_option == "SAR-2023-24680":
     # Evidence uploader/Fetch    
     st.header("Upload Evidence")
     # Showing files record
-    data_source = ["Customer details", "Transaction details", "Fraud dispute details", "Other Files"]
-    data_file_df = pd.DataFrame(data_source, columns=["File Name"])
-    data_file_df = data_file_df.reset_index(drop=True)
+    # data_source = ["Customer details", "Transaction details", "Fraud dispute details", "Other Files"]
+    # data_file_df = pd.DataFrame(data_source, columns=["File Name"])
+    # data_file_df = data_file_df.reset_index(drop=True)
 
-    df_s_with_checkboxes = add_checkboxes_to_dataframe(data_file_df)
+    # df_s_with_checkboxes = add_checkboxes_to_dataframe(data_file_df)
 
-    # Iterate through each row and add checkboxes
-    for index, row in df_s_with_checkboxes.iterrows():
-        if index < -1:
-            checkbox_state = st.checkbox(f" {row['File Name']}", value=True)
-            df_s_with_checkboxes.loc[index, 'Select'] = checkbox_state
-        else:
-            st.checkbox(f"{row['File Name']}", value=False)
+    # # Iterate through each row and add checkboxes
+    # for index, row in df_s_with_checkboxes.iterrows():
+    #     if index < -1:
+    #         checkbox_state = st.checkbox(f" {row['File Name']}", value=True)
+    #         df_s_with_checkboxes.loc[index, 'Select'] = checkbox_state
+    #     else:
+    #         st.checkbox(f"{row['File Name']}", value=False)
 
 
     if selected_option:
