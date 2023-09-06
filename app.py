@@ -442,6 +442,10 @@ if selected_option == "SAR-2023-24680":
                 # st.write("Evidence Files:") 
                 # st.markdown(html_str, unsafe_allow_html=True)
                 
+                # Showing files
+                files_frame = pd.DataFrame(files, columns=["File Name"])
+                st.table(files_frame)
+                
                 #select box to select file
                 selected_file_name = st.selectbox(":blue[Select a file to View]",fetched_files)
                 st.write("Selected File: ", selected_file_name)
