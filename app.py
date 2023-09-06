@@ -468,22 +468,22 @@ if selected_option == "SAR-2023-24680":
                 # st.markdown(html_str, unsafe_allow_html=True)
                 
                 # Showing files
-                show_files = fetched_files.copy()
-                show_files = show_files + ['Other.pdf']
-                files_frame = pd.DataFrame(show_files, columns=["File Name"])
-                # files_frame["Select"] = [True for _ in range(len(files_frame))]
-                files_frame = files_frame.reset_index(drop=True)
+                # show_files = fetched_files.copy()
+                # show_files = show_files + ['Other.pdf']
+                # files_frame = pd.DataFrame(show_files, columns=["File Name"])
+                # # files_frame["Select"] = [True for _ in range(len(files_frame))]
+                # files_frame = files_frame.reset_index(drop=True)
 
-                # Add checkboxes to the DataFrame
-                df_with_checkboxes = add_checkboxes_to_dataframe(files_frame)
+                # # Add checkboxes to the DataFrame
+                # df_with_checkboxes = add_checkboxes_to_dataframe(files_frame)
                
-                # Iterate through each row and add checkboxes
-                for index, row in df_with_checkboxes.iterrows():
-                    if index < len(df_with_checkboxes) - 1:
-                        checkbox_state = st.checkbox(f" {row['File Name']}", value=True)
-                        df_with_checkboxes.loc[index, 'Select'] = checkbox_state
-                    else:
-                        st.checkbox(f"{row['File Name']}", value=False)
+                # # Iterate through each row and add checkboxes
+                # for index, row in df_with_checkboxes.iterrows():
+                #     if index < len(df_with_checkboxes) - 1:
+                #         checkbox_state = st.checkbox(f" {row['File Name']}", value=True)
+                #         df_with_checkboxes.loc[index, 'Select'] = checkbox_state
+                #     else:
+                #         st.checkbox(f"{row['File Name']}", value=False)
 
 
 
@@ -694,7 +694,7 @@ with st.spinner('Wait for it...'):
             st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
 st.markdown("---")
 
-# For input box outside of template
+# For input box outside of template4
 try:
     if temp_file_path:
         docs, docsearch = embedding_store(temp_file_path)
