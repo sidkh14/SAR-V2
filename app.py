@@ -186,9 +186,13 @@ def is_searchable_pdf(file_path):
                 return True
 
     return False
-# Adding a checkbox
-def add_checkbox(df):
-    df["Select"] = [st.checkbox("", value=True) for _ in range(len(df))]
+
+
+# Function to add checkboxes to the DataFrame
+def add_checkboxes_to_dataframe(df):
+    # Create a new column 'Select' with checkboxes
+    checkbox_values = [True] * (len(df) - 1) + [False]  # All True except the last row
+    df['Select'] = checkbox_values
     return df
 
 # convert scanned pdf to searchable pdf
@@ -450,7 +454,21 @@ if selected_option == "SAR-2023-24680":
                 files_frame = pd.DataFrame(fetched_files, columns=["File Name"])
                 files_frame["Select"] = [True for _ in range(len(files_frame))]
                 files_frame = files_frame.reset_index(drop=True)
-                st.dataframe(files_frame)
+
+                # Add checkboxes to the DataFrame
+                df_with_checkboxes = add_checkboxes_to_dataframe(files_frame)
+
+                # Iterate through each row and add checkboxes
+                for index, row in df_with_checkboxes.iterrows():
+                    if index < len(df_with_checkboxes) - 1:
+                        checkbox_state = st.checkbox(f"Select {row['Item']}", value=True)
+                        df_with_checkboxes.loc[index, 'Select'] = checkbox_state
+                    else:
+                        st.checkbox(f"Select {row['Item']}", value=False)
+
+
+
+                # st.dataframe(files_frame)
                 # st.write(df_reset.to_html(index=False), unsafe_allow_html=True)
                 # st.markdown(files_frame.style.hide(axis="index").to_html(), unsafe_allow_html=True)
                 
