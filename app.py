@@ -509,14 +509,14 @@ if selected_option == "SAR-2023-24680":
     # model_name = "hkunlp/instructor-large"
     
     # Memory setup
-    llm = ChatOpenAI(temperature=0.0)
+    llm = ChatOpenAI(temperature=0.1)
     memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=500)
     conversation = ConversationChain(llm=llm, memory =memory,verbose=False)
     
     
     # Adding condition on embedding
     try:
-        if pdf_files:
+        if temp_file_path:
             hf_embeddings = embed(model_name) 
         else:
             pass
@@ -644,8 +644,8 @@ st.markdown("---")
 
 # For input box outside of template
 try:
-    if pdf_files:
-        docs, docsearch = embedding_store(pdf_files)
+    if temp_file_path:
+        docs, docsearch = embedding_store(temp_file_path)
     else:
         pass
 except Exception:
