@@ -956,13 +956,15 @@ with st.spinner("Downloading...."):
 
             
             # Download the package
-            with open(zip_file_name, "rb") as file:
-                st.download_button(
-                    label="Download Case Package", 
-                    data=file, 
-                    file_name=zip_file_name,
-                    disabled=st.session_state.disabled)
-
+            try:
+                with open(zip_file_name, "rb") as file:
+                    st.download_button(
+                        label="Download Case Package", 
+                        data=file, 
+                        file_name=zip_file_name,
+                        disabled=st.session_state.disabled)
+            except FileNotFoundError:
+                pass
                 # # Cleanup: Delete the temporary directory and its contents
                 # for file_path in file_paths + [combined_doc_path]:
                 #     os.remove(file_path)
