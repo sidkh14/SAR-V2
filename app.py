@@ -491,7 +491,7 @@ if selected_option == "SAR-2023-24680":
         for fetched_pdf in fetched_files:
             file_pth = os.path.join('data/', fetched_pdf)
             # st.write(file_pth)
-            temp_file_path.append(file_pth)    .
+            temp_file_path.append(file_pth) 
 
         #combining files in fetch evidence and upload evidence
         if temp_file_path:
