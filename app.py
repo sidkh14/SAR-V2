@@ -448,8 +448,8 @@ if selected_option == "SAR-2023-24680":
                 
                 # Showing files
                 files_frame = pd.DataFrame(fetched_files, columns=["File Name"])
-                df_with_checkbox = add_checkbox(files_frame)
-                st.markdown(df_with_checkbox.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                # df_with_checkbox = add_checkbox(files_frame)
+                st.markdown(files_frame.style.hide(axis="index").to_html(), unsafe_allow_html=True)
                 
                 
                 
