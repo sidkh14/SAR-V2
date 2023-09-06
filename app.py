@@ -625,7 +625,7 @@ with st.spinner('Wait for it...'):
             #     context: {response}\
             #     Response (give me the response in the form of a python dictionary with questions exactly as it is): "
             # resp_dict = usellm(prompt_conv)
-            st.write(response)
+            # st.write(response)
             resp_dict_obj = json.loads(response)
             res_df = pd.DataFrame(resp_dict_obj.items(), columns=['Question','Answer'])
             try:
@@ -634,6 +634,7 @@ with st.spinner('Wait for it...'):
                 df_base = res_df.copy(deep=True)
                 df_base["S.No."] = df_base.index
                 df_base = df_base.loc[:,['S.No.','Question','Answer']]
+                st.table(df_base)
             except IndexError:
                 pass
             # st.table(res_df)
