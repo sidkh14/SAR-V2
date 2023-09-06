@@ -664,7 +664,7 @@ with st.spinner('Wait for it...'):
                 
 
             response = usellm(prompts)
-            # st.write(response)
+            st.write(response)
             # memory.save_context({"input": f"{queries}"}, {"output": f"{response}"})
             # st.write(response)
             # st.write(memory.load_memory_variables({}))
