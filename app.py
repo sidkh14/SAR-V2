@@ -638,7 +638,7 @@ with st.spinner('Wait for it...'):
             except IndexError:
                 pass
             # st.table(res_df)
-            st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+            # st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
             # st.write(resp_dict_obj)
             st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
 st.markdown("---")
