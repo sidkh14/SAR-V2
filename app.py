@@ -186,6 +186,10 @@ def is_searchable_pdf(file_path):
                 return True
 
     return False
+# Adding a checkbox
+def add_checkbox(df):
+    df["Select"] = [st.checkbox("", value=True) for _ in range(len(df))]
+    return df
 
 # convert scanned pdf to searchable pdf
 def convert_scanned_pdf_to_searchable_pdf(input_file):
@@ -444,7 +448,8 @@ if selected_option == "SAR-2023-24680":
                 
                 # Showing files
                 files_frame = pd.DataFrame(fetched_files, columns=["File Name"])
-                st.markdown(files_frame.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                df_with_checkbox = add_checkbox(files_frame)
+                st.markdown(df_with_checkbox.style.hide(axis="index").to_html(), unsafe_allow_html=True)
                 
                 
                 
