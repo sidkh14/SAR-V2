@@ -453,7 +453,7 @@ if selected_option == "SAR-2023-24680":
                 
                 # Showing files
                 files_frame = pd.DataFrame(fetched_files, columns=["File Name"])
-                files_frame["Select"] = [True for _ in range(len(files_frame))]
+                # files_frame["Select"] = [True for _ in range(len(files_frame))]
                 files_frame = files_frame.reset_index(drop=True)
 
                 # Add checkboxes to the DataFrame
