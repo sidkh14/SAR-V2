@@ -463,10 +463,10 @@ if selected_option == "SAR-2023-24680":
                 for index, row in df_with_checkboxes.iterrows():
                     st.write(row)
                     if index < len(df_with_checkboxes) - 1:
-                        checkbox_state = st.checkbox(f" {row['Item']}", value=True)
+                        checkbox_state = st.checkbox(f" {row['File Name']}", value=True)
                         df_with_checkboxes.loc[index, 'Select'] = checkbox_state
                     else:
-                        st.checkbox(f"{row['Item']}", value=False)
+                        st.checkbox(f"{row['File Name']}", value=False)
 
 
 
