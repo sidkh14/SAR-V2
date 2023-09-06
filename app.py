@@ -444,7 +444,8 @@ if selected_option == "SAR-2023-24680":
                 
                 # Showing files
                 files_frame = pd.DataFrame(fetched_files, columns=["File Name"])
-                st.table(files_frame)
+                st.markdown(files_frame.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                
                 
                 
                 #select box to select file
