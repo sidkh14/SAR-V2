@@ -449,6 +449,7 @@ if selected_option == "SAR-2023-24680":
                 # Showing files
                 files_frame = pd.DataFrame(fetched_files, columns=["File Name"])
                 files_frame["Select"] = [True for _ in range(len(files_frame))]
+                files_frame.index = files_frame["File Name"]
                 st.dataframe(files_frame,index=None)
                 # st.markdown(files_frame.style.hide(axis="index").to_html(), unsafe_allow_html=True)
                 
