@@ -451,6 +451,7 @@ if selected_option == "SAR-2023-24680":
                 files_frame["Select"] = [True for _ in range(len(files_frame))]
                 files_frame = files_frame.reset_index(drop=True)
                 st.dataframe(files_frame)
+                # st.write(df_reset.to_html(index=False), unsafe_allow_html=True)
                 # st.markdown(files_frame.style.hide(axis="index").to_html(), unsafe_allow_html=True)
                 
                 
