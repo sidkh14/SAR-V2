@@ -452,7 +452,9 @@ if selected_option == "SAR-2023-24680":
                 # st.markdown(html_str, unsafe_allow_html=True)
                 
                 # Showing files
-                files_frame = pd.DataFrame(fetched_files, columns=["File Name"])
+                show_files = fetched_files.copy()
+                show_files = show_files + ['Other.pdf']
+                files_frame = pd.DataFrame(show_files, columns=["File Name"])
                 # files_frame["Select"] = [True for _ in range(len(files_frame))]
                 files_frame = files_frame.reset_index(drop=True)
 
