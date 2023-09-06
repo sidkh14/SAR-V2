@@ -659,7 +659,7 @@ with st.spinner('Wait for it...'):
                     9. What type of cards are involved?\n\
                     10. Was the police report filed?\n\
                 Context: {contexts}\n\
-                Response (in the python dictionary format\
+                Response (in the python dictionary format or JSON format\
                 where the dictionary key would carry the questions and its value would have a descriptive answer to the questions asked): "
                 
 
