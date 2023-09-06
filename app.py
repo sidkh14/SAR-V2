@@ -459,14 +459,13 @@ if selected_option == "SAR-2023-24680":
                 # Add checkboxes to the DataFrame
                 df_with_checkboxes = add_checkboxes_to_dataframe(files_frame)
 
-                st.write(df_with_checkboxes)
                 # Iterate through each row and add checkboxes
-                # for index, row in df_with_checkboxes.iterrows():
-                #     if index < len(df_with_checkboxes) - 1:
-                #         checkbox_state = st.checkbox(f"Select {row['Item']}", value=True)
-                #         df_with_checkboxes.loc[index, 'Select'] = checkbox_state
-                #     else:
-                #         st.checkbox(f"Select {row['Item']}", value=False)
+                for index, row in df_with_checkboxes.iterrows():
+                    if index < len(df_with_checkboxes) - 1:
+                        checkbox_state = st.checkbox(f" {row['Item']}", value=True)
+                        df_with_checkboxes.loc[index, 'Select'] = checkbox_state
+                    else:
+                        st.checkbox(f"{row['Item']}", value=False)
 
 
 
