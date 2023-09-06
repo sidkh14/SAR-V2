@@ -628,17 +628,17 @@ with st.spinner('Wait for it...'):
             # st.write(response)
             resp_dict_obj = json.loads(response)
             res_df = pd.DataFrame(resp_dict_obj.items(), columns=['Question','Answer'])
+            st.table(res_df)
             try:
                 res_df.Question = res_df.Question.apply(lambda x: x.split(".")[1])
                 res_df.index = res_df.index + 1
                 df_base = res_df.copy(deep=True)
                 df_base["S.No."] = df_base.index
                 df_base = df_base.loc[:,['S.No.','Question','Answer']]
-                st.table(df_base)
             except IndexError:
                 pass
             # st.table(res_df)
-            # st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+            st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
             # st.write(resp_dict_obj)
             st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
 st.markdown("---")
