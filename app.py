@@ -44,6 +44,30 @@ if st.secrets["OPENAI_API_KEY"] is not None:
 else:
     os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY")
 
+@st.cache_data
+def show_pdf(file_path):
+    with open(file_path,"rb") as f:
+        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+        pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="1000px" type="application/pdf"></iframe>'
+        st.markdown(pdf_display, unsafe_allow_html=True)
+
+@st.cache_data
+def pdf_to_bytes(pdf_file_):
+    with open(pdf_file_,"rb") as pdf_file:
+        pdf_content = pdf_file.read()
+        pdf_bytes_io = io.BytesIO(pdf_content)
+    return pdf_bytes_io
+
+@st.cache_data
+def read_pdf_files(path):
+    pdf_files =[]
+    directoty_path = path
+    files = os.listdir(directoty_path)
+    for file in files:
+        if file.lower().endswith('.pdf'):
+            pdf_files.append(file)
+    return pdf_files
+
 
 @st.cache_data
 def merge_pdfs(pdf_list):
@@ -154,6 +178,48 @@ def render_pdf_as_images(pdf_file):
     pdf_document.close()
     return pdf_images
 
+# To check if pdf is searchable
+def is_searchable_pdf(file_path):
+    with pdfplumber.open(file_path) as pdf:
+        for page in pdf.pages:
+            if page.extract_text():
+                return True
+
+    return False
+
+# convert scanned pdf to searchable pdf
+def convert_scanned_pdf_to_searchable_pdf(input_file):
+    """
+     Convert a Scanned PDF to Searchable PDF
+
+    """
+    # Convert PDF to images
+    print("Running OCR")
+    images = convert_from_path(input_file)
+
+    # Preprocess images using OpenCV
+    for i, image in enumerate(images):
+        # Convert image to grayscale
+        image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2GRAY)
+
+        # Apply thresholding to remove noise
+        _, image = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+
+        # Enhance contrast
+        image = cv2.equalizeHist(image)
+
+        # Save preprocessed image
+        cv2.imwrite(f'{i}.png', image)
+
+    # Perform OCR on preprocessed images using Tesseract
+    text = ''
+    for i in range(len(images)):
+        image = cv2.imread(f'{i}.png')
+        text += pytesseract.image_to_string(image)
+    
+    return text
+
+
 # Setting globals
 if "visibility" not in st.session_state:
     st.session_state.visibility = "visible"
@@ -170,6 +236,10 @@ if "fin_opt" not in st.session_state:
     st.session_state.fin_opt = ''
 if "context_1" not in st.session_state:
     st.session_state.context_1 = ''
+
+# reading files from local directory from fetch evidence button
+directoty_path = "data/"
+fetched_files = read_pdf_files(directoty_path)
 
 
 # Apply CSS styling to resize the buttons
@@ -351,34 +421,89 @@ if selected_option == "SAR-2023-24680":
         col1_up, col2_up = st.tabs(["Fetch Evidence", "Upload Evidence"])
         with col1_up:
             # Set the color
-            st.markdown(
-                """
-                <div style="display: flex; justify-content: center; align-items: center; height: 48px; border: 1px solid #ccc; border-radius: 5px; background-color: #f2f2f2;">
-                    <span style="font-size: 16px;  ">Fetch Evidence</span>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+            # st.markdown(
+            #     """
+            #     <div style="display: flex; justify-content: center; align-items: center; height: 48px; border: 1px solid #ccc; border-radius: 5px; background-color: #f2f2f2;">
+            #         <span style="font-size: 16px;  ">Fetch Evidence</span>
+            #     </div>
+            #     """,
+            #     unsafe_allow_html=True
+            # )
+            if 'clicked' not in st.session_state:
+                st.session_state.clicked = False
+            
+            def set_clicked():
+                st.session_state.clicked = True
+                st.session_state.disabled = True
+            
+            st.button('Fetch Evidence', on_click=set_clicked)
+
+            if st.session_state.clicked:
+                # st.write("Evidence Files:") 
+                # st.markdown(html_str, unsafe_allow_html=True)
+                
+                #select box to select file
+                selected_file_name = st.selectbox(":blue[Select a file to View]",fetched_files)
+                st.write("Selected File: ", selected_file_name)
+                st.session_state.disabled = False
+                if selected_file_name:
+                    selected_file_path = os.path.join(directoty_path, selected_file_name)
+                    #converting pdf data to bytes so that render_pdf_as_images could read it
+                    file = pdf_to_bytes(selected_file_path)
+                    pdf_images = render_pdf_as_images(file)
+                    #showing content of the pdf
+                    st.subheader(f"Contents of {selected_file_name}")
+                    for img_bytes in pdf_images:
+                        st.image(img_bytes, use_column_width=True)
+
+
+
         with col2_up:
-            pdf_files = st.file_uploader("", accept_multiple_files=True)
+            pdf_files = st.file_uploader("", type=["pdf","png","jpeg","docx","xlsx"], accept_multiple_files=True)
             
 
 
-    # Show uploaded files in a dropdown
-    if pdf_files:
-        st.subheader("Uploaded Files")
-        file_names = [file.name for file in pdf_files]
-        selected_file = st.selectbox(":blue[Select a file]", file_names)
-        # Enabling the button
-        st.session_state.disabled = False
-        # Display selected PDF contents
-        if selected_file:
-            selected_pdf = [pdf for pdf in pdf_files if pdf.name == selected_file][0]
-            pdf_images = render_pdf_as_images(selected_pdf)
-            st.subheader(f"Contents of {selected_file}")
-            for img_bytes in pdf_images:
-                st.image(img_bytes, use_column_width=True)
+            # Show uploaded files in a dropdown
+            if pdf_files:
+                st.subheader("Uploaded Files")
+                file_names = [file.name for file in pdf_files]
+                selected_file = st.selectbox(":blue[Select a file]", file_names)
+                # Enabling the button
+                st.session_state.disabled = False
+                # Display selected PDF contents
+                if selected_file:
+                    selected_pdf = [pdf for pdf in pdf_files if pdf.name == selected_file][0]
+                    pdf_images = render_pdf_as_images(selected_pdf)
+                    st.subheader(f"Contents of {selected_file}")
+                    for img_bytes in pdf_images:
+                        st.image(img_bytes, use_column_width=True)
 
+        tmp_dir_ = tempfile.mkdtemp()
+        temp_file_path= []
+
+        for uploaded_file in pdf_files:
+            file_pth = os.path.join(tmp_dir_, uploaded_file.name)
+            with open(file_pth, "wb") as file_opn:
+                file_opn.write(uploaded_file.getbuffer())
+                temp_file_path.append(file_pth)
+
+
+        for fetched_pdf in fetched_files:
+            file_pth = os.path.join('data/', fetched_pdf)
+            # st.write(file_pth)
+            temp_file_path.append(file_pth)    .
+
+        #combining files in fetch evidence and upload evidence
+        if temp_file_path:
+            if pdf_files and fetched_files:
+                file_names = [file.name for file in pdf_files]
+                file_names = file_names + fetched_files
+                pdf_files_ = file_names
+            elif fetched_files:
+                pdf_files_ = fetched_files
+            elif pdf_files:
+                pdf_files_ = pdf_files
+            else: pass
 
     model_name = "sentence-transformers/all-MiniLM-L6-v2"
     # model_name = "hkunlp/instructor-large"
@@ -462,7 +587,7 @@ with st.spinner('Wait for it...'):
     if st.button("Generate Insights",disabled=st.session_state.disabled):
         if pdf_files is not None:
             # File handling logic
-            _, docsearch = embedding_store(pdf_files)
+            _, docsearch = embedding_store(temp_file_path)
             queries ="Please provide the following information regarding the possible fraud case: What is the name of the customer name,\
             has any suspect been reported, list the merchant name, how was the bank notified, when was the bank notified, what is the fraud type,\
             when did the fraud occur, was the disputed amount greater than 5000 USD, what type of cards are involved, was the police report filed,\
