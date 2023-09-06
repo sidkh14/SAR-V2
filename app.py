@@ -625,7 +625,7 @@ with st.spinner('Wait for it...'):
             #     context: {response}\
             #     Response (give me the response in the form of a python dictionary with questions exactly as it is): "
             # resp_dict = usellm(prompt_conv)
-            # st.write(resp_dict)
+            st.write(response)
             resp_dict_obj = json.loads(response)
             res_df = pd.DataFrame(resp_dict_obj.items(), columns=['Question','Answer'])
             try:
