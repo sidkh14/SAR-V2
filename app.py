@@ -687,7 +687,7 @@ with st.spinner('Wait for it...'):
                 Response (in the python dictionary format\
                 where the dictionary key would carry the questions and its value would have a descriptive answer to the questions asked): "
                 
-            if st.session_state.llm = "GPT-3.5":
+            if st.session_state.llm == "GPT-3.5":
                 response = usellm(prompts)
             else:
                 response = llama_llm(llama_llm_, prompts)
