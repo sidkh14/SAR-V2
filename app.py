@@ -3,6 +3,7 @@ import random,os,json,io,re,zipfile,tempfile
 import pandas as pd
 import streamlit as st
 import streamlit_toggle as tog
+from langchain import HuggingFaceHub
 from langchain.llms import OpenAI
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import HuggingFaceEmbeddings
