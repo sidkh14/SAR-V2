@@ -86,7 +86,9 @@ def merge_pdfs(pdf_list):
 
 @st.cache_data
 def usellm(prompt):
-
+    """
+    Getting GPT-3.5 Model into action
+    """
     service = UseLLM(service_url="https://usellm.org/api/llm")
     messages = [
       Message(role="system", content="You are a fraud analyst, who is an expert at finding out suspicious activities"),
@@ -95,6 +97,22 @@ def usellm(prompt):
     options = Options(messages=messages)
     response = service.chat(options)
     return response.content
+
+# Setting Config for Llama-2
+llama_llm_ =HuggingFaceHub(
+            repo_id="meta-llama/Llama-2-13b-chat-hf",
+            model_kwargs={"temperature":0.01, 
+                        "min_new_tokens":100, 
+                        "max_new_tokens":500})
+
+memory = ConversationSummaryBufferMemory(llm=llama_llm_, max_token_limit=500)
+conversation = ConversationChain(llm=llama_llm_, memory=memory,verbose=False)
+
+
+@st.cache_data
+def llama_llm(llm,prompt):
+    response = llm.predict(prompt)
+    return response
 
 @st.cache_data
 def process_text(text):
@@ -669,9 +687,11 @@ with st.spinner('Wait for it...'):
                 Response (in the python dictionary format\
                 where the dictionary key would carry the questions and its value would have a descriptive answer to the questions asked): "
                 
-
-            response = usellm(prompts)
-            # st.write(response)
+            if st.session_state.llm = "GPT-3.5":
+                response = usellm(prompts)
+            else:
+                response = llama_llm(llama_llm_, prompts)
+            st.write(response)
             # memory.save_context({"input": f"{queries}"}, {"output": f"{response}"})
             # st.write(response)
             # st.write(memory.load_memory_variables({}))
