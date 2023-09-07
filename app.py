@@ -313,6 +313,10 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+#Adding llm type-> st.session_state.llm
+    options = st.radio("", ("", "GPT-3.5", "Llama-2"))
+    st.markdown("---")
+    
 st.title("Suspicious Activity Reporting Assistant")
 with st.sidebar:
     # st.sidebar.write("This is :blue[test]")
