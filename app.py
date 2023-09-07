@@ -245,6 +245,8 @@ if "fin_opt" not in st.session_state:
     st.session_state.fin_opt = ''
 if "context_1" not in st.session_state:
     st.session_state.context_1 = ''
+if "llm" not in st.session_state:
+    st.session_state.llm = 'GPT-3.5'
 
 # reading files from local directory from fetch evidence button
 directoty_path = "data/"
@@ -365,6 +367,9 @@ with st.sidebar:
     # Add the app name
     st.sidebar.markdown('<p class="big-font">SARA</p>', unsafe_allow_html=True)
     # st.sidebar.header("SARA")
+
+    #Adding llm type-> st.session_state.llm
+    st.session_state.llm = st.radio("", ("GPT-3.5", "Llama-2"))
 
     # Add a drop-down for case type
     options = ["Select Case Type", "Fraud transaction dispute", "AML"]
