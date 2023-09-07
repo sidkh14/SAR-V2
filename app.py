@@ -116,6 +116,7 @@ conversation = ConversationChain(llm= llama_13b, memory=memory,verbose=False)
 
 @st.cache_data
 def llama_llm(llm,prompt):
+
     response = llm.predict(prompt)
     return response
 
@@ -722,7 +723,8 @@ with st.spinner('Wait for it...'):
                 st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
                 # st.write(resp_dict_obj)
                 st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
-            else:
+            
+            elif st.session_state.llm == "Llama-2":
                 chat_history = {}
                 query = "What is the victim's name?"
                 context_1 = docsearch.similarity_search(query, k=5)
