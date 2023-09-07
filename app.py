@@ -314,7 +314,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 #Adding llm type-> st.session_state.llm
-options = st.radio("", ("", "GPT-3.5", "Llama-2"))
+st.session_state.llm = st.radio(":blue[Please select a LLM]", ["GPT-3.5","Llama-2"], horizontal=True)
+st.write(st.session_state.llm)
 st.markdown("---")
 
 st.title("Suspicious Activity Reporting Assistant")
