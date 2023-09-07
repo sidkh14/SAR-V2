@@ -99,7 +99,10 @@ def usellm(prompt):
     return response.content
 
 # Setting Config for Llama-2
-llama_llm_ =HuggingFaceHub(
+login(token=st.secrets["HUGGINGFACEHUB_API_TOKEN"])
+os.environ["HUGGINGFACEHUB_API_TOKEN"] = st.secrets["HUGGINGFACEHUB_API_TOKEN"]
+
+llama_llm_ = HuggingFaceHub(
             repo_id="meta-llama/Llama-2-13b-chat-hf",
             model_kwargs={"temperature":0.01, 
                         "min_new_tokens":100, 
