@@ -368,10 +368,12 @@ with st.sidebar:
     st.sidebar.markdown('<p class="big-font">SARA</p>', unsafe_allow_html=True)
     # st.sidebar.header("SARA")
     st.markdown("---")
+
     #Adding llm type-> st.session_state.llm
-    options = st.radio("e", ("GPT-3.5", "Llama-2"))
-    st.session_state.llm= options
+    options = st.radio("", ("GPT-3.5", "Llama-2"))
+    
     st.markdown("---")
+
     # Add a drop-down for case type
     options = ["Select Case Type", "Fraud transaction dispute", "AML"]
     selected_option_case_type = st.sidebar.selectbox("", options)
