@@ -370,7 +370,7 @@ with st.sidebar:
     st.markdown("---")
 
     #Adding llm type-> st.session_state.llm
-    options = st.radio("", ("GPT-3.5", "Llama-2"))
+    options = st.radio("", ("", "GPT-3.5", "Llama-2"))
     
     st.markdown("---")
 
