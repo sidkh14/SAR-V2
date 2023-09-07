@@ -369,7 +369,7 @@ with st.sidebar:
     # st.sidebar.header("SARA")
     st.markdown("---")
     #Adding llm type-> st.session_state.llm
-    options = st.radio("", ("GPT-3.5", "Llama-2"))
+    options = st.radio("e", ("GPT-3.5", "Llama-2"))
     st.session_state.llm= options
     st.markdown("---")
     # Add a drop-down for case type
