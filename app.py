@@ -25,6 +25,7 @@ from langchain.callbacks import get_openai_callback
 from io import StringIO
 from io import BytesIO
 from usellm import Message, Options, UseLLM
+from huggingface_hub import login
 #from playsound import playsound
 #from langchain.text_splitter import CharacterTextSplitter
 #from langchain.embeddings.openai import OpenAIEmbeddings
