@@ -730,7 +730,7 @@ with st.spinner('Wait for it...'):
                         Question: {query}\n\
                         Context: {context_1}\n\
                         Response: (Give me response in one sentence. Do not give me any Explanation or Note)'''
-                response = llama_llm(llama_llm_,prompt_1)
+                response = llama_llm(llama_13b,prompt_1)
                 chat_history[query] = response
 
 
@@ -741,7 +741,7 @@ with st.spinner('Wait for it...'):
                 Reply the name of human on whose name bill is addressed who is basically the suspect.
                             Context: {context_1}\n\
                             Response: (Give me response in one sentence.Do not give me any Explanation or Note)'''
-                response = llama_llm(llama_llm_,prompt_1)
+                response = llama_llm(llama_13b,prompt_1)
                 chat_history[query] = response
 
                 
@@ -752,7 +752,7 @@ with st.spinner('Wait for it...'):
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: (Give me concise response in one sentence. Do not provide any further Explanation or Note from the context)'''
-                response = llama_llm(llama_llm_,prompt_1)
+                response = llama_llm(llama_13b,prompt_1)
                 chat_history[query] = response
 
 
@@ -762,7 +762,7 @@ with st.spinner('Wait for it...'):
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: (Give me a concise response in one sentence. Do not give me any further Explanation, Note )'''
-                response = llama_llm(llama_llm_,prompt_1)
+                response = llama_llm(llama_13b,prompt_1)
                 chat_history[query] = response
 
                 
@@ -772,7 +772,7 @@ with st.spinner('Wait for it...'):
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: (Give me a concise response in one sentence.Do not add any prefix like 'Response' or 'Based on the document'. Do not add any extra Explanation, Note)'''
-                response = llama_llm(llama_llm_,prompt_1)
+                response = llama_llm(llama_13b,prompt_1)
                 chat_history[query] = response
                 
 
@@ -783,7 +783,7 @@ with st.spinner('Wait for it...'):
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: (Give me response in one sentence. Do not add prefix like 'Response' or 'based on the document. Do not give me any Explanation or Note)'''
-                response = llama_llm(llama_llm_,prompt_1)
+                response = llama_llm(llama_13b,prompt_1)
                 chat_history[query] = response
 
 
@@ -795,7 +795,7 @@ with st.spinner('Wait for it...'):
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: (Give me a concise response in one sentence. Do not add prefix like 'based on the document. Do not add any further Explanation or Note.)'''
-                response = llama_llm(llama_llm_,prompt_1)
+                response = llama_llm(llama_13b,prompt_1)
                 chat_history[query] = response
 
 
@@ -805,7 +805,7 @@ with st.spinner('Wait for it...'):
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: (Give me a concise response in one sentence. Do not give me any further Explanation,Note)'''
-                response = llama_llm(llama_llm_,prompt_1)
+                response = llama_llm(llama_13b,prompt_1)
                 chat_history[query] = response
 
 
@@ -815,7 +815,7 @@ with st.spinner('Wait for it...'):
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: (Give me a concise response in one sentence.Do not add prefix like: ['based on the document']. Do not add any further Explanation, Note.')'''
-                response = llama_llm(llama_llm_,prompt_1)
+                response = llama_llm(llama_13b,prompt_1)
                 chat_history[query] = response
 
 
@@ -826,7 +826,7 @@ with st.spinner('Wait for it...'):
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: (Give a concise Response in a single sentence.Do not add prefix like ['based on the document','Rationale','Respone']. Do not add any Explanation,Note after the Response.)'''
-                response = llama_llm(llama_llm_,prompt_1)
+                response = llama_llm(llama_13b,prompt_1)
                 chat_history[query] = response
 
                 try:
