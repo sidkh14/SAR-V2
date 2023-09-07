@@ -669,61 +669,185 @@ with st.spinner('Wait for it...'):
         if pdf_files is not None:
             # File handling logic
             _, docsearch = embedding_store(temp_file_path)
-            queries ="Please provide the following information regarding the possible fraud case: What is the name of the customer name,\
-            has any suspect been reported, list the merchant name, how was the bank notified, when was the bank notified, what is the fraud type,\
-            when did the fraud occur, was the disputed amount greater than 5000 USD, what type of cards are involved, was the police report filed,\
-            and based on the evidence, is this a suspicious activity(Summarize all the questions asked prior to this in a detailed manner),that's the answer of\
-            whether this is a suspicious activity\
-            "
-            contexts = docsearch.similarity_search(queries, k=5) 
-            prompts = f" Give a the answer to the below questions as truthfully and in as detailed in the form of sentences\
-            as possible as per given context only,\n\n\
-                    1. What is the Victim's Name?\n\
-                    2. Has any suspect been reported?\n\
-                    3. List the Merchant name\n\
-                    4. How was the bank notified?\n\
-                    5. When was the bank notified?\n\
-                    6. What is the Fraud Type?\n\
-                    7. When did the fraud occur?\n\
-                    8. Was the disputed amount greater than 5000 USD?\n\
-                    9. What type of cards are involved?\n\
-                    10. Was the police report filed?\n\
-                Context: {contexts}\n\
-                Response (in the python dictionary format\
-                where the dictionary key would carry the questions and its value would have a descriptive answer to the questions asked): "
-                
             if st.session_state.llm == "GPT-3.5":
+                queries ="Please provide the following information regarding the possible fraud case: What is the name of the customer name,\
+                has any suspect been reported, list the merchant name, how was the bank notified, when was the bank notified, what is the fraud type,\
+                when did the fraud occur, was the disputed amount greater than 5000 USD, what type of cards are involved, was the police report filed,\
+                and based on the evidence, is this a suspicious activity(Summarize all the questions asked prior to this in a detailed manner),that's the answer of\
+                whether this is a suspicious activity\
+                "
+                contexts = docsearch.similarity_search(queries, k=5) 
+                prompts = f" Give a the answer to the below questions as truthfully and in as detailed in the form of sentences\
+                as possible as per given context only,\n\n\
+                        1. What is the Victim's Name?\n\
+                        2. Has any suspect been reported?\n\
+                        3. List the Merchant name\n\
+                        4. How was the bank notified?\n\
+                        5. When was the bank notified?\n\
+                        6. What is the Fraud Type?\n\
+                        7. When did the fraud occur?\n\
+                        8. Was the disputed amount greater than 5000 USD?\n\
+                        9. What type of cards are involved?\n\
+                        10. Was the police report filed?\n\
+                    Context: {contexts}\n\
+                    Response (in the python dictionary format\
+                    where the dictionary key would carry the questions and its value would have a descriptive answer to the questions asked): "
+                    
                 response = usellm(prompts)
+                
+                # memory.save_context({"input": f"{queries}"}, {"output": f"{response}"})
+                # st.write(response)
+                # st.write(memory.load_memory_variables({}))
+
+
+
+                # Convert the response in dictionary from tbl
+                # prompt_conv = f" Convert the tabular data into a python dictionary\
+                #     context: {response}\
+                #     Response (give me the response in the form of a python dictionary with questions exactly as it is): "
+                # resp_dict = usellm(prompt_conv)
+                # st.write(response)
+                resp_dict_obj = json.loads(response)
+                res_df = pd.DataFrame(resp_dict_obj.items(), columns=['Question','Answer'])
+                # st.table(res_df)
+                try:
+                    res_df.Question = res_df.Question.apply(lambda x: x.split(".")[1])
+                    res_df.index = res_df.index + 1
+                    df_base = res_df.copy(deep=True)
+                    df_base["S.No."] = df_base.index
+                    df_base = df_base.loc[:,['S.No.','Question','Answer']]
+                except IndexError:
+                    pass
+                # st.table(res_df)
+                st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                # st.write(resp_dict_obj)
+                st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
             else:
-                response = llama_llm(llama_llm_, prompts)
-            st.write(response)
-            # memory.save_context({"input": f"{queries}"}, {"output": f"{response}"})
-            # st.write(response)
-            # st.write(memory.load_memory_variables({}))
+                chat_history = {}
+                query = "What is the victim's name?"
+                context_1 = docsearch.similarity_search(query, k=5)
+                prompt_1 = f'''You are a professional fraud analyst. Perform Name Enitity Recognition to identify the victim name as accurately as possible, given the context. The victim can also be referenced as the customer with whom the Fraud has taken place.\n\n\
+                        Question: {query}\n\
+                        Context: {context_1}\n\
+                        Response: (Give me response in one sentence. Do not give me any Explanation or Note)'''
+                response = llama_llm(llama_llm_,prompt_1)
+                chat_history[query] = response
+
+
+                query = "What is the suspect's name?"
+                context_1 = docsearch.similarity_search(query, k=5)
+                prompt_1 =  f''' You are a professional fraud analyst. You need to check the document and compare if any name discrepencies are present that address towards the suspect who used the card without the consent of the cardholder.
+                Hence, Compare the name of the cardholder and the human name present in Invoice. 
+                Reply the name of human on whose name bill is addressed who is basically the suspect.
+                            Context: {context_1}\n\
+                            Response: (Give me response in one sentence.Do not give me any Explanation or Note)'''
+                response = llama_llm(llama_llm_,prompt_1)
+                chat_history[query] = response
+
+                
+                
+                query = "list the merchant name"
+                context_1 = docsearch.similarity_search(query, k=5)
+                prompt_1 = f'''Perform Name Enitity Recognition to identify all the Merchant Organizations as accurately as possible, given the context. A merchant is a type of business or organization that accepts payments from the customer account. Give a relevant and concise response.\n\n\
+                            Question: {query}\n\
+                            Context: {context_1}\n\
+                            Response: (Give me concise response in one sentence. Do not provide any further Explanation or Note from the context)'''
+                response = llama_llm(llama_llm_,prompt_1)
+                chat_history[query] = response
+
+
+                query = "How was the bank notified?"
+                context_1 = docsearch.similarity_search(query, k=5)
+                prompt_1 =  f'''You need to act as a Financial analyst to identify how was the bank notified of the Supicious or Fraud event with in the given context. The means of communication can be a call, an email or in person. Give a concise response.\n\n\
+                            Question: {query}\n\
+                            Context: {context_1}\n\
+                            Response: (Give me a concise response in one sentence. Do not give me any further Explanation, Note )'''
+                response = llama_llm(llama_llm_,prompt_1)
+                chat_history[query] = response
+
+                
+                query = "When was the bank notified?"
+                context_1 = docsearch.similarity_search(query, k=5)
+                prompt_1 =  f'''You need to act as a Financial analyst to identify when the bank was notified of the Fraud. Look for the disputed date. Given the context, provide a relevant and concise response.\n\n\
+                            Question: {query}\n\
+                            Context: {context_1}\n\
+                            Response: (Give me a concise response in one sentence.Do not add any prefix like 'Response' or 'Based on the document'. Do not add any extra Explanation, Note)'''
+                response = llama_llm(llama_llm_,prompt_1)
+                chat_history[query] = response
+                
+
+
+                query = "What is the Fraud Type?"
+                context_1 = docsearch.similarity_search(query, k=5)
+                prompt_1 =  f''' You need to act as a Financial analyst to identify the type of fraud or suspicious activity has taken place amd summarize it, within the given context. Also mention the exact fraud code. Give a relevant and concise response.\n\n\
+                            Question: {query}\n\
+                            Context: {context_1}\n\
+                            Response: (Give me response in one sentence. Do not add prefix like 'Response' or 'based on the document. Do not give me any Explanation or Note)'''
+                response = llama_llm(llama_llm_,prompt_1)
+                chat_history[query] = response
 
 
 
-            # Convert the response in dictionary from tbl
-            # prompt_conv = f" Convert the tabular data into a python dictionary\
-            #     context: {response}\
-            #     Response (give me the response in the form of a python dictionary with questions exactly as it is): "
-            # resp_dict = usellm(prompt_conv)
-            # st.write(response)
-            resp_dict_obj = json.loads(response)
-            res_df = pd.DataFrame(resp_dict_obj.items(), columns=['Question','Answer'])
-            # st.table(res_df)
-            try:
-                res_df.Question = res_df.Question.apply(lambda x: x.split(".")[1])
-                res_df.index = res_df.index + 1
-                df_base = res_df.copy(deep=True)
-                df_base["S.No."] = df_base.index
-                df_base = df_base.loc[:,['S.No.','Question','Answer']]
-            except IndexError:
-                pass
-            # st.table(res_df)
-            st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
-            # st.write(resp_dict_obj)
+
+                query = "When did the fraud occur?"
+                context_1 = docsearch.similarity_search(query, k=5)
+                prompt_1 =  f''' You need to act as a Financial analyst to identify the when the did the fraud occur i.e., the Transaction Date. Given the context, provide a relevant and concise response.\n\n\
+                            Question: {query}\n\
+                            Context: {context_1}\n\
+                            Response: (Give me a concise response in one sentence. Do not add prefix like 'based on the document. Do not add any further Explanation or Note.)'''
+                response = llama_llm(llama_llm_,prompt_1)
+                chat_history[query] = response
+
+
+                query = "Was the disputed amount greater than 5000 usd?"
+                context_1 = docsearch.similarity_search(query, k=5)
+                prompt_1 =  f''' You need to act as a Financial analyst to identify the disputed amount and perform a mathematical calculation to check if the disputed amount is greater than 5000 USD or not, given the context. Give a relevant and concise response.\n\n\
+                            Question: {query}\n\
+                            Context: {context_1}\n\
+                            Response: (Give me a concise response in one sentence. Do not give me any further Explanation,Note)'''
+                response = llama_llm(llama_llm_,prompt_1)
+                chat_history[query] = response
+
+
+                query = "What type of cards are involved?"
+                context_1 = docsearch.similarity_search(query, k=5)
+                prompt_1 =  f''' You need to act as a Financial analyst to identify the type of card and card network involved, given the context. On a higher level the card can be a Credit Visa, Debit Visa Card.Based on the context give a relevant and concise response.\n\n\
+                            Question: {query}\n\
+                            Context: {context_1}\n\
+                            Response: (Give me a concise response in one sentence.Do not add prefix like: ['based on the document']. Do not add any further Explanation, Note.')'''
+                response = llama_llm(llama_llm_,prompt_1)
+                chat_history[query] = response
+
+
+                query = "was the police report filed?"
+                context_1 = docsearch.similarity_search(query, k=5)
+                prompt_1 =  f''' You need to act as a Financial analyst to identify if the police was reported of the Fraud activity, given the context. Give a relevant and concise response.
+                Do not provide any extra [Explanation, Note] block below the Response.\n\n\
+                            Question: {query}\n\
+                            Context: {context_1}\n\
+                            Response: (Give a concise Response in a single sentence.Do not add prefix like ['based on the document','Rationale','Respone']. Do not add any Explanation,Note after the Response.)'''
+                response = llama_llm(llama_llm_,prompt_1)
+                chat_history[query] = response
+
+                try:
+                    res_df = pd.DataFrame(list(chat_history.items()), columns=['Question','Answer'])
+                    res_df.reset_index(drop=True, inplace=True)
+                    index_ = pd.Series([1,2,3,4,5,6,7,8,9,10])
+                    res_df = res_df.set_index([index_])
+                    # res_df["S.No."] = index_
+                    # res_df = res_df.loc[:,['S.No.','Question','Answer']]
+                    # st.write(res_df)
+                    # df_base = res_df.copy(deep=True)
+                    # st.write(df_base)
+                except IndexError: 
+                    pass
+                
+            st.table(res_df)
+            # st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
             st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
+            
+
+
 st.markdown("---")
 
 # For input box outside of template4
