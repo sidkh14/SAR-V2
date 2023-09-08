@@ -546,6 +546,9 @@ if selected_option == "SAR-2023-24680":
         with col2_up:
             pdf_files = st.file_uploader("", type=["pdf","png","jpeg","docx","xlsx"], accept_multiple_files=True)
             
+            for files in pdf_files:
+                file_ext = list(set([f.split('.')[1] for f in files]))
+                st.write(file_ext)
 
 
             # Show uploaded files in a dropdown
@@ -714,17 +717,18 @@ with st.spinner('Wait for it...'):
                 resp_dict_obj = json.loads(response)
                 res_df = pd.DataFrame(resp_dict_obj.items(), columns=['Question','Answer'])
                 # st.table(res_df)
-                # try:
-                #     res_df.Question = res_df.Question.apply(lambda x: x.split(".")[1])
-                #     res_df.index = res_df.index + 1
-                #     df_base = res_df.copy(deep=True)
-                #     df_base["S.No."] = df_base.index
-                #     df_base = df_base.loc[:,['S.No.','Question','Answer']]
-                #     # st.write(df_base)
+
+                try:
+                    # res_df.Question = res_df.Question.apply(lambda x: x.split(".")[1])
+                    # res_df.index = res_df.index + 1
+                    # df_base = res_df.copy(deep=True)
+                    # df_base["S.No."] = df_base.index
+                    # df_base = df_base.loc[:,['S.No.','Question','Answer']]
+                    # st.write(df_base)
                 # except IndexError:
                 #     pass
-                # # st.table(res_df)
-                # # st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                # #st.table(res_df)
+                # st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
                 # st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
                 
                 try:
