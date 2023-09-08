@@ -547,7 +547,7 @@ if selected_option == "SAR-2023-24680":
             pdf_files = st.file_uploader("", type=["pdf","png","jpeg","docx","xlsx"], accept_multiple_files=True)
             
             try:
-            for files in all_files:
+            for files in pdf_files:
                 file_ext = tuple("pdf")
                 if f.endswith(file_ext):
                     pass
