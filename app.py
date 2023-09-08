@@ -714,18 +714,30 @@ with st.spinner('Wait for it...'):
                 resp_dict_obj = json.loads(response)
                 res_df = pd.DataFrame(resp_dict_obj.items(), columns=['Question','Answer'])
                 # st.table(res_df)
+                # try:
+                #     res_df.Question = res_df.Question.apply(lambda x: x.split(".")[1])
+                #     res_df.index = res_df.index + 1
+                #     df_base = res_df.copy(deep=True)
+                #     df_base["S.No."] = df_base.index
+                #     df_base = df_base.loc[:,['S.No.','Question','Answer']]
+                #     # st.write(df_base)
+                # except IndexError:
+                #     pass
+                # # st.table(res_df)
+                # # st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                # st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
+                
                 try:
-                    res_df.Question = res_df.Question.apply(lambda x: x.split(".")[1])
-                    res_df.index = res_df.index + 1
-                    df_base = res_df.copy(deep=True)
-                    df_base["S.No."] = df_base.index
-                    df_base = df_base.loc[:,['S.No.','Question','Answer']]
-                    st.write(df_base)
-                except IndexError:
+                    res_df = pd.DataFrame(list(chat_history.items()), columns=['Question','Answer'])
+                    res_df.reset_index(drop=True, inplace=True)
+                    index_ = pd.Series([1,2,3,4,5,6,7,8,9,10])
+                    res_df = res_df.set_index([index_])
+                    # st.write(res_df)
+                except IndexError: 
                     pass
-                # st.table(res_df)
-                # st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                st.table(res_df)
                 st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
+            
             
             elif st.session_state.llm == "Llama-2":
 
@@ -839,15 +851,9 @@ with st.spinner('Wait for it...'):
                     index_ = pd.Series([1,2,3,4,5,6,7,8,9,10])
                     res_df = res_df.set_index([index_])
                     # st.write(res_df)
-                    # res_df["S.No."] = index_
-                    # res_df = res_df.loc[:,['S.No.','Question','Answer']]
-                    # st.write(res_df)
-                    # df_base = res_df.copy(deep=True)
-                    # st.write(df_base)
                 except IndexError: 
                     pass
                 st.table(res_df)
-                # st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
                 st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
             
             else:
