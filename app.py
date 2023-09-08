@@ -100,9 +100,12 @@ def usellm(prompt):
     response = service.chat(options)
     return response.content
 
-# Setting Config for Llama-2
-login(token=st.secrets["HUGGINGFACEHUB_API_TOKEN"])
-os.environ["HUGGINGFACEHUB_API_TOKEN"] = st.secrets["HUGGINGFACEHUB_API_TOKEN"]
+# # Setting Config for Llama-2
+# login(token=st.secrets["HUGGINGFACEHUB_API_TOKEN"])
+# os.environ["HUGGINGFACEHUB_API_TOKEN"] = st.secrets["HUGGINGFACEHUB_API_TOKEN"]
+
+login(token="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")
+os.environ["HUGGINGFACEHUB_API_TOKEN"]="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"
 
 llama_13b = HuggingFaceHub(
             repo_id="meta-llama/Llama-2-13b-chat-hf",
