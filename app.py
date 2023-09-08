@@ -718,7 +718,7 @@ with st.spinner('Wait for it...'):
                 res_df = pd.DataFrame(resp_dict_obj.items(), columns=['Question','Answer'])
                 # st.table(res_df)
 
-                try:
+                # try:
                     # res_df.Question = res_df.Question.apply(lambda x: x.split(".")[1])
                     # res_df.index = res_df.index + 1
                     # df_base = res_df.copy(deep=True)
