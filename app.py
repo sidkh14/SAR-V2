@@ -722,13 +722,14 @@ with st.spinner('Wait for it...'):
                     df_base = df_base.loc[:,['S.No.','Question','Answer']]
                 except IndexError:
                     pass
-                # st.table(res_df)
-                # st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                st.table(res_df)
+                st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
                 # st.write(resp_dict_obj)
                 st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
             
             elif st.session_state.llm == "Llama-2":
                 chat_history = {}
+                
                 query = "What is the victim's name?"
                 context_1 = docsearch.similarity_search(query, k=5)
                 prompt_1 = f'''You are a professional fraud analyst. Perform Name Enitity Recognition to identify the victim name as accurately as possible, given the context. The victim can also be referenced as the customer with whom the Fraud has taken place.\n\n\
