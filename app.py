@@ -832,16 +832,16 @@ with st.spinner('Wait for it...'):
                 chat_history[query] = response
 
                 try:
-                res_df = pd.DataFrame(list(chat_history.items()), columns=['Question','Answer'])
-                res_df.reset_index(drop=True, inplace=True)
-                index_ = pd.Series([1,2,3,4,5,6,7,8,9,10])
-                res_df = res_df.set_index([index_])
-                # st.write(res_df)
-                # res_df["S.No."] = index_
-                # res_df = res_df.loc[:,['S.No.','Question','Answer']]
-                # st.write(res_df)
-                # df_base = res_df.copy(deep=True)
-                # st.write(df_base)
+                    res_df = pd.DataFrame(list(chat_history.items()), columns=['Question','Answer'])
+                    res_df.reset_index(drop=True, inplace=True)
+                    index_ = pd.Series([1,2,3,4,5,6,7,8,9,10])
+                    res_df = res_df.set_index([index_])
+                    # st.write(res_df)
+                    # res_df["S.No."] = index_
+                    # res_df = res_df.loc[:,['S.No.','Question','Answer']]
+                    # st.write(res_df)
+                    # df_base = res_df.copy(deep=True)
+                    # st.write(df_base)
                 except IndexError: 
                     pass
                 st.table(res_df)
