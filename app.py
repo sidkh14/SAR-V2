@@ -720,14 +720,15 @@ with st.spinner('Wait for it...'):
                     df_base = res_df.copy(deep=True)
                     df_base["S.No."] = df_base.index
                     df_base = df_base.loc[:,['S.No.','Question','Answer']]
+                    st.write(df_base)
                 except IndexError:
                     pass
                 # st.table(res_df)
-                st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                # st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
                 st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
             
             elif st.session_state.llm == "Llama-2":
-                
+
                 chat_history = {}
 
                 query = "What is the victim's name?"
