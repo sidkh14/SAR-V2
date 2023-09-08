@@ -115,9 +115,9 @@ conversation = ConversationChain(llm= llama_13b, memory=memory,verbose=False)
 
 
 @st.cache_data
-def llama_llm(llm,prompt):
+def llama_llm(_llm,prompt):
 
-    response = llm.predict(prompt)
+    response = _llm.predict(prompt)
     return response
 
 @st.cache_data
