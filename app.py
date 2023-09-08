@@ -848,7 +848,8 @@ with st.spinner('Wait for it...'):
                 # st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
                 st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
             
-
+            else:
+                "Choose a Model"
             
 
 
@@ -1142,6 +1143,7 @@ elif st.session_state.llm == "Llama-2":
             Response: (Provide the summary in a single paragraph.)'''
         summ = llama_llm(llama_13b,prompt_1)  
         st.write(summ)
+
 
 with st.spinner("Downloading...."):
 # if st.button("Download Response", disabled=st.session_state.disabled):
