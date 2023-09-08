@@ -546,8 +546,9 @@ if selected_option == "SAR-2023-24680":
         with col2_up:
             pdf_files = st.file_uploader("", type=["pdf","png","jpeg","docx","xlsx"], accept_multiple_files=True)
             
-            
+            # showing files
             for uploaded_file in pdf_files:
+                #This code is to show pdf files
                 file_ext = tuple("pdf")
                 if uploaded_file.name.endswith(file_ext):
                     # Show uploaded files in a dropdown
@@ -566,8 +567,10 @@ if selected_option == "SAR-2023-24680":
                             st.image(img_bytes, use_column_width=True)
 
                 else:
+                    # This is showing png,jpeg files
                     st.image(uploaded_file, use_column_width=True)
 
+#creating temp directory to have all the files at one place for accessing
     tmp_dir_ = tempfile.mkdtemp()
     temp_file_path= []
 
@@ -599,10 +602,11 @@ if selected_option == "SAR-2023-24680":
             pdf_files_ = pdf_files
         else: pass
 
+    #This is the embedding model
     model_name = "sentence-transformers/all-MiniLM-L6-v2"
     # model_name = "hkunlp/instructor-large"
     
-    # Memory setup
+    # Memory setup for gpt-3.5
     llm = ChatOpenAI(temperature=0.1)
     memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=500)
     conversation = ConversationChain(llm=llm, memory =memory,verbose=False)
