@@ -565,8 +565,8 @@ if selected_option == "SAR-2023-24680":
                         for img_bytes in pdf_images:
                             st.image(img_bytes, use_column_width=True)
 
-            else:
-                st.image(uploaded_file, use_column_width=True)
+                else:
+                    st.image(uploaded_file, use_column_width=True)
 
     tmp_dir_ = tempfile.mkdtemp()
     temp_file_path= []
