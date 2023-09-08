@@ -549,10 +549,10 @@ if selected_option == "SAR-2023-24680":
             try:
                 for files in pdf_files:
                     file_ext = tuple("pdf")
-                    if f.endswith(file_ext):
+                    if files.endswith(file_ext):
                         pass
                     else:
-                        st.image(f, use_column_width=True)
+                        st.image(files, use_column_width=True)
             except:
                 pass
 
