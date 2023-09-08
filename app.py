@@ -670,7 +670,7 @@ with col2:
 
 with st.spinner('Wait for it...'):
     if st.button("Generate Insights",disabled=st.session_state.disabled):
-        if pdf_files is not None:
+        if temp_file_path is not None:
             # File handling logic
             _, docsearch = embedding_store(temp_file_path)
             if st.session_state.llm == "GPT-3.5":
@@ -741,9 +741,7 @@ with st.spinner('Wait for it...'):
 
                 query = "What is the suspect's name?"
                 context_1 = docsearch.similarity_search(query, k=5)
-                prompt_1 =  f''' You are a professional fraud analyst. You need to check the document and compare if any name discrepencies are present that address towards the suspect who used the card without the consent of the cardholder.
-                Hence, Compare the name of the cardholder and the human name present in Invoice. 
-                Reply the name of human on whose name bill is addressed who is basically the suspect.
+                prompt_1 =  f''''Perform Name Enitity Recognition to identify the Suspect name as accurately as possible, given the context. Suspect is the Person who has committed the fraud with the Customer. Respond saying "The Suspect Name is not Present" if there is no suspect in the given context.\n\n\
                             Context: {context_1}\n\
                             Response: (Give me response in one sentence.Do not give me any Explanation or Note)'''
                 response = llama_llm(llama_13b,prompt_1)
@@ -825,14 +823,14 @@ with st.spinner('Wait for it...'):
 
 
                 query = "was the police report filed?"
-                context_1 = docsearch.similarity_search(query, k=5)
-                prompt_1 =  f''' You need to act as a Financial analyst to identify if the police was reported of the Fraud activity, given the context. Give a relevant and concise response.
-                Do not provide any extra [Explanation, Note] block below the Response.\n\n\
-                            Question: {query}\n\
-                            Context: {context_1}\n\
-                            Response: (Give a concise Response in a single sentence.Do not add prefix like ['based on the document','Rationale','Respone']. Do not add any Explanation,Note after the Response.)'''
-                response = llama_llm(llama_13b,prompt_1)
-                chat_history[query] = response
+            context_1 = docsearch.similarity_search(query, k=5)
+            prompt_1 =  f''' You need to act as a Financial analyst to identify if the police was reported of the Fraud activity, given the context. Give a relevant and concise response.
+            Do not provide any extra [Explanation, Note] block below the Response.\n\n\
+                        Question: {query}\n\
+                        Context: {context_1}\n\
+                        Response: (Provide a concise Response without any extra [Explanation, Note, Descricption] below the Response.)'''
+            response = llama_llm(llama_13b,prompt_1)
+            chat_history[query] = response
 
                 try:
                     res_df = pd.DataFrame(list(chat_history.items()), columns=['Question','Answer'])
