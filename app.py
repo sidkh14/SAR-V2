@@ -547,31 +547,26 @@ if selected_option == "SAR-2023-24680":
             pdf_files = st.file_uploader("", type=["pdf","png","jpeg","docx","xlsx"], accept_multiple_files=True)
             
             
-            # for files in pdf_files:
-            #     file_ext = tuple("pdf")
-            #     if files.endswith(file_ext):
-            #         pass
-            #     else:
-            #         pdf_files.remove(files)
-            #         st.image(files, use_column_width=True)
-
             for uploaded_file in pdf_files:
-                st.write(uploaded_file.name)
+                file_ext = tuple("pdf")
+                if uploaded_file.name.endswith(file_ext):
+                    # Show uploaded files in a dropdown
+                    if pdf_files:
+                        st.subheader("Uploaded Files")
+                        file_names = [file.name for file in pdf_files]
+                        selected_file = st.selectbox(":blue[Select a file]", file_names)
+                        # Enabling the button
+                        st.session_state.disabled = False
+                        # Display selected PDF contents
+                        if selected_file:
+                            selected_pdf = [pdf for pdf in pdf_files if pdf.name == selected_file][0]
+                            pdf_images = render_pdf_as_images(selected_pdf)
+                            st.subheader(f"Contents of {selected_file}")
+                            for img_bytes in pdf_images:
+                                st.image(img_bytes, use_column_width=True)
 
-            # Show uploaded files in a dropdown
-            if pdf_files:
-                st.subheader("Uploaded Files")
-                file_names = [file.name for file in pdf_files]
-                selected_file = st.selectbox(":blue[Select a file]", file_names)
-                # Enabling the button
-                st.session_state.disabled = False
-                # Display selected PDF contents
-                if selected_file:
-                    selected_pdf = [pdf for pdf in pdf_files if pdf.name == selected_file][0]
-                    pdf_images = render_pdf_as_images(selected_pdf)
-                    st.subheader(f"Contents of {selected_file}")
-                    for img_bytes in pdf_images:
-                        st.image(img_bytes, use_column_width=True)
+            else:
+                st.image(files, use_column_width=True)
 
     tmp_dir_ = tempfile.mkdtemp()
     temp_file_path= []
