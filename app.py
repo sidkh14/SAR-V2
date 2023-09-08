@@ -546,9 +546,13 @@ if selected_option == "SAR-2023-24680":
         with col2_up:
             pdf_files = st.file_uploader("", type=["pdf","png","jpeg","docx","xlsx"], accept_multiple_files=True)
             
-            for files in pdf_files:
-                file_ext = list(set([f.split('.')[1] for f in files]))
-                st.write(file_ext)
+            try:
+            for files in all_files:
+                file_ext = tuple("pdf")
+                if f.endswith(file_ext):
+                    pass
+                else:
+                    st.image(f, use_column_width=True)
 
 
             # Show uploaded files in a dropdown
