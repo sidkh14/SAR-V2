@@ -553,6 +553,8 @@ if selected_option == "SAR-2023-24680":
                         pass
                     else:
                         st.image(f, use_column_width=True)
+            except:
+                pass
 
 
             # Show uploaded files in a dropdown
