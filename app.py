@@ -1136,7 +1136,7 @@ elif st.session_state.llm == "Llama-2":
     if st.button("Summarize",disabled=st.session_state.disabled):
         summ_dict = st.session_state.tmp_table.set_index('Question')['Answer'].to_dict()
         query = "Provide a detailed summary of the text provided"
-        prompt_1 = f'''You are responding to a highly professional customer. Provide a detailed summary by reframing the sentences from the context.\n\n\
+        prompt_1 = f'''You are a fraud analyst. Analyse the text provided to give a detailed summary by reframing the sentences so that the summary is quite understandable.\n\n\
             Question: {query}\n\
             Context: {summ_dict}\n\                      
             Response: (Provide the summary in a single paragraph.)'''
