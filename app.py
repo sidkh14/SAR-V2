@@ -572,10 +572,14 @@ if selected_option == "SAR-2023-24680":
     temp_file_path= []
 
     for uploaded_file in pdf_files:
-        file_pth = os.path.join(tmp_dir_, uploaded_file.name)
-        with open(file_pth, "wb") as file_opn:
-            file_opn.write(uploaded_file.getbuffer())
-            temp_file_path.append(file_pth)
+        file_ext = tuple("pdf")
+        if uploaded_file.name.endswith(file_ext):
+            file_pth = os.path.join(tmp_dir_, uploaded_file.name)
+            with open(file_pth, "wb") as file_opn:
+                file_opn.write(uploaded_file.getbuffer())
+                temp_file_path.append(file_pth)
+        else:
+            pass
 
 
     for fetched_pdf in fetched_files:
