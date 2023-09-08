@@ -824,11 +824,10 @@ with st.spinner('Wait for it...'):
 
                 query = "was the police report filed?"
                 context_1 = docsearch.similarity_search(query, k=5)
-                prompt_1 =  f''' You need to act as a Financial analyst to identify if the police was reported of the Fraud activity, given the context. Give a relevant and concise response.
-                Do not provide any extra [Explanation, Note] block below the Response.\n\n\
+                prompt_1 =  f''' You need to act as a Financial analyst to identify if the police was reported of the Fraud activity, given the context. Give a relevant and concise response.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
-                            Response: (Provide a concise Response in one sentence. Do not provide any extra 'Note','Description".)'''
+                            Response: (Provide a concise Response in a single sentence. Do not write any extra [Explanation, Note, Descricption].)'''
                 response = llama_llm(llama_13b,prompt_1)
                 chat_history[query] = response
 
