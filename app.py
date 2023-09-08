@@ -547,15 +547,15 @@ if selected_option == "SAR-2023-24680":
             pdf_files = st.file_uploader("", type=["pdf","png","jpeg","docx","xlsx"], accept_multiple_files=True)
             
             
-            for files in pdf_files:
-                file_ext = tuple("pdf")
-                if files.endswith(file_ext):
-                    pass
-                else:
-                    pdf_files.remove(files)
-                    st.image(files, use_column_width=True)
+            # for files in pdf_files:
+            #     file_ext = tuple("pdf")
+            #     if files.endswith(file_ext):
+            #         pass
+            #     else:
+            #         pdf_files.remove(files)
+            #         st.image(files, use_column_width=True)
 
-
+           st.write(pdf_files)
 
             # Show uploaded files in a dropdown
             if pdf_files:
