@@ -555,7 +555,8 @@ if selected_option == "SAR-2023-24680":
             #         pdf_files.remove(files)
             #         st.image(files, use_column_width=True)
 
-            st.write(pdf_files)
+            for uploaded_file in pdf_files:
+                st.write(uploaded_file)
 
             # Show uploaded files in a dropdown
             if pdf_files:
