@@ -1137,7 +1137,7 @@ elif st.session_state.llm == "Llama-2":
         prompt_1 = f'''You are responding to a highly professional customer. Give a detailed summary.\n\n\
             Question: {query}\n\
             Context: {summ_dict}\n\                      
-            Response: (Provide a detailed summary in a single paragraph.Keep the font size same for every sentence in the summary.Maintain proper spacing\gap between words in the paragraph.)'''
+            Response: (Provide a detailed summary in a single paragraph.Maintain proper spacing\gap between words in the paragraph.)'''
         summ = llama_llm(llama_13b,prompt_1)  
         st.write(summ)
 
