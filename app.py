@@ -849,7 +849,7 @@ with st.spinner('Wait for it...'):
                 st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
             
             else:
-                "Choose a Model"
+                "Kindly choose a model from above."
             
 
 
