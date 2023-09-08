@@ -728,7 +728,6 @@ with st.spinner('Wait for it...'):
                 # st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
                 
                 try:
-                    res_df = pd.DataFrame(list(chat_history.items()), columns=['Question','Answer'])
                     res_df.reset_index(drop=True, inplace=True)
                     index_ = pd.Series([1,2,3,4,5,6,7,8,9,10])
                     res_df = res_df.set_index([index_])
