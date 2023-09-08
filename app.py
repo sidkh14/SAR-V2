@@ -723,7 +723,7 @@ with st.spinner('Wait for it...'):
                 except IndexError:
                     pass
                 # st.table(res_df)
-                st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                # st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
                 # st.write(resp_dict_obj)
                 st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
             
@@ -739,7 +739,7 @@ with st.spinner('Wait for it...'):
                 chat_history[query] = response
 
 
-                query = "What is the suspect's name?"
+                query = "Has any suspect been reported?"
                 context_1 = docsearch.similarity_search(query, k=5)
                 prompt_1 =  f''''Perform Name Enitity Recognition to identify the Suspect name as accurately as possible, given the context. Suspect is the Person who has committed the fraud with the Customer. Respond saying "The Suspect Name is not Present" if there is no suspect in the given context.\n\n\
                             Context: {context_1}\n\
