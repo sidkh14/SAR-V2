@@ -828,7 +828,7 @@ with st.spinner('Wait for it...'):
                 Do not provide any extra [Explanation, Note] block below the Response.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
-                            Response: (Provide a concise Response without any extra [Explanation, Note, Descricption] below the Response.)'''
+                            Response: (Provide a concise Response in one sentence. Do not give any extra [Explanation, Note, Descricption].)'''
                 response = llama_llm(llama_13b,prompt_1)
                 chat_history[query] = response
 
