@@ -1264,7 +1264,7 @@ with st.spinner("Downloading...."):
         runner.italic = True
         suspect_info = {
             "Name                                           ": "Mike White",
-            "Address                                      ": ""520, WintergreenCt,Vancaville,CA,95587"",
+            "Address                                      ": "520, WintergreenCt,Vancaville,CA,95587",
             "Phone                                          ": "",
             "SSN                                               ": "",
             "Relationship with Customer ": ""
