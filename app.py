@@ -1165,7 +1165,7 @@ if st.session_state.llm == "GPT-3.5":
             llm=llm, 
             memory = memory,
             verbose=True)
-            st.session_state["tmp_summary_gpt"] = conversation.predict(input="Provide a detailed summary of the text provided in a single paragraph. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
+            st.session_state["tmp_summary_gpt"] = conversation.predict(input="Provide a detailed summary of the text provided by reframing the sentences. Provide the summary in a single paragraph. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
             # showing the text in a textbox
             # usr_review = st.text_area("", value=st.session_state["tmp_summary_gpt"])
             # if st.button("Update Summary"):
