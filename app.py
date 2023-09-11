@@ -1567,8 +1567,8 @@ with st.spinner("Downloading...."):
                 # os.remove(file_path)
             # os.rmdir(temp_dir_)    
 
-    except NameError:
-        pass
+        except NameError:
+            pass
         
 # Adding Radio button
 st.header("Make Decision")
