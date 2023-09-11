@@ -1201,11 +1201,6 @@ with st.spinner("Downloading...."):
         st.session_state["tmp_summary"] = st.session_state["tmp_summary_gpt"]
         st.session_state["tmp_table"] = st.session_state["tmp_table_gpt"]
 
-    elif st.session_state.llm == "Llama-2-13b":
-        st.session_state.disabled=False
-        st.session_state["tmp_summary"] = st.session_state["tmp_summary_llama"]
-        st.session_state["tmp_table"] = st.session_state["tmp_table_llama"]
-
     try:
         # initiate the doc file
         doc = docx.Document()
@@ -1253,7 +1248,7 @@ with st.spinner("Downloading...."):
         #""" Addition of a checkbox where unticked box imply unavailability of suspect info"""
 
         # Add the customer information
-        # sent_val = "No suspect has been reported."
+        sent_val = "Suspect has been reported."
         paragraph = doc.add_paragraph()
         runner = paragraph.add_run(sent_val)
         runner.bold = True
