@@ -341,7 +341,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 #Adding llm type-> st.session_state.llm
-st.session_state.llm = st.radio(":blue[]", ["","GPT-3.5","Llama-2"], horizontal=True)
+st.session_state.llm = st.radio(":blue[]", ["","GPT-3.5","Llama-2-13b"], horizontal=True)
 st.markdown("---")
 
 st.title("Suspicious Activity Reporting Assistant")
@@ -602,7 +602,7 @@ if selected_option == "SAR-2023-24680":
             pdf_files_ = pdf_files
         else: pass
 
-    #This is the embedding model
+     #This is the embedding model
     model_name = "sentence-transformers/all-MiniLM-L6-v2"
     # model_name = "hkunlp/instructor-large"
     
@@ -752,7 +752,7 @@ with st.spinner('Wait for it...'):
                 st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
             
             
-            elif st.session_state.llm == "Llama-2":
+            elif st.session_state.llm == "Llama-2-13b":
 
                 chat_history = {}
 
@@ -1003,7 +1003,7 @@ if st.session_state.llm == "GPT-3.5":
             st.session_state.tmp_table.drop_duplicates(subset=['Question'])
             # st.table(st.session_state.tmp_table)
 
-elif st.session_state.llm == "Llama-2":
+elif st.session_state.llm == "Llama-2-13b":
     with st.spinner('Getting you information...'):      
         if query:
             # Text input handling logic
@@ -1154,7 +1154,7 @@ if st.session_state.llm == "GPT-3.5":
             #     st.session_state["fin_opt"] = usr_review
             st.write(st.session_state["tmp_summary"])
 
-elif st.session_state.llm == "Llama-2":
+elif st.session_state.llm == "Llama-2-13b":
     if st.button("Summarize",disabled=st.session_state.disabled):
         summ_dict = st.session_state.tmp_table.set_index('Question')['Answer'].to_dict()
         query = "Provide a detailed summary of the text provided"
