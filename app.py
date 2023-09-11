@@ -1388,12 +1388,6 @@ with st.spinner("Downloading...."):
                     os.remove(file_path)
                 os.rmdir(temp_dir)
 
-
-        # Cleanup: Delete the temporary directory that was created to merge evidence
-        for file_path in temp_file_path:
-            os.remove(file_path)
-        os.rmdir(temp_dir_)
-
           
     except NameError:
         pass
