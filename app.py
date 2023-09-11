@@ -1191,14 +1191,15 @@ elif st.session_state.llm == "Llama-2-13b":
 
 
 
-with st.spinner("Downloading...."):
+
 
     # if st.button("Download Response", disabled=st.session_state.disabled):
     # Create a Word document with the table and some text
 
 
-    if st.session_state.llm == "GPT-3.5":
-        st.session_state.disabled=False
+if st.session_state.llm == "GPT-3.5":
+    st.session_state.disabled=False
+    # with st.spinner("Downloading...."):
 
     
         
@@ -1394,8 +1395,8 @@ with st.spinner("Downloading...."):
         pass
 
 
-    elif st.session_state.llm == "Llama-2-13b":
-        st.session_state.disabled=False
+elif st.session_state.llm == "Llama-2-13b":
+    st.session_state.disabled=False
     # with st.spinner("Downloading...."):
     try:
         # initiate the doc file
