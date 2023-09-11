@@ -1171,7 +1171,7 @@ elif st.session_state.llm == "Llama-2-13b":
 
         template = """You are a fraud analyst. Analyse the text provided to give a detailed summary by reframing the sentences to create a sequence of events.
         ```{text}```
-        Response: (Provide a concise Response without any extra [Explanation, Note, Descricption] below the Response.)"""
+        Response: (Provide a concise Response in a single paragraph without any extra [Explanation, Note, Descricption] below the Response.)"""
         prompt = PromptTemplate(template=template,input_variables=["text"])
         llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
 
