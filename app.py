@@ -1202,9 +1202,9 @@ with st.spinner("Downloading...."):
         st.session_state["tmp_table"] = st.session_state["tmp_table_gpt"]
     
     elif st.session_state.llm == "Llama-2-13b":
-    st.session_state.disabled=False
-    st.session_state["tmp_summary"] = st.session_state["tmp_summary_llama"]
-    st.session_state["tmp_table"] = st.session_state["tmp_table_llama"]
+        st.session_state.disabled=False
+        st.session_state["tmp_summary"] = st.session_state["tmp_summary_llama"]
+        st.session_state["tmp_table"] = st.session_state["tmp_table_llama"]
 
 
     try:
