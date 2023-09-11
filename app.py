@@ -758,7 +758,8 @@ with st.spinner('Wait for it...'):
 
                 query = "What is the victim's name?"
                 context_1 = docsearch.similarity_search(query, k=5)
-                prompt_1 = f'''You are a professional fraud analyst. Perform Name Enitity Recognition to identify the victim name as accurately as possible, given the context. The victim can also be referenced as the customer with whom the Fraud has taken place.\n\n\
+                prompt_1 = f'''You are a professional fraud analyst. Perform Name Enitity Recognition to identify the victim name as accurately as possible, given the context. The victim can also be referenced as the customer with whom the Fraud has taken place.
+                Victim can be identified from Cardholder Information.\n\n\
                         Question: {query}\n\
                         Context: {context_1}\n\
                         Response: (Give me response in one sentence. Do not give me any Explanation or Note)'''
@@ -770,7 +771,7 @@ with st.spinner('Wait for it...'):
                 context_1 = docsearch.similarity_search(query, k=5)
                 prompt_1 =  f'''' You are a professional fraud analyst. You need to check the document and compare if any name discrepencies are present that address towards the suspect who used the card without the consent of the cardholder.
             Hence, Compare the name of the cardholder and the human name present in the context. 
-            Reply the name of human who used the card without proper authorization,who is basically the suspect.\n\n\
+            Reply the name of human who used the card without proper authorization.\n\n\
                             Context: {context_1}\n\
                             Response: (Give me response in one sentence.Do not give me any Explanation or Note)'''
                 response = llama_llm(llama_13b,prompt_1)
