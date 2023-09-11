@@ -696,16 +696,16 @@ with st.spinner('Wait for it...'):
                 contexts = docsearch.similarity_search(queries, k=5) 
                 prompts = f" Give a the answer to the below questions as truthfully and in as detailed in the form of sentences\
                 as possible as per given context only,\n\n\
-                        1. What is the Victim's Name?\n\
-                        2. Has any suspect been reported?\n\
-                        3. List the Merchant name\n\
-                        4. How was the bank notified?\n\
-                        5. When was the bank notified?\n\
-                        6. What is the Fraud Type?\n\
-                        7. When did the fraud occur?\n\
-                        8. Was the disputed amount greater than 5000 USD?\n\
-                        9. What type of cards are involved?\n\
-                        10. Was the police report filed?\n\
+                        What is the Victim's Name?\n\
+                        Has any suspect been reported?\n\
+                        List the Merchant name\n\
+                        How was the bank notified?\n\
+                        When was the bank notified?\n\
+                        What is the Fraud Type?\n\
+                        When did the fraud occur?\n\
+                        Was the disputed amount greater than 5000 USD?\n\
+                        What type of cards are involved?\n\
+                        Was the police report filed?\n\
                     Context: {contexts}\n\
                     Response (in the python dictionary format\
                     where the dictionary key would carry the questions and its value would have a descriptive answer to the questions asked): "
@@ -769,8 +769,8 @@ with st.spinner('Wait for it...'):
                 query = "Has any suspect been reported?"
                 context_1 = docsearch.similarity_search(query, k=5)
                 prompt_1 =  f'''' You are a professional fraud analyst. You need to check the document and compare if any name discrepencies are present that address towards the suspect who used the card without the consent of the cardholder.
-            Hence, Compare the name of the cardholder and the human name present in Invoice. 
-            Reply the name of human on whose name bill is addressed who is basically the suspect.\n\n\
+            Hence, Compare the name of the cardholder and the human name present in the context. 
+            Reply the name of human who used the card without proper authorization,who is basically the suspect.\n\n\
                             Context: {context_1}\n\
                             Response: (Give me response in one sentence.Do not give me any Explanation or Note)'''
                 response = llama_llm(llama_13b,prompt_1)
