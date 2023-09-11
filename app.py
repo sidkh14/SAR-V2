@@ -1180,7 +1180,7 @@ elif st.session_state.llm == "Llama-2-13b":
             text = []
             for key,value in summ_dict_llama.items():
                 text.append(value)
-            st.session_state["tmp_summary_llama"] = llm_chain_llama.run(summ_dict_llama)
+            st.session_state["tmp_summary_llama"] = llm_chain_llama.run(text)
             st.write(st.session_state["tmp_summary_llama"])
         
 
