@@ -1169,14 +1169,15 @@ elif st.session_state.llm == "Llama-2-13b":
         # st.write(summ)
 
         summ_dict = st.session_state.tmp_table.set_index('Question')['Answer'].to_dict()
-        template =  f"""Provide a detailed summary of the following text delimited by triple backquotes. From key-value pair in the text, use only value to summarize.
-        Return the summary in a single paragraph with same font size and proper spacing between words.
-        ```{summ_dict}```
-        Response: """
-        prompt = PromptTemplate(template=template,input_variables=["summ_dict"])
-        llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
-        summary = llm_chain_llama.run(summ_dict)
-        st.write(summary)
+        # template =  f"""Provide a detailed summary of the following text delimited by triple backquotes. From key-value pair in the text, use only value to summarize.
+        # Return the summary in a single paragraph with same font size and proper spacing between words.
+        # ```{summ_dict}```
+        # Response: """
+        # prompt = PromptTemplate(template=template,input_variables=["summ_dict"])
+        # llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
+        # summary = llm_chain_llama.run(summ_dict)
+        # st.write(summary)
+        st.write(summ_dict)
 
 
 
