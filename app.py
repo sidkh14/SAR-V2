@@ -1172,7 +1172,7 @@ elif st.session_state.llm == "Llama-2-13b":
 
 
         template = """Write a detailed summary of the text provided. 
-        Return your response professionally in a single paragraph.
+        Return your response in a single paragraph.
         ```{text}```
         Response: """
         prompt = PromptTemplate(template=template,input_variables=["text"])
