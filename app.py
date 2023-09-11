@@ -771,7 +771,7 @@ with st.spinner('Wait for it...'):
                 context_1 = docsearch.similarity_search(query, k=5)
                 prompt_1 =  f'''You are a professional fraud analyst. You need to check the document and compare if any name discrepencies are present that address towards the suspect who used the card without the consent of the cardholder.
             Hence, Compare the names present in the context. 
-            Reply the name of the person who is basically the suspect.
+            Reply the name of the person who is basically the suspect.\n\n\
                             Context: {context_1}\n\
                             Response: (Give me response in one sentence.Do not give me any Explanation,note)'''
                 response = llama_llm(llama_13b,prompt_1)
