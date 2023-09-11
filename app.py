@@ -1146,7 +1146,7 @@ if st.session_state.llm == "GPT-3.5":
             summ_dict_gpt = st.session_state.tmp_table_gpt.set_index('Question')['Answer'].to_dict()
             # chat_history = resp_dict_obj['Summary']
             memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=300)
-            memory.save_context({"input": "This is the entire chat summary"}, 
+            memory.save_context({"input": "This is the entire summary"}, 
                             {"output": f"{summ_dict_gpt}"})
             conversation = ConversationChain(
             llm=llm, 
@@ -1171,7 +1171,7 @@ elif st.session_state.llm == "Llama-2-13b":
         # st.write(summ)
 
 
-        template = """Write a detailed summary of the text provided. 
+        template = """Write a detailed summary. 
         Return your response in a single paragraph.
         ```{text}```
         Response: """
