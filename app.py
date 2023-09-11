@@ -1169,10 +1169,10 @@ elif st.session_state.llm == "Llama-2-13b":
         # st.write(summ)
 
 
-        template = """Write a detailed summary of the following text delimited by triple backquotes.
-        Return your response in a single paragraph.
+        template = """Write a detailed summary of the following text delimited by triple backquotes. 
+        Make sure to cover the key points of the text.
         ```{text}```
-        Response: (Do not add any extra [Explanation, Note, Descricption] below the Response.)"""
+        Response: ( Return your response in a single paragraph.Do not add any extra [Explanation, Note, Descricption] below the Response.)"""
         prompt = PromptTemplate(template=template,input_variables=["text"])
         llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
 
