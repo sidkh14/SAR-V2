@@ -1169,7 +1169,7 @@ elif st.session_state.llm == "Llama-2-13b":
         # st.write(summ)
 
 
-        template =  f"""Provide a detailed summary of the following text delimited by triple backquotes. From key-value pair in the text, use only value to summarize.
+        template = """Provide a detailed summary of the following text delimited by triple backquotes. From key-value pair in the text, use only value to summarize.
         Return the summary in a single paragraph with same font size and proper spacing between words.
         ```{text}```
         Response: """
