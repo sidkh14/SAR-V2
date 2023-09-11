@@ -766,7 +766,7 @@ with st.spinner('Wait for it...'):
                 chat_history[query] = response
 
 
-                query = "Has any suspect been reported?"
+                query = "What is the suspect's name?"
                 context_1 = docsearch.similarity_search(query, k=5)
                 prompt_1 =  f'''' You are a professional fraud analyst. You need to check the document and compare if any name discrepencies are present that address towards the suspect who used the card without the consent of the cardholder.
             Hence, Compare the name of the cardholder and the human name present in the context. 
