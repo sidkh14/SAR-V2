@@ -1344,15 +1344,15 @@ with st.spinner("Downloading...."):
                         disabled=st.session_state.disabled)
             except FileNotFoundError:
                 pass
-                # Cleanup: Delete the temporary directory and its contents
-                for file_path in file_paths + [combined_doc_path]:
-                    os.remove(file_path)
-                os.rmdir(temp_dir)
+                # # Cleanup: Delete the temporary directory and its contents
+                # for file_path in file_paths + [combined_doc_path]:
+                #     os.remove(file_path)
+                # os.rmdir(temp_dir)
 
 
         # # Cleanup: Delete the temporary directory that was created to merge evidence
-        for file_path in temp_file_path:
-            os.remove(file_path)
+        # for file_path in temp_file_path:
+            # os.remove(file_path)
         os.rmdir(temp_dir_)    
 
     except NameError:
@@ -1388,10 +1388,10 @@ if st.button("Submit"):
         st.info("Thanks for your review, Case has been assigned to the next reviewer")
 
 
-# Allow the user to clear all stored conversation sessions
-if st.button("Reset Session"):
-    reset_session_state()
-    pdf_files_.clear()
+# # Allow the user to clear all stored conversation sessions
+# if st.button("Reset Session"):
+#     reset_session_state()
+#     pdf_files_.clear()
 
 # Footer
 st.markdown(
