@@ -1163,7 +1163,7 @@ elif st.session_state.llm == "Llama-2-13b":
         prompt_1 = f'''You are a fraud analyst. Analyse the text provided to give a detailed summary by reframing the sentences to create a sequence of events.\n\n\
             Question: {query}\n\
             Context: {summ_dict}\n\                      
-            Response: (Provide the summary in a single paragraph.)'''
+            Response: (Provide the summary in a single paragraph with similar font size.)'''
         summ = llama_llm(llama_13b,prompt_1)  
         st.write(summ)
 
