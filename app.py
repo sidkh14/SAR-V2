@@ -1142,31 +1142,29 @@ elif st.session_state.llm == "Llama-2-13b":
 
     if st.session_state.llm == "GPT-3.5":
        st.session_state.disabled=False
+       with st.spinner('Summarization ...'):  
+        if st.button("Summarize",disabled=st.session_state.disabled):
+            summ_dict_gpt = st.session_state.tmp_table_gpt.set_index('Question')['Answer'].to_dict()
+            # chat_history = resp_dict_obj['Summary']
+            memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=300)
+            memory.save_context({"input": "This is the entire summary"}, 
+                            {"output": f"{summ_dict_gpt}"})
+            conversation = ConversationChain(
+            llm=llm, 
+            memory = memory,
+            verbose=True)
+            st.session_state["tmp_summary_gpt"] = conversation.predict(input="Give me a detailed summary of the above texts in a single paragraph without anything additional other than the overall content. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
+            # showing the text in a textbox
+            # usr_review = st.text_area("", value=st.session_state["tmp_summary_gpt"])
+            # if st.button("Update Summary"):
+            #     st.session_state["fin_opt"] = usr_review
+            st.write(st.session_state["tmp_summary_gpt"])
 
-        with st.spinner('Summarization ...'):  
-            if st.button("Summarize",disabled=st.session_state.disabled):
-                
-                summ_dict_gpt = st.session_state.tmp_table_gpt.set_index('Question')['Answer'].to_dict()
-                # chat_history = resp_dict_obj['Summary']
-                memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=300)
-                memory.save_context({"input": "This is the entire summary"}, 
-                                {"output": f"{summ_dict_gpt}"})
-                conversation = ConversationChain(
-                llm=llm, 
-                memory = memory,
-                verbose=True)
-                st.session_state["tmp_summary_gpt"] = conversation.predict(input="Give me a detailed summary of the above texts in a single paragraph without anything additional other than the overall content. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
-                # showing the text in a textbox
-                # usr_review = st.text_area("", value=st.session_state["tmp_summary_gpt"])
-                # if st.button("Update Summary"):
-                #     st.session_state["fin_opt"] = usr_review
-                st.write(st.session_state["tmp_summary_gpt"])
-    
     elif st.session_state.llm == "Llama-2-13b":
         st.session_state.disabled=False
-        with st.spinner('Summarization ...'):  
+        with st.spinner('Summarization ...'):
             if st.button("Summarize",disabled=st.session_state.disabled):
-                # summ_dict = st.session_state.tmp_table.set_index('Question')['Answer'].to_dict()
+                #summ_dict = st.session_state.tmp_table.set_index('Question')['Answer'].to_dict()
                 # query = "Provide a detailed summary of the text provided"
                 # prompt_1 = f'''You are a fraud analyst. Analyse the text provided to give a detailed summary by reframing the sentences to create a sequence of events.\n\n\
                 #     Question: {query}\n\
