@@ -658,7 +658,7 @@ with col1:
     st.subheader('Pre-Set Questionnaire')
     # Create a Pandas DataFrame with your data
 
-    data = {'Questions': [" What is the Victim's Name?","What is the suspect's name?",' List the Merchant name',' How was the bank notified?',' When was the bank notified?',' What is the Fraud Type?',' When did the fraud occur?',' Was the disputed amount greater than 5000 USD?',' What type of cards are involved?',' Was the police report filed?']}
+    data = {'Questions': [" What is the victim's name?","What is the suspect's name?",' List the merchant name',' How was the bank notified?',' When was the bank notified?',' What is the fraud type?',' When did the fraud occur?',' Was the disputed amount greater than 5000 USD?',' What type of cards are involved?',' Was the police report filed?']}
     df_fixed = pd.DataFrame(data)
     df_fixed.index = df_fixed.index +1
 with col2:
@@ -696,12 +696,12 @@ with st.spinner('Wait for it...'):
                 contexts = docsearch.similarity_search(queries, k=5) 
                 prompts = f" Give a the answer to the below questions as truthfully and in as detailed in the form of sentences\
                 as possible as per given context only,\n\n\
-                        What is the Victim's Name?\n\
+                        What is the victim's name?\n\
                         What is the suspect's name?\n\
-                        List the Merchant name\n\
+                        List the merchant name\n\
                         How was the bank notified?\n\
                         When was the bank notified?\n\
-                        What is the Fraud Type?\n\
+                        What is the fraud type?\n\
                         When did the fraud occur?\n\
                         Was the disputed amount greater than 5000 USD?\n\
                         What type of cards are involved?\n\
