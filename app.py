@@ -1169,9 +1169,10 @@ elif st.session_state.llm == "Llama-2-13b":
         # st.write(summ)
 
 
-        template = """You are a fraud analyst. Analyse the text provided to give a detailed summary.
+        template = """Write a detailed summary of the following text delimited by triple backquotes.
+        Return your response in a single paragraph.
         ```{text}```
-        Response: (Provide a concise Response in a single paragraph without any extra [Explanation, Note, Descricption] below the Response.)"""
+        Response: (Do not add any extra [Explanation, Note, Descricption] below the Response.)"""
         prompt = PromptTemplate(template=template,input_variables=["text"])
         llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
 
