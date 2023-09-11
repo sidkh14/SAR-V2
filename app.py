@@ -1181,7 +1181,7 @@ elif st.session_state.llm == "Llama-2-13b":
             text.append(value)
 
         summary = llm_chain_llama.run(text)
-        st.write(summ_dict)
+        st.write(text)
     
 
 
