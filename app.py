@@ -768,7 +768,9 @@ with st.spinner('Wait for it...'):
 
                 query = "Has any suspect been reported?"
                 context_1 = docsearch.similarity_search(query, k=5)
-                prompt_1 =  f''''Perform Name Enitity Recognition to identify the Suspect name as accurately as possible, given the context. Suspect is the Person who has committed the fraud with the Customer. Respond saying "The Suspect Name is not Present" if there is no suspect in the given context.\n\n\
+                prompt_1 =  f'''' You are a professional fraud analyst. You need to check the document and compare if any name discrepencies are present that address towards the suspect who used the card without the consent of the cardholder.
+            Hence, Compare the name of the cardholder and the human name present in Invoice. 
+            Reply the name of human on whose name bill is addressed who is basically the suspect.\n\n\
                             Context: {context_1}\n\
                             Response: (Give me response in one sentence.Do not give me any Explanation or Note)'''
                 response = llama_llm(llama_13b,prompt_1)
