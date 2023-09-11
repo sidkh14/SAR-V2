@@ -1197,9 +1197,10 @@ elif st.session_state.llm == "Llama-2-13b":
     # Create a Word document with the table and some text
 
 
-if st.session_state["tmp_summary_gpt"]:
-    st.session_state.disabled=False
-    with st.spinner("Downloading...."):
+
+with st.spinner("Downloading...."):
+    if st.session_state.llm == "GPT-3.5":
+        st.session_state.disabled=False
         try:
             # initiate the doc file
             doc = docx.Document()
