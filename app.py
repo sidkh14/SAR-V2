@@ -1199,12 +1199,12 @@ with st.spinner("Downloading...."):
     if st.session_state.llm == "GPT-3.5":
         st.session_state.disabled=False
         st.session_state["tmp_summary"] = st.session_state["tmp_summary_gpt"]
-        st.session_state.["tmp_table"] = st.session_state["tmp_table_gpt"]
+        st.session_state["tmp_table"] = st.session_state["tmp_table_gpt"]
 
     elif st.session_state.llm == "GPT-3.5":
         st.session_state.disabled=False
         st.session_state["tmp_summary"] = st.session_state["tmp_summary_llama"]
-        st.session_state.["tmp_table"] = st.session_state["tmp_table_llama"]
+        st.session_state["tmp_table"] = st.session_state["tmp_table_llama"]
     else:
         pass
         
