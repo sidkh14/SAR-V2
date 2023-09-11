@@ -535,7 +535,6 @@ if selected_option == "SAR-2023-24680":
                 
                 
                 #select box to select file
-                st.write(fetched_files)
                 selected_file_name = st.selectbox(":blue[Select a file to View]",fetched_files)
                 st.write("Selected File: ", selected_file_name)
                 st.session_state.disabled = False
