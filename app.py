@@ -769,7 +769,7 @@ with st.spinner('Wait for it...'):
 
                 query = "What is the suspect's name?"
                 context_1 = docsearch.similarity_search(query, k=5)
-                prompt_1 =  f'''You are a professional fraud analyst. You need to check the document and compare if any name discrepencies are present that address towards the suspect who used the card without the consent of the cardholder.
+                prompt_1 =  f'''You are a professional fraud analyst. You need to check the document and compare if any name discrepencies are present that points towards the suspect who used the card without the consent of the cardholder.
             Hence, Compare the names present in the context. 
             Reply the name of the person who is basically the suspect.\n\n\
                             Context: {context_1}\n\
