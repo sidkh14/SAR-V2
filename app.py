@@ -539,7 +539,8 @@ if selected_option == "SAR-2023-24680":
                 selected_file_name = st.selectbox(":blue[Select a file to View]",fetched_files)
                 st.write("Selected File: ", selected_file_name)
                 st.session_state.disabled = False
-                if selected_file_name:
+                file_ext = tuple("pdf")
+                if selected_file_name.endswith(file_ext):
                     selected_file_path = os.path.join(directoty_path, selected_file_name)
                     #converting pdf data to bytes so that render_pdf_as_images could read it
                     file = pdf_to_bytes(selected_file_path)
@@ -548,6 +549,9 @@ if selected_option == "SAR-2023-24680":
                     st.subheader(f"Contents of {selected_file_name}")
                     for img_bytes in pdf_images:
                         st.image(img_bytes, use_column_width=True)
+                else:
+                    # This is showing png,jpeg files
+                    st.image(uploaded_file, use_column_width=True)
 
 
 
@@ -594,9 +598,13 @@ if selected_option == "SAR-2023-24680":
 
 
     for fetched_pdf in fetched_files:
-        file_pth = os.path.join('data/', fetched_pdf)
-        # st.write(file_pth)
-        temp_file_path.append(file_pth) 
+        file_ext = tuple("pdf")
+        if fetched_pdf.endswith(file_ext):
+            file_pth = os.path.join('data/', fetched_pdf)
+            # st.write(file_pth)
+            temp_file_path.append(file_pth) 
+        else:
+            pass
 
     #combining files in fetch evidence and upload evidence
     if temp_file_path:
