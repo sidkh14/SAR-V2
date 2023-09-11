@@ -1169,7 +1169,7 @@ elif st.session_state.llm == "Llama-2-13b":
         # st.write(summ)
 
 
-        template = """You are a fraud analyst. Analyse the following text delimited by triple backquotes and provide a detailed summary.
+        template = """You are a fraud analyst. Write a detailed summary of the following text delimited by triple backquotes. 
         Return your response in a single paragraph.
         ```{text}```
         Response: """
