@@ -1169,7 +1169,7 @@ elif st.session_state.llm == "Llama-2-13b":
     with st.spinner('Summarization ...'):
         if st.button("Summarize",disabled=st.session_state.disabled):
 
-            template = """Write a detailed summary.Do not add the line delimited by triple backquote while creating summary```so the answer to the question is Yes```.
+            template = """Write a detailed summary.Do not add the line delimited by triple backquote in the summary```so the answer to the question is Yes```.
             Return your response in a single paragraph.
             ```{text}```
             Response: """
