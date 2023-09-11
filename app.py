@@ -262,14 +262,14 @@ if "visibility" not in st.session_state:
     st.session_state.disabled = True
 if "stored_session" not in st.session_state:
     st.session_state["stored_session"] = []
-if "tmp_table_gpt" not in st.session_state:
-    st.session_state.tmp_table_gpt=pd.DataFrame()
-if "tmp_table_llama" not in st.session_state:
-    st.session_state.tmp_table_llama=pd.DataFrame()
-if "tmp_summary_gpt" not in st.session_state:
-    st.session_state["tmp_summary_gpt"] = ''
-if "tmp_summary_llama" not in st.session_state:
-    st.session_state["tmp_summary_llama"] = ''
+# if "tmp_table_gpt" not in st.session_state:
+#     st.session_state.tmp_table_gpt=pd.DataFrame()
+# if "tmp_table_llama" not in st.session_state:
+#     st.session_state.tmp_table_llama=pd.DataFrame()
+# if "tmp_summary_gpt" not in st.session_state:
+#     st.session_state["tmp_summary_gpt"] = ''
+# if "tmp_summary_llama" not in st.session_state:
+#     st.session_state["tmp_summary_llama"] = ''
 if "case_num" not in st.session_state:
     st.session_state.case_num = ''
 if "fin_opt" not in st.session_state:
@@ -1242,13 +1242,13 @@ with st.spinner("Downloading...."):
             #""" Addition of a checkbox where unticked box imply unavailability of suspect info"""
 
             # Add the customer information
-            sent_val = "No suspect has been reported."
+            # sent_val = "No suspect has been reported."
             paragraph = doc.add_paragraph()
             runner = paragraph.add_run(sent_val)
             runner.bold = True
             runner.italic = True
             suspect_info = {
-                "Name                                           ": "",
+                "Name                                           ": "Mike White",
                 "Address                                      ": "",
                 "Phone                                          ": "",
                 "SSN                                               ": "",
@@ -1261,11 +1261,12 @@ with st.spinner("Downloading...."):
             doc.add_heading('Summary', level=2)
             paragraph = doc.add_paragraph()
             doc.add_paragraph(st.session_state["tmp_summary_gpt"])
+             st.write(tmp_summary_gpt)
             paragraph = doc.add_paragraph()
             doc.add_heading('Key Insights', level=2)
             paragraph = doc.add_paragraph()
             st.session_state.tmp_table.drop_duplicates(inplace=True)
-            columns = list(st.session_state.tmp_table.columns)
+            columns = list(st.session_state.tmp_table_gpt.columns)
             table = doc.add_table(rows=1, cols=len(columns), style="Table Grid")
             table.autofit = True
             for col in range(len(columns)):
@@ -1273,7 +1274,7 @@ with st.spinner("Downloading...."):
                 table.cell(0, col).text = columns[col]
             # doc.add_table(st.session_state.tmp_table.shape[0]+1, st.session_state.tmp_table.shape[1], style='Table Grid')
             
-            for i, row in enumerate(st.session_state.tmp_table.itertuples()):
+            for i, row in enumerate(st.session_state.tmp_table_gpt.itertuples()):
                 table_row = table.add_row().cells # add new row to table
                 for col in range(len(columns)): # iterate over each column in row and add text
                     table_row[col].text = str(row[col+1]) # avoid index by adding col+1
@@ -1380,6 +1381,8 @@ with st.spinner("Downloading...."):
         except NameError:
             pass
 
+
+
     elif st.session_state["tmp_summary_llama"]:
         st.session_state.disabled=False
 
@@ -1449,11 +1452,12 @@ with st.spinner("Downloading...."):
             doc.add_heading('Summary', level=2)
             paragraph = doc.add_paragraph()
             doc.add_paragraph(st.session_state["tmp_summary_llama"])
+            st.write(tmp_summary_llama)
             paragraph = doc.add_paragraph()
             doc.add_heading('Key Insights', level=2)
             paragraph = doc.add_paragraph()
-            st.session_state.tmp_table.drop_duplicates(inplace=True)
-            columns = list(st.session_state.tmp_table.columns)
+            st.session_state.tmp_table_llama.drop_duplicates(inplace=True)
+            columns = list(st.session_state.tmp_table_llama.columns)
             table = doc.add_table(rows=1, cols=len(columns), style="Table Grid")
             table.autofit = True
             for col in range(len(columns)):
@@ -1461,7 +1465,7 @@ with st.spinner("Downloading...."):
                 table.cell(0, col).text = columns[col]
             # doc.add_table(st.session_state.tmp_table.shape[0]+1, st.session_state.tmp_table.shape[1], style='Table Grid')
             
-            for i, row in enumerate(st.session_state.tmp_table.itertuples()):
+            for i, row in enumerate(st.session_state.tmp_table_llama.itertuples()):
                 table_row = table.add_row().cells # add new row to table
                 for col in range(len(columns)): # iterate over each column in row and add text
                     table_row[col].text = str(row[col+1]) # avoid index by adding col+1
@@ -1601,9 +1605,9 @@ if st.button("Submit"):
 
 
 # # Allow the user to clear all stored conversation sessions
-# if st.button("Reset Session"):
-#     reset_session_state()
-#     pdf_files_.clear()
+if st.button("Reset Session"):
+    reset_session_state()
+    pdf_files_.clear()
 
 # Footer
 st.markdown(
