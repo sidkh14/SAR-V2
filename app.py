@@ -1169,6 +1169,10 @@ elif st.session_state.llm == "Llama-2-13b":
         # st.write(summ)
 
         summ_dict = st.session_state.tmp_table.set_index('Question')['Answer'].to_dict()
+        text = []
+        for key,value in summ_dict.items():
+            text.append(value)
+
         # template =  f"""Provide a detailed summary of the following text delimited by triple backquotes. From key-value pair in the text, use only value to summarize.
         # Return the summary in a single paragraph with same font size and proper spacing between words.
         # ```{summ_dict}```
@@ -1177,8 +1181,8 @@ elif st.session_state.llm == "Llama-2-13b":
         # llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
         # summary = llm_chain_llama.run(summ_dict)
         # st.write(summary)
-        for key,value in summ_dict.items():
-            st.write(value)
+        
+            st.write(text)
 
 
 
