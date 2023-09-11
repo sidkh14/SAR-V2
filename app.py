@@ -770,7 +770,7 @@ with st.spinner('Wait for it...'):
                 query = "What is the suspect's name?"
                 context_1 = docsearch.similarity_search(query, k=5)
                 prompt_1 =  f''''Perform Name Enitity Recognition to identify the Suspect name as accurately as possible, given the context. Suspect is the Person who has committed fraud against the customer.
-                Reply Suspect Name who used the card without the cardholder's consent.\n\n\
+                Reply Suspect Name.\n\n\
                             Context: {context_1}\n\
                             Response: (Give me response in one sentence.Do not give me any Explanation,note)'''
                 response = llama_llm(llama_13b,prompt_1)
