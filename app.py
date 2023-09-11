@@ -1195,7 +1195,7 @@ elif st.session_state.llm == "Llama-2-13b":
 
 with st.spinner("Downloading...."):
 # if st.button("Download Response", disabled=st.session_state.disabled):
-    # Create a Word document with the table and some text
+# Create a Word document with the table and some text
     if st.session_state.llm == "GPT-3.5":
         st.session_state.disabled=False
         st.session_state["tmp_summary"] = st.session_state["tmp_summary_gpt"]
@@ -1205,10 +1205,6 @@ with st.spinner("Downloading...."):
         st.session_state.disabled=False
         st.session_state["tmp_summary"] = st.session_state["tmp_summary_llama"]
         st.session_state["tmp_table"] = st.session_state["tmp_table_llama"]
-    else:
-        pass
-        
-        
 
     try:
         # initiate the doc file
@@ -1257,14 +1253,14 @@ with st.spinner("Downloading...."):
         #""" Addition of a checkbox where unticked box imply unavailability of suspect info"""
 
         # Add the customer information
-        # sent_val = "No suspect has been reported."
+        sent_val = "No suspect has been reported."
         paragraph = doc.add_paragraph()
         runner = paragraph.add_run(sent_val)
         runner.bold = True
         runner.italic = True
         suspect_info = {
-            "Name                                           ": "Mike White",
-            "Address                                      ": "520, WintergreenCt,Vancaville,CA,95587",
+            "Name                                           ": "",
+            "Address                                      ": "",
             "Phone                                          ": "",
             "SSN                                               ": "",
             "Relationship with Customer ": ""
@@ -1397,12 +1393,10 @@ with st.spinner("Downloading...."):
         #     os.remove(file_path)
         # os.rmdir(temp_dir_)
 
-        
+          
     except NameError:
         pass
-
-
-
+    
 
 # Adding Radio button
 st.header("Make Decision")
