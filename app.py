@@ -1613,10 +1613,10 @@ if st.button("Submit"):
         st.info("Thanks for your review, Case has been assigned to the next reviewer")
 
 
-# # Allow the user to clear all stored conversation sessions
-if st.button("Reset Session"):
-    reset_session_state()
-    pdf_files_.clear()
+# # # Allow the user to clear all stored conversation sessions
+# if st.button("Reset Session"):
+#     reset_session_state()
+#     pdf_files_.clear()
 
 # Footer
 st.markdown(
