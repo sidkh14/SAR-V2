@@ -262,10 +262,14 @@ if "visibility" not in st.session_state:
     st.session_state.disabled = True
 if "stored_session" not in st.session_state:
     st.session_state["stored_session"] = []
-if "tmp_table" not in st.session_state:
-    st.session_state.tmp_table=pd.DataFrame()
-if "tmp_summary" not in st.session_state:
-    st.session_state["tmp_summary"] = ''
+if "tmp_table_gpt" not in st.session_state:
+    st.session_state.tmp_table_gpt=pd.DataFrame()
+if "tmp_table_llama" not in st.session_state:
+    st.session_state.tmp_table_llama=pd.DataFrame()
+if "tmp_summary_gpt" not in st.session_state:
+    st.session_state["tmp_summary_gpt"] = ''
+if "tmp_summary_llama" not in st.session_state:
+    st.session_state["tmp_summary_llama"] = ''
 if "case_num" not in st.session_state:
     st.session_state.case_num = ''
 if "fin_opt" not in st.session_state:
@@ -725,31 +729,31 @@ with st.spinner('Wait for it...'):
                 # resp_dict = usellm(prompt_conv)
                 # st.write(response)
                 resp_dict_obj = json.loads(response)
-                res_df = pd.DataFrame(resp_dict_obj.items(), columns=['Question','Answer'])
-                # st.table(res_df)
+                res_df_gpt = pd.DataFrame(resp_dict_obj.items(), columns=['Question','Answer'])
+                # st.table(res_df_gpt)
 
                 # try:
-                    # res_df.Question = res_df.Question.apply(lambda x: x.split(".")[1])
-                    # res_df.index = res_df.index + 1
-                    # df_base = res_df.copy(deep=True)
-                    # df_base["S.No."] = df_base.index
-                    # df_base = df_base.loc[:,['S.No.','Question','Answer']]
-                    # st.write(df_base)
+                    # res_df_gpt.Question = res_df_gpt.Question.apply(lambda x: x.split(".")[1])
+                    # res_df_gpt.index = res_df.index + 1
+                    # df_base_gpt = res_df_gpt.copy(deep=True)
+                    # df_base_gpt["S.No."] = df_base_gpt.index
+                    # df_base_gpt = df_base_gpt.loc[:,['S.No.','Question','Answer']]
+                    # st.write(df_base_gpt)
                 # except IndexError:
                 #     pass
-                # #st.table(res_df)
-                # st.markdown(df_base.style.hide(axis="index").to_html(), unsafe_allow_html=True)
-                # st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
+                # #st.table(res_df_gpt)
+                # st.markdown(df_base_gpt.style.hide(axis="index").to_html(), unsafe_allow_html=True)
+                # st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, res_df_gpt], ignore_index=True)
                 
                 try:
-                    res_df.reset_index(drop=True, inplace=True)
+                    res_df_gpt.reset_index(drop=True, inplace=True)
                     index_ = pd.Series([1,2,3,4,5,6,7,8,9,10])
-                    res_df = res_df.set_index([index_])
-                    # st.write(res_df)
+                    res_df_gpt = res_df_gpt.set_index([index_])
+                    # st.write(res_df_gpt)
                 except IndexError: 
                     pass
-                st.table(res_df)
-                st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
+                st.table(res_df_gpt)
+                st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, res_df_gpt], ignore_index=True)
             
             
             elif st.session_state.llm == "Llama-2-13b":
@@ -862,15 +866,15 @@ with st.spinner('Wait for it...'):
                 chat_history[query] = response
 
                 try:
-                    res_df = pd.DataFrame(list(chat_history.items()), columns=['Question','Answer'])
-                    res_df.reset_index(drop=True, inplace=True)
+                    res_df_llama = pd.DataFrame(list(chat_history.items()), columns=['Question','Answer'])
+                    res_df_llama.reset_index(drop=True, inplace=True)
                     index_ = pd.Series([1,2,3,4,5,6,7,8,9,10])
-                    res_df = res_df.set_index([index_])
-                    # st.write(res_df)
+                    res_df_llama = res_df_llama.set_index([index_])
+                    # st.write(res_df_llama)
                 except IndexError: 
                     pass
-                st.table(res_df)
-                st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, res_df], ignore_index=True)
+                st.table(res_df_llama)
+                st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, res_df_llama], ignore_index=True)
             
             else:
                 "Kindly choose a model from above."
@@ -1000,11 +1004,10 @@ if st.session_state.llm == "GPT-3.5":
                 df = pd.DataFrame(text_dict.items(), columns=['Question','Answer'])
             else:
                 df = pd.DataFrame()
-            # st.session_state.tmp_table = pd.concat([tmp_table, tmp_table], ignore_index=True)
-            # st.write(text_dict.items())
-            st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, df], ignore_index=True)
-            st.session_state.tmp_table.drop_duplicates(subset=['Question'])
-            # st.table(st.session_state.tmp_table)
+
+            st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, df], ignore_index=True)
+            st.session_state.tmp_table_gpt.drop_duplicates(subset=['Question'])
+
 
 elif st.session_state.llm == "Llama-2-13b":
     with st.spinner('Getting you information...'):      
@@ -1132,30 +1135,29 @@ elif st.session_state.llm == "Llama-2-13b":
                 df = pd.DataFrame(text_dict.items(), columns=['Question','Answer'])
             else:
                 df = pd.DataFrame()
-            # st.session_state.tmp_table = pd.concat([tmp_table, tmp_table], ignore_index=True)
-            # st.write(text_dict.items())
-            st.session_state["tmp_table"] = pd.concat([st.session_state.tmp_table, df], ignore_index=True)
-            st.session_state.tmp_table.drop_duplicates(subset=['Question'])
-            # st.table(st.session_state.tmp_table)
+
+            st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, df], ignore_index=True)
+            st.session_state.tmp_table_llama.drop_duplicates(subset=['Question'])
+
 
 if st.session_state.llm == "GPT-3.5":
     with st.spinner('Summarization ...'):  
         if st.button("Summarize",disabled=st.session_state.disabled):
-            summ_dict = st.session_state.tmp_table.set_index('Question')['Answer'].to_dict()
+            summ_dict_gpt = st.session_state.tmp_table_gpt.set_index('Question')['Answer'].to_dict()
             # chat_history = resp_dict_obj['Summary']
             memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=300)
             memory.save_context({"input": "This is the entire chat summary"}, 
-                            {"output": f"{summ_dict}"})
+                            {"output": f"{summ_dict_gpt}"})
             conversation = ConversationChain(
             llm=llm, 
             memory = memory,
             verbose=True)
-            st.session_state["tmp_summary"] = conversation.predict(input="Give me a detailed summary of the above texts in a single paragraph without anything additional other than the overall content. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
+            st.session_state["tmp_summary_gpt"] = conversation.predict(input="Give me a detailed summary of the above texts in a single paragraph without anything additional other than the overall content. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
             # showing the text in a textbox
-            # usr_review = st.text_area("", value=st.session_state["tmp_summary"])
+            # usr_review = st.text_area("", value=st.session_state["tmp_summary_gpt"])
             # if st.button("Update Summary"):
             #     st.session_state["fin_opt"] = usr_review
-            st.write(st.session_state["tmp_summary"])
+            st.write(st.session_state["tmp_summary_gpt"])
 
 elif st.session_state.llm == "Llama-2-13b":
     if st.button("Summarize",disabled=st.session_state.disabled):
@@ -1176,13 +1178,13 @@ elif st.session_state.llm == "Llama-2-13b":
         prompt = PromptTemplate(template=template,input_variables=["text"])
         llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
 
-        summ_dict = st.session_state.tmp_table.set_index('Question')['Answer']
+        summ_dict_llama = st.session_state.tmp_table_llama.set_index('Question')['Answer']
         text = []
         for key,value in summ_dict.items():
             text.append(value)
 
-        summary = llm_chain_llama.run(text)
-        st.write(summary)
+        st.session_state["tmp_summary_llama"] = llm_chain_llama.run(text)
+        st.write(st.session_state["tmp_summary_llama"])
     
 
 
@@ -1190,7 +1192,10 @@ elif st.session_state.llm == "Llama-2-13b":
 with st.spinner("Downloading...."):
 # if st.button("Download Response", disabled=st.session_state.disabled):
     # Create a Word document with the table and some text
-    if st.session_state["tmp_summary"]:
+    
+    if st.session_state["tmp_summary_gpt"]:
+        st.session_state.disabled=False
+    elif st.session_state["tmp_summary_llama"]:
         st.session_state.disabled=False
         
     try:
