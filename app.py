@@ -1169,7 +1169,7 @@ elif st.session_state.llm == "Llama-2-13b":
     with st.spinner('Summarization ...'):
         if st.button("Summarize",disabled=st.session_state.disabled):
 
-            template = """Write a detailed summary of the text by reframing the sentences. 
+            template = """Write a detailed summary. 
             Return your response in a single paragraph.
             ```{text}```
             Response: """
@@ -1180,7 +1180,7 @@ elif st.session_state.llm == "Llama-2-13b":
             text = []
             for key,value in summ_dict_llama.items():
                 text.append(value)
-            st.session_state["tmp_summary_llama"] = llm_chain_llama.run(text)
+            st.session_state["tmp_summary_llama"] = llm_chain_llama.run(summ_dict_llama)
             st.write(st.session_state["tmp_summary_llama"])
         
 
