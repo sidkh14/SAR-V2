@@ -1344,11 +1344,17 @@ with st.spinner("Downloading...."):
                         disabled=st.session_state.disabled)
             except FileNotFoundError:
                 pass
-                # # Cleanup: Delete the temporary directory and its contents
-                # for file_path in file_paths + [combined_doc_path]:
-                #     os.remove(file_path)
-                # os.rmdir(temp_dir)
-            
+                # Cleanup: Delete the temporary directory and its contents
+                for file_path in file_paths + [combined_doc_path]:
+                    os.remove(file_path)
+                os.rmdir(temp_dir)
+
+
+        # # Cleanup: Delete the temporary directory that was created to merge evidence
+        for file_path in temp_file_path:
+            os.remove(file_path)
+        os.rmdir(temp_dir_)    
+
     except NameError:
         pass
         
@@ -1383,9 +1389,9 @@ if st.button("Submit"):
 
 
 # Allow the user to clear all stored conversation sessions
-# if st.button("Reset Session"):
-#     reset_session_state()
-#     pdf_files.clear()
+if st.button("Reset Session"):
+    reset_session_state()
+    pdf_files_.clear()
 
 # Footer
 st.markdown(
