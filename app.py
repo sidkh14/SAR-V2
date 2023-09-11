@@ -1169,20 +1169,19 @@ elif st.session_state.llm == "Llama-2-13b":
         # st.write(summ)
 
 
-        template = """Provide a detailed summary of the following text delimited by triple backquotes. From key-value pair in the text, use only value to summarize.
-        Return the summary in a single paragraph with same font size and proper spacing between words.
+        template = """You are a fraud analyst. Analyse the text provided to give a detailed summary by reframing the sentences to create a sequence of events.
         ```{text}```
         Response: """
         prompt = PromptTemplate(template=template,input_variables=["text"])
         llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
 
-        summ_df = st.session_state.tmp_table.set_index('Question')['Answer']
-        text = summ_df['Answer']
+        summ_dict = st.session_state.tmp_table.set_index('Question')['Answer']
+        text = []
         for key,value in summ_dict.items():
             text.append(value)
 
         summary = llm_chain_llama.run(text)
-        st.write(text)
+        st.write(summ_dict)
     
 
 
