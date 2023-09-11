@@ -1195,196 +1195,196 @@ with st.spinner("Downloading...."):
     if st.session_state.llm == "GPT-3.5":
         st.session_state.disabled=False
         
-    try:
-        # initiate the doc file
-        doc = docx.Document()
-        # doc.add_section(WD_SECTION.NEW_PAGE)
-        doc.add_heading(f"Case No.: {st.session_state.case_num}",0)
+        try:
+            # initiate the doc file
+            doc = docx.Document()
+            # doc.add_section(WD_SECTION.NEW_PAGE)
+            doc.add_heading(f"Case No.: {st.session_state.case_num}",0)
 
-        # Add a subheader for case details
-        subheader_case = doc.add_paragraph("Case Details")
-        subheader_case.style = "Heading 2"
-        # Addition of case details
-        paragraph = doc.add_paragraph(" ")
-        case_info = {
-            "Case Number                            ": " SAR-2023-24680",
-            "Customer Name                       ": " John Brown",
-            "Customer ID                              ": " 9659754",
-            "Case open date                         ": " Feb 02, 2021",
-            "Case Type                                  ": " Fraud Transaction",
-            "Case Status                                ": " Open"
-        }
-        for key_c, value_c in case_info.items():
-            doc.add_paragraph(f"{key_c}: {value_c}")
-        paragraph = doc.add_paragraph(" ")
+            # Add a subheader for case details
+            subheader_case = doc.add_paragraph("Case Details")
+            subheader_case.style = "Heading 2"
+            # Addition of case details
+            paragraph = doc.add_paragraph(" ")
+            case_info = {
+                "Case Number                            ": " SAR-2023-24680",
+                "Customer Name                       ": " John Brown",
+                "Customer ID                              ": " 9659754",
+                "Case open date                         ": " Feb 02, 2021",
+                "Case Type                                  ": " Fraud Transaction",
+                "Case Status                                ": " Open"
+            }
+            for key_c, value_c in case_info.items():
+                doc.add_paragraph(f"{key_c}: {value_c}")
+            paragraph = doc.add_paragraph(" ")
 
-        # Add a subheader for customer info to the document ->>
-        subheader_paragraph = doc.add_paragraph("Customer Information")
-        subheader_paragraph.style = "Heading 2"
-        paragraph = doc.add_paragraph(" ")
+            # Add a subheader for customer info to the document ->>
+            subheader_paragraph = doc.add_paragraph("Customer Information")
+            subheader_paragraph.style = "Heading 2"
+            paragraph = doc.add_paragraph(" ")
 
-        # Add the customer information
-        customer_info = {
-            "Name                                           ": " John Brown",
-            "Address                                      ": " 858 3rd Ave, Chula Vista, California, 91911 US",
-            "Phone                                          ": " (619) 425-2972",
-            "A/C No.                                        ": " 4587236908230087",
-            "SSN                                               ": " 653-30-9562"
-        }
+            # Add the customer information
+            customer_info = {
+                "Name                                           ": " John Brown",
+                "Address                                      ": " 858 3rd Ave, Chula Vista, California, 91911 US",
+                "Phone                                          ": " (619) 425-2972",
+                "A/C No.                                        ": " 4587236908230087",
+                "SSN                                               ": " 653-30-9562"
+            }
 
-        for key, value in customer_info.items():
-            doc.add_paragraph(f"{key}: {value}")
-        paragraph = doc.add_paragraph()
-        # Add a subheader for Suspect infor to the document ->>
-        subheader_paragraph = doc.add_paragraph("Suspect's Info")
-        subheader_paragraph.style = "Heading 2"
-        paragraph = doc.add_paragraph()
-        #""" Addition of a checkbox where unticked box imply unavailability of suspect info"""
+            for key, value in customer_info.items():
+                doc.add_paragraph(f"{key}: {value}")
+            paragraph = doc.add_paragraph()
+            # Add a subheader for Suspect infor to the document ->>
+            subheader_paragraph = doc.add_paragraph("Suspect's Info")
+            subheader_paragraph.style = "Heading 2"
+            paragraph = doc.add_paragraph()
+            #""" Addition of a checkbox where unticked box imply unavailability of suspect info"""
 
-        # Add the customer information
-        sent_val = "No suspect has been reported."
-        paragraph = doc.add_paragraph()
-        runner = paragraph.add_run(sent_val)
-        runner.bold = True
-        runner.italic = True
-        suspect_info = {
-            "Name                                           ": "",
-            "Address                                      ": "",
-            "Phone                                          ": "",
-            "SSN                                               ": "",
-            "Relationship with Customer ": ""
-        }
+            # Add the customer information
+            sent_val = "No suspect has been reported."
+            paragraph = doc.add_paragraph()
+            runner = paragraph.add_run(sent_val)
+            runner.bold = True
+            runner.italic = True
+            suspect_info = {
+                "Name                                           ": "",
+                "Address                                      ": "",
+                "Phone                                          ": "",
+                "SSN                                               ": "",
+                "Relationship with Customer ": ""
+            }
 
-        for key, value in suspect_info.items():
-            doc.add_paragraph(f"{key}: {value}")
-        
-        doc.add_heading('Summary', level=2)
-        paragraph = doc.add_paragraph()
-        doc.add_paragraph(st.session_state["tmp_summary_gpt"])
-        paragraph = doc.add_paragraph()
-        doc.add_heading('Key Insights', level=2)
-        paragraph = doc.add_paragraph()
-        st.session_state.tmp_table_gpt.drop_duplicates(inplace=True)
-        columns = list(st.session_state.tmp_table_gpt.columns)
-        table = doc.add_table(rows=1, cols=len(columns), style="Table Grid")
-        table.autofit = True
-        for col in range(len(columns)):
-            # set_cell_margins(table.cell(0, col), top=100, start=100, bottom=100, end=50) # set cell margin
-            table.cell(0, col).text = columns[col]
-        # doc.add_table(st.session_state.tmp_table.shape[0]+1, st.session_state.tmp_table.shape[1], style='Table Grid')
-        
-        for i, row in enumerate(st.session_state.tmp_table_gpt.itertuples()):
-            table_row = table.add_row().cells # add new row to table
-            for col in range(len(columns)): # iterate over each column in row and add text
-                table_row[col].text = str(row[col+1]) # avoid index by adding col+1
-        # save document
-        # output_bytes = docx.Document.save(doc, 'output.docx')
-        # st.download_button(label='Download Report', data=output_bytes, file_name='evidence.docx', mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+            for key, value in suspect_info.items():
+                doc.add_paragraph(f"{key}: {value}")
+            
+            doc.add_heading('Summary', level=2)
+            paragraph = doc.add_paragraph()
+            doc.add_paragraph(st.session_state["tmp_summary_gpt"])
+            paragraph = doc.add_paragraph()
+            doc.add_heading('Key Insights', level=2)
+            paragraph = doc.add_paragraph()
+            st.session_state.tmp_table_gpt.drop_duplicates(inplace=True)
+            columns = list(st.session_state.tmp_table_gpt.columns)
+            table = doc.add_table(rows=1, cols=len(columns), style="Table Grid")
+            table.autofit = True
+            for col in range(len(columns)):
+                # set_cell_margins(table.cell(0, col), top=100, start=100, bottom=100, end=50) # set cell margin
+                table.cell(0, col).text = columns[col]
+            # doc.add_table(st.session_state.tmp_table.shape[0]+1, st.session_state.tmp_table.shape[1], style='Table Grid')
+            
+            for i, row in enumerate(st.session_state.tmp_table_gpt.itertuples()):
+                table_row = table.add_row().cells # add new row to table
+                for col in range(len(columns)): # iterate over each column in row and add text
+                    table_row[col].text = str(row[col+1]) # avoid index by adding col+1
+            # save document
+            # output_bytes = docx.Document.save(doc, 'output.docx')
+            # st.download_button(label='Download Report', data=output_bytes, file_name='evidence.docx', mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
 
-        bio = io.BytesIO()
-        doc.save(bio)
-        # col_d1, col_d2 = st.columns(2)
-        col_d1, col_d2 = st.tabs(["Download Report", "Download Case Package"])
-        with col_d1:
-        # Applying to download button -> download_button
-            st.markdown("""
-                <style>
-                    .stButton download_button {
-                        width: 100%;
-                        height: 70%;
-                    }
-                </style>
-            """, unsafe_allow_html=True)
+            bio = io.BytesIO()
+            doc.save(bio)
+            # col_d1, col_d2 = st.columns(2)
+            col_d1, col_d2 = st.tabs(["Download Report", "Download Case Package"])
+            with col_d1:
+            # Applying to download button -> download_button
+                st.markdown("""
+                    <style>
+                        .stButton download_button {
+                            width: 100%;
+                            height: 70%;
+                        }
+                    </style>
+                """, unsafe_allow_html=True)
 
 
-            # combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
-            # doc.save(combined_doc_path)
+                # combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
+                # doc.save(combined_doc_path)
 
-            # # Create a zip file with the uploaded PDF files and the combined document
-            # zip_file_name = "package_files.zip"
-            # if pdf_files:
-            #     st.write(file_paths)
-            #     files =  [combined_doc_path]
-            #     st.write(files)
+                # # Create a zip file with the uploaded PDF files and the combined document
+                # zip_file_name = "package_files.zip"
+                # if pdf_files:
+                #     st.write(file_paths)
+                #     files =  [combined_doc_path]
+                #     st.write(files)
+                    
+                #     create_zip_file(files, zip_file_name)
+                #     # create_zip_file(file_paths, zip_file_name)
+                # else:
+                #     pass
+                # # Download the package
+                # with open(zip_file_name, "rb") as file:
+                #     st.download_button(
+                #         label="Download Case Package", 
+                #         data=file, 
+                #         file_name=zip_file_name,
+                #         disabled=st.session_state.disabled)
                 
-            #     create_zip_file(files, zip_file_name)
-            #     # create_zip_file(file_paths, zip_file_name)
-            # else:
-            #     pass
-            # # Download the package
-            # with open(zip_file_name, "rb") as file:
-            #     st.download_button(
-            #         label="Download Case Package", 
-            #         data=file, 
-            #         file_name=zip_file_name,
-            #         disabled=st.session_state.disabled)
+                if doc:
+                    st.download_button(
+                        label="Download Report",
+                        data=bio.getvalue(),
+                        file_name="Report.docx",
+                        mime="docx",
+                        disabled=st.session_state.disabled
+                    )
+            with col_d2:
+
+                # initiating a temp file
+                tmp_dir = tempfile.mkdtemp()
             
-            if doc:
-                st.download_button(
-                    label="Download Report",
-                    data=bio.getvalue(),
-                    file_name="Report.docx",
-                    mime="docx",
-                    disabled=st.session_state.disabled
-                )
-        with col_d2:
+                file_paths= []
 
-            # initiating a temp file
-            tmp_dir = tempfile.mkdtemp()
-        
-            file_paths= []
+                for uploaded_file in pdf_files:
+                    file_pth = os.path.join(tmp_dir, uploaded_file.name)
+                    with open(file_pth, "wb") as file_opn:
+                        file_opn.write(uploaded_file.getbuffer())
+                    file_paths.append(file_pth)
 
-            for uploaded_file in pdf_files:
-                file_pth = os.path.join(tmp_dir, uploaded_file.name)
-                with open(file_pth, "wb") as file_opn:
-                    file_opn.write(uploaded_file.getbuffer())
-                file_paths.append(file_pth)
+                for fetched_pdf in fetched_files:
+                    # st.write(fetched_pdf)
+                    file_pth = os.path.join('data/', fetched_pdf)
+                    # st.write(file_pth)
+                    file_paths.append(file_pth)
 
-            for fetched_pdf in fetched_files:
-                # st.write(fetched_pdf)
-                file_pth = os.path.join('data/', fetched_pdf)
-                # st.write(file_pth)
-                file_paths.append(file_pth)
+                
+                combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
+                doc.save(combined_doc_path)
 
             
-            combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
-            doc.save(combined_doc_path)
 
-        
+                # Create a zip file with the uploaded PDF files and the combined document
+                zip_file_name = "package_files.zip"
+                if file_paths:
+                    files =  [combined_doc_path] + file_paths
+                    create_zip_file(files, zip_file_name)
+                    # create_zip_file(file_paths, zip_file_name)
+                else:
+                    pass
 
-            # Create a zip file with the uploaded PDF files and the combined document
-            zip_file_name = "package_files.zip"
-            if file_paths:
-                files =  [combined_doc_path] + file_paths
-                create_zip_file(files, zip_file_name)
-                # create_zip_file(file_paths, zip_file_name)
-            else:
-                pass
+                
+                # Download the package
+
+                with open(zip_file_name, "rb") as file:
+                    st.download_button(
+                        label="Download Case Package", 
+                        data=file, 
+                        file_name=zip_file_name,
+                        disabled=st.session_state.disabled)
+
+                    # # Cleanup: Delete the temporary directory and its contents
+                    # for file_path in file_paths + [combined_doc_path]:
+                    #     os.remove(file_path)
+                    # os.rmdir(temp_dir)
+
+
+            # # Cleanup: Delete the temporary directory that was created to merge evidence
+            # for file_path in temp_file_path:
+            #     os.remove(file_path)
+            # os.rmdir(temp_dir_)
 
             
-            # Download the package
-
-            with open(zip_file_name, "rb") as file:
-                st.download_button(
-                    label="Download Case Package", 
-                    data=file, 
-                    file_name=zip_file_name,
-                    disabled=st.session_state.disabled)
-
-                # # Cleanup: Delete the temporary directory and its contents
-                # for file_path in file_paths + [combined_doc_path]:
-                #     os.remove(file_path)
-                # os.rmdir(temp_dir)
-
-
-        # # Cleanup: Delete the temporary directory that was created to merge evidence
-        # for file_path in temp_file_path:
-        #     os.remove(file_path)
-        # os.rmdir(temp_dir_)
-
-          
-    except NameError:
-        pass
+        except NameError:
+            pass
         
 
 
