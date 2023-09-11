@@ -550,8 +550,9 @@ if selected_option == "SAR-2023-24680":
                     for img_bytes in pdf_images:
                         st.image(img_bytes, use_column_width=True)
                 else:
+                    selected_file_path = os.path.join(directoty_path, selected_file_name)
                     # This is showing png,jpeg files
-                    st.image(uploaded_file, use_column_width=True)
+                    st.image(selected_file_path, use_column_width=True)
 
 
 
