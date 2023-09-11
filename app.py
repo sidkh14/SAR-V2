@@ -1159,7 +1159,7 @@ if st.session_state.llm == "GPT-3.5":
 
 elif st.session_state.llm == "Llama-2-13b":
     if st.button("Summarize",disabled=st.session_state.disabled):
-        summ_dict = st.session_state.tmp_table.set_index('Question')['Answer'].to_dict()
+        # summ_dict = st.session_state.tmp_table.set_index('Question')['Answer'].to_dict()
         # query = "Provide a detailed summary of the text provided"
         # prompt_1 = f'''You are a fraud analyst. Analyse the text provided to give a detailed summary by reframing the sentences to create a sequence of events.\n\n\
         #     Question: {query}\n\
@@ -1168,6 +1168,7 @@ elif st.session_state.llm == "Llama-2-13b":
         # summ = llama_llm(llama_13b,prompt_1)  
         # st.write(summ)
 
+        summ_dict = st.session_state.tmp_table.set_index('Question')['Answer']
         template =  f"""Provide a detailed summary of the context provided. From key-value pair in the text, use only value to summarize.
         Return the summary in a single paragraph with same font size and proper spacing between words.\n\n\
         Context: {summ_dict}\n\
