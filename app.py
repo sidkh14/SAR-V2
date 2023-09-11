@@ -1172,8 +1172,6 @@ elif st.session_state.llm == "Llama-2-13b":
             template = """Write a detailed summary.
             Return your response in a single paragraph.
             ```{text}```
-            Do not include line given square brackets while creating the summary from the text.
-            [so the answer to the question is Yes]
             Response: """
             prompt = PromptTemplate(template=template,input_variables=["text"])
             llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
