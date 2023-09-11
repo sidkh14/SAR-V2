@@ -1159,13 +1159,13 @@ if st.session_state.llm == "GPT-3.5":
             summ_dict_gpt = st.session_state.tmp_table_gpt.set_index('Question')['Answer'].to_dict()
             # chat_history = resp_dict_obj['Summary']
             memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=300)
-            memory.save_context({"input": "Summarize"}, 
+            memory.save_context({"input": "This is the entire summary"}, 
                             {"output": f"{summ_dict_gpt}"})
             conversation = ConversationChain(
             llm=llm, 
             memory = memory,
             verbose=True)
-            st.session_state["tmp_summary_gpt"] = conversation.predict(input="Give me a detailed summary of the above texts in a single paragraph without anything additional other than the overall content. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
+            st.session_state["tmp_summary_gpt"] = conversation.predict(input="Give a detailed summary of the above texts in a single paragraph. Please don't include words like these: 'chat summary', 'includes information' in my final summary.")
             # showing the text in a textbox
             # usr_review = st.text_area("", value=st.session_state["tmp_summary_gpt"])
             # if st.button("Update Summary"):
