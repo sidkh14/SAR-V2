@@ -1177,7 +1177,8 @@ elif st.session_state.llm == "Llama-2-13b":
         # llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
         # summary = llm_chain_llama.run(summ_dict)
         # st.write(summary)
-        st.write(summ_dict)
+        for key,value in summ_dict.items():
+            st.write(value)
 
 
 
