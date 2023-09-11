@@ -66,7 +66,6 @@ def read_pdf_files(path):
     directoty_path = path
     files = os.listdir(directoty_path)
     for file in files:
-        if file.lower().endswith('.pdf'):
             pdf_files.append(file)
     return pdf_files
 
