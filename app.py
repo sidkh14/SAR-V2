@@ -1176,13 +1176,13 @@ elif st.session_state.llm == "Llama-2-13b":
         prompt = PromptTemplate(template=template,input_variables=["text"])
         llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
 
-        summ_dict = st.session_state.tmp_table.set_index('Question')['Answer'].to_dict()
+        summ_dict = st.session_state.tmp_table.set_index('Question')['Answer']
         text = []
         for key,value in summ_dict.items():
             text.append(value)
 
         summary = llm_chain_llama.run(text)
-        st.write(summary)
+        st.write(summ_dict)
     
 
 
