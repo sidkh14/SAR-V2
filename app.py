@@ -1169,7 +1169,7 @@ elif st.session_state.llm == "Llama-2-13b":
         # st.write(summ)
 
 
-        template = """You are a fraud analyst. Analyse the text provided to give a detailed summary by reframing the sentences to create a sequence of events.
+        template = """You are a fraud analyst. Analyse the text provided to give a detailed summary.
         ```{text}```
         Response: (Provide a concise Response in a single paragraph without any extra [Explanation, Note, Descricption] below the Response.)"""
         prompt = PromptTemplate(template=template,input_variables=["text"])
