@@ -1382,10 +1382,10 @@ with st.spinner("Downloading...."):
                     file_name=zip_file_name,
                     disabled=st.session_state.disabled)
 
-                # Cleanup: Delete the temporary directory and its contents
-                for file_path in file_paths + [combined_doc_path]:
-                    os.remove(file_path)
-                os.rmdir(temp_dir)
+                # # Cleanup: Delete the temporary directory and its contents
+                # for file_path in file_paths + [combined_doc_path]:
+                #     os.remove(file_path)
+                # os.rmdir(temp_dir)
 
           
     except NameError:
