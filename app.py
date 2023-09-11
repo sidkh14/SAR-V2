@@ -1172,7 +1172,7 @@ elif st.session_state.llm == "Llama-2-13b":
         Return the summary in a single paragraph with same font size and proper spacing between words.\n\n\
         Context: {summ_dict}\n\
         Response: (Provide the summary in a single paragraph.)"""
-        prompt = PromptTemplate(template=template,input_variable=["summ_dict"])
+        prompt = PromptTemplate(template=template,input_variables=["summ_dict"])
         llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
         summary = llm_chain_llama.run(summ_dict)
         st.write(summary)
