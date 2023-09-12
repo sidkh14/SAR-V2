@@ -797,7 +797,7 @@ with st.spinner('Wait for it...'):
                 prompt_1 = f'''Perform Name Enitity Recognition to identify Merchant as accurately as possible, given the context. A merchant is a type of business or organization that accepts payments from the customer account. Give a relevant and concise response.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
-                            Response: (Give me a concise response in only two words. Do not add any Explanation,Note.)'''
+                            Response: (Give me a concise response. Do not add any Explanation,Note.)'''
                 response = llama_llm(llama_13b,prompt_1)
                 chat_history[query] = response
 
