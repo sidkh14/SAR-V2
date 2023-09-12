@@ -277,6 +277,8 @@ if "context_1" not in st.session_state:
     st.session_state.context_1 = ''
 if "llm" not in st.session_state:
     st.session_state.llm = 'Open-AI'
+if "pdf_files" not in st.session_state:
+    st.session_state.pdf_files = []
 
 # reading files from local directory from fetch evidence button
 directoty_path = "data/"
@@ -553,7 +555,7 @@ if selected_option == "SAR-2023-24680":
 
         with col2_up:
             pdf_files = st.file_uploader("", type=["pdf","png","jpeg","docx","xlsx"], accept_multiple_files=True)
-            
+            st.session_state.pdf_files = pdf_files
             # showing files
             for uploaded_file in pdf_files:
                 #This code is to show pdf files
@@ -1386,13 +1388,13 @@ with col_d1:
             disabled=st.session_state.disabled
         )
 with col_d2:
-
+    
     # initiating a temp file
     tmp_dir = tempfile.mkdtemp()
 
     file_paths= []
 
-    for uploaded_file in pdf_files:
+    for uploaded_file in st.session_state.pdf_files:
         file_pth = os.path.join(tmp_dir, uploaded_file.name)
         with open(file_pth, "wb") as file_opn:
             file_opn.write(uploaded_file.getbuffer())
