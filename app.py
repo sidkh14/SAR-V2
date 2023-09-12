@@ -794,7 +794,7 @@ with st.spinner('Wait for it...'):
                 
                 query = "list the merchant name"
                 context_1 = docsearch.similarity_search(query, k=5)
-                prompt_1 = f'''Perform Name Enitity Recognition to identify all the Merchant Organizations as accurately as possible, given the context. A merchant is a type of business or organization that accepts payments from the customer account. Give a relevant and concise response.\n\n\
+                prompt_1 = f'''Perform Name Enitity Recognition to identify Merchant as accurately as possible, given the context. A merchant is a type of business or organization that accepts payments from the customer account. Give a relevant and concise response.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: (Give me concise response in one sentence. Do not provide any further Explanation or Note from the context)'''
