@@ -1427,7 +1427,7 @@ if st.button("Submit"):
 # # Allow the user to clear all stored conversation sessions
 if st.button("Reset Session"):
     reset_session_state()
-    pdf_files_.clear()
+    # pdf_files_.clear()
     os.remove(temp_file_path)
     os.rmdir(tmp_dir_)
 
