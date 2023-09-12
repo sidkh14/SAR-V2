@@ -265,14 +265,10 @@ if "tmp_table_gpt" not in st.session_state:
     st.session_state.tmp_table_gpt=pd.DataFrame()
 if "tmp_table_llama" not in st.session_state:
     st.session_state.tmp_table_llama=pd.DataFrame()
-# if "tmp_table" not in st.session_state:
-#     st.session_state.tmp_table=pd.DataFrame()
 if "tmp_summary_gpt" not in st.session_state:
     st.session_state["tmp_summary_gpt"] = ''
 if "tmp_summary_llama" not in st.session_state:
     st.session_state["tmp_summary_llama"] = ''
-# if "tmp_summary" not in st.session_state:
-#     st.session_state["tmp_summary"] = ''
 if "case_num" not in st.session_state:
     st.session_state.case_num = ''
 if "fin_opt" not in st.session_state:
@@ -1195,28 +1191,21 @@ elif st.session_state.llm == "Llama-2-13b":
 with st.spinner("Downloading...."):
 # if st.button("Download Response", disabled=st.session_state.disabled):
 # Create a Word document with the table and some text
+
     tmp_summary = []
     tmp_table = pd.DataFrame()
+
     if st.session_state.llm == "GPT-3.5":
         st.session_state.disabled=False
-        # st.session_state["tmp_summary"] = st.session_state["tmp_summary_gpt"]
-        # st.session_state["tmp_table"] = st.session_state["tmp_table_gpt"]
-        # tmp_summary = pd.concat([tmp_summary, st.session_state["tmp_summary_gpt"]], ignore_index=True)
         tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_gpt"]], ignore_index=True)
         tmp_summary.append(st.session_state["tmp_summary_gpt"])
-        # tmp_table.append(st.session_state["tmp_table_gpt"])
+       
     
     elif st.session_state.llm == "Llama-2-13b":
         st.session_state.disabled=False
-        # st.session_state["tmp_summary"] = st.session_state["tmp_summary_llama"]
-        # st.session_state["tmp_table"] = st.session_state["tmp_table_llama"]
         tmp_summary.append(st.session_state["tmp_summary_llama"])
-        # tmp_table.append(st.session_state["tmp_table_llama"])
-        # tmp_summary = pd.concat([tmp_summary, st.session_state["tmp_summary_llama"]], ignore_index=True)
         tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_llama"]], ignore_index=True)
 
-    st.write(tmp_summary)
-    st.write(tmp_table)
     try:
         # initiate the doc file
         doc = docx.Document()
