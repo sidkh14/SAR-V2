@@ -276,7 +276,7 @@ if "fin_opt" not in st.session_state:
 if "context_1" not in st.session_state:
     st.session_state.context_1 = ''
 if "llm" not in st.session_state:
-    st.session_state.llm = 'GPT-3.5'
+    st.session_state.llm = 'Open-AI'
 
 # reading files from local directory from fetch evidence button
 directoty_path = "data/"
@@ -344,7 +344,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 #Adding llm type-> st.session_state.llm
-st.session_state.llm = st.radio(":blue[]", ["","GPT-3.5","Llama-2-13b"], horizontal=True)
+st.session_state.llm = st.radio(":blue[]", ["","Open-AI","Open-Source"], horizontal=True)
 st.markdown("---")
 
 st.title("Suspicious Activity Reporting Assistant")
@@ -698,7 +698,7 @@ with st.spinner('Wait for it...'):
         if temp_file_path is not None:
             # File handling logic
             _, docsearch = embedding_store(temp_file_path)
-            if st.session_state.llm == "GPT-3.5":
+            if st.session_state.llm == "Open-AI":
                 queries ="Please provide the following information regarding the possible fraud case: What is the name of the customer name,\
                 has any suspect been reported, list the merchant name, how was the bank notified, when was the bank notified, what is the fraud type,\
                 when did the fraud occur, was the disputed amount greater than 5000 USD, what type of cards are involved, was the police report filed,\
@@ -764,7 +764,7 @@ with st.spinner('Wait for it...'):
                 st.session_state["tmp_table_gpt"] = pd.concat([st.session_state.tmp_table_gpt, res_df_gpt], ignore_index=True)
             
             
-            elif st.session_state.llm == "Llama-2-13b":
+            elif st.session_state.llm == "Open-Source":
 
                 chat_history = {}
 
@@ -884,8 +884,8 @@ with st.spinner('Wait for it...'):
                 st.table(res_df_llama)
                 st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, res_df_llama], ignore_index=True)
             
-            else:
-                "Kindly choose a model from above."
+            # else:
+            #     "Kindly choose a model from above."
             
 
 
@@ -910,7 +910,7 @@ def LLM_Response():
     llm_chain = LLMChain(prompt=prompt, llm=llm)
     response = llm_chain.run({"query":query, "context":context})
     return response
-if st.session_state.llm == "GPT-3.5":
+if st.session_state.llm == "Open-AI":
     with st.spinner('Getting you information...'):      
         if query:
             # Text input handling logic
@@ -1017,7 +1017,7 @@ if st.session_state.llm == "GPT-3.5":
             st.session_state.tmp_table_gpt.drop_duplicates(subset=['Question'])
 
 
-elif st.session_state.llm == "Llama-2-13b":
+elif st.session_state.llm == "Open-Source":
     with st.spinner('Getting you information...'):      
         if query:
             # Text input handling logic
@@ -1148,7 +1148,7 @@ elif st.session_state.llm == "Llama-2-13b":
             st.session_state.tmp_table_llama.drop_duplicates(subset=['Question'])
 
 
-if st.session_state.llm == "GPT-3.5":
+if st.session_state.llm == "Open-AI":
     st.session_state.disabled=False
     with st.spinner('Summarization ...'):
         if st.button("Summarize",disabled=st.session_state.disabled):
@@ -1168,7 +1168,7 @@ if st.session_state.llm == "GPT-3.5":
             #     st.session_state["fin_opt"] = usr_review
             st.write(st.session_state["tmp_summary_gpt"])
 
-elif st.session_state.llm == "Llama-2-13b":
+elif st.session_state.llm == "Open-Source":
     st.session_state.disabled=False
     with st.spinner('Summarization ...'):
         if st.button("Summarize",disabled=st.session_state.disabled):
@@ -1195,13 +1195,13 @@ with st.spinner("Downloading...."):
     tmp_summary = []
     tmp_table = pd.DataFrame()
 
-    if st.session_state.llm == "GPT-3.5":
+    if st.session_state.llm == "Open-AI":
         st.session_state.disabled=False
         tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_gpt"]], ignore_index=True)
         tmp_summary.append(st.session_state["tmp_summary_gpt"])
        
     
-    elif st.session_state.llm == "Llama-2-13b":
+    elif st.session_state.llm == "Open-Source":
         st.session_state.disabled=False
         tmp_summary.append(st.session_state["tmp_summary_llama"])
         tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_llama"]], ignore_index=True)
