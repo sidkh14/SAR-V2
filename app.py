@@ -1217,129 +1217,129 @@ elif st.session_state.llm == "Open-Source":
                     #     st.session_state["fin_opt"] = usr_review
                     st.write(st.session_state["tmp_summary_gpt"])
 
-                elif st.session_state.llm == "Open-Source":
-                    st.session_state.disabled=False
-                    with st.spinner('Summarization ...'):
-                        if st.button("Summarize",disabled=st.session_state.disabled):
+        elif st.session_state.llm == "Open-Source":
+            st.session_state.disabled=False
+            with st.spinner('Summarization ...'):
+                if st.button("Summarize",disabled=st.session_state.disabled):
 
-                            template = """Write a detailed summary.
-                            Return your response in a single paragraph.
-                            ```{text}```
-                            Response: """
-                            prompt = PromptTemplate(template=template,input_variables=["text"])
-                            llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
+                    template = """Write a detailed summary.
+                    Return your response in a single paragraph.
+                    ```{text}```
+                    Response: """
+                    prompt = PromptTemplate(template=template,input_variables=["text"])
+                    llm_chain_llama = LLMChain(prompt=prompt,llm=llama_13b)
 
-                            summ_dict_llama = st.session_state.tmp_table_llama.set_index('Question')['Answer']
-                            text = []
-                            for key,value in summ_dict_llama.items():
-                                text.append(value)
-                            st.session_state["tmp_summary_llama"] = llm_chain_llama.run(text)
-                            st.write(st.session_state["tmp_summary_llama"])
+                    summ_dict_llama = st.session_state.tmp_table_llama.set_index('Question')['Answer']
+                    text = []
+                    for key,value in summ_dict_llama.items():
+                        text.append(value)
+                    st.session_state["tmp_summary_llama"] = llm_chain_llama.run(text)
+                    st.write(st.session_state["tmp_summary_llama"])
 
     
-            tmp_summary = []
-            tmp_table = pd.DataFrame()
+        tmp_summary = []
+        tmp_table = pd.DataFrame()
 
-            if st.session_state.llm == "Open-AI":
-                st.session_state.disabled=False
-                tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_gpt"]], ignore_index=True)
-                tmp_summary.append(st.session_state["tmp_summary_gpt"])
-
-
-            elif st.session_state.llm == "Open-Source":
-                st.session_state.disabled=False
-                tmp_summary.append(st.session_state["tmp_summary_llama"])
-                tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_llama"]], ignore_index=True)
+        if st.session_state.llm == "Open-AI":
+            st.session_state.disabled=False
+            tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_gpt"]], ignore_index=True)
+            tmp_summary.append(st.session_state["tmp_summary_gpt"])
 
 
-            try:
-                # initiate the doc file
-                doc = docx.Document()
-                # doc.add_section(WD_SECTION.NEW_PAGE)
-                doc.add_heading(f"Case No.: {st.session_state.case_num}",0)
+        elif st.session_state.llm == "Open-Source":
+            st.session_state.disabled=False
+            tmp_summary.append(st.session_state["tmp_summary_llama"])
+            tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_llama"]], ignore_index=True)
 
-                # Add a subheader for case details
-                subheader_case = doc.add_paragraph("Case Details")
-                subheader_case.style = "Heading 2"
-                # Addition of case details
-                paragraph = doc.add_paragraph(" ")
-                case_info = {
-                    "Case Number                            ": " SAR-2023-24680",
-                    "Customer Name                       ": " John Brown",
-                    "Customer ID                              ": " 9659754",
-                    "Case open date                         ": " Feb 02, 2021",
-                    "Case Type                                  ": " Fraud Transaction",
-                    "Case Status                                ": " Open"
-                }
-                for key_c, value_c in case_info.items():
-                    doc.add_paragraph(f"{key_c}: {value_c}")
-                paragraph = doc.add_paragraph(" ")
 
-                # Add a subheader for customer info to the document ->>
-                subheader_paragraph = doc.add_paragraph("Customer Information")
-                subheader_paragraph.style = "Heading 2"
-                paragraph = doc.add_paragraph(" ")
+        try:
+            # initiate the doc file
+            doc = docx.Document()
+            # doc.add_section(WD_SECTION.NEW_PAGE)
+            doc.add_heading(f"Case No.: {st.session_state.case_num}",0)
 
-                # Add the customer information
-                customer_info = {
-                    "Name                                           ": " John Brown",
-                    "Address                                      ": " 858 3rd Ave, Chula Vista, California, 91911 US",
-                    "Phone                                          ": " (619) 425-2972",
-                    "A/C No.                                        ": " 4587236908230087",
-                    "SSN                                               ": " 653-30-9562"
-                }
+            # Add a subheader for case details
+            subheader_case = doc.add_paragraph("Case Details")
+            subheader_case.style = "Heading 2"
+            # Addition of case details
+            paragraph = doc.add_paragraph(" ")
+            case_info = {
+                "Case Number                            ": " SAR-2023-24680",
+                "Customer Name                       ": " John Brown",
+                "Customer ID                              ": " 9659754",
+                "Case open date                         ": " Feb 02, 2021",
+                "Case Type                                  ": " Fraud Transaction",
+                "Case Status                                ": " Open"
+            }
+            for key_c, value_c in case_info.items():
+                doc.add_paragraph(f"{key_c}: {value_c}")
+            paragraph = doc.add_paragraph(" ")
 
-                for key, value in customer_info.items():
-                    doc.add_paragraph(f"{key}: {value}")
-                paragraph = doc.add_paragraph()
-                # Add a subheader for Suspect infor to the document ->>
-                subheader_paragraph = doc.add_paragraph("Suspect's Info")
-                subheader_paragraph.style = "Heading 2"
-                paragraph = doc.add_paragraph()
-                #""" Addition of a checkbox where unticked box imply unavailability of suspect info"""
+            # Add a subheader for customer info to the document ->>
+            subheader_paragraph = doc.add_paragraph("Customer Information")
+            subheader_paragraph.style = "Heading 2"
+            paragraph = doc.add_paragraph(" ")
 
-                # Add the customer information
-                sent_val = "Suspect has been reported."
-                paragraph = doc.add_paragraph()
-                runner = paragraph.add_run(sent_val)
-                runner.bold = True
-                runner.italic = True
-                suspect_info = {
-                    "Name                                           ": "Mike White",
-                    "Address                                      ": "520, WintergreenCt,Vancaville,CA,95587",
-                    "Phone                                          ": "",
-                    "SSN                                               ": "",
-                    "Relationship with Customer ": ""
-                }
+            # Add the customer information
+            customer_info = {
+                "Name                                           ": " John Brown",
+                "Address                                      ": " 858 3rd Ave, Chula Vista, California, 91911 US",
+                "Phone                                          ": " (619) 425-2972",
+                "A/C No.                                        ": " 4587236908230087",
+                "SSN                                               ": " 653-30-9562"
+            }
 
-                for key, value in suspect_info.items():
-                    doc.add_paragraph(f"{key}: {value}")
+            for key, value in customer_info.items():
+                doc.add_paragraph(f"{key}: {value}")
+            paragraph = doc.add_paragraph()
+            # Add a subheader for Suspect infor to the document ->>
+            subheader_paragraph = doc.add_paragraph("Suspect's Info")
+            subheader_paragraph.style = "Heading 2"
+            paragraph = doc.add_paragraph()
+            #""" Addition of a checkbox where unticked box imply unavailability of suspect info"""
 
-                doc.add_heading('Summary', level=2)
-                paragraph = doc.add_paragraph()
-                doc.add_paragraph(tmp_summary)
-                paragraph = doc.add_paragraph()
-                doc.add_heading('Key Insights', level=2)
-                paragraph = doc.add_paragraph()
-                tmp_table.drop_duplicates(inplace=True)
-                columns = list(tmp_table.columns)
-                table = doc.add_table(rows=1, cols=len(columns), style="Table Grid")
-                table.autofit = True
-                for col in range(len(columns)):
-                    # set_cell_margins(table.cell(0, col), top=100, start=100, bottom=100, end=50) # set cell margin
-                    table.cell(0, col).text = columns[col]
-                # doc.add_table(st.session_state.tmp_table.shape[0]+1, st.session_state.tmp_table.shape[1], style='Table Grid')
+            # Add the customer information
+            sent_val = "Suspect has been reported."
+            paragraph = doc.add_paragraph()
+            runner = paragraph.add_run(sent_val)
+            runner.bold = True
+            runner.italic = True
+            suspect_info = {
+                "Name                                           ": "Mike White",
+                "Address                                      ": "520, WintergreenCt,Vancaville,CA,95587",
+                "Phone                                          ": "",
+                "SSN                                               ": "",
+                "Relationship with Customer ": ""
+            }
 
-                for i, row in enumerate(tmp_table.itertuples()):
-                    table_row = table.add_row().cells # add new row to table
-                    for col in range(len(columns)): # iterate over each column in row and add text
-                        table_row[col].text = str(row[col+1]) # avoid index by adding col+1
-                # save document
-                # output_bytes = docx.Document.save(doc, 'output.docx')
-                # st.download_button(label='Download Report', data=output_bytes, file_name='evidence.docx', mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+            for key, value in suspect_info.items():
+                doc.add_paragraph(f"{key}: {value}")
 
-                bio = io.BytesIO()
-                doc.save(bio)
+            doc.add_heading('Summary', level=2)
+            paragraph = doc.add_paragraph()
+            doc.add_paragraph(tmp_summary)
+            paragraph = doc.add_paragraph()
+            doc.add_heading('Key Insights', level=2)
+            paragraph = doc.add_paragraph()
+            tmp_table.drop_duplicates(inplace=True)
+            columns = list(tmp_table.columns)
+            table = doc.add_table(rows=1, cols=len(columns), style="Table Grid")
+            table.autofit = True
+            for col in range(len(columns)):
+                # set_cell_margins(table.cell(0, col), top=100, start=100, bottom=100, end=50) # set cell margin
+                table.cell(0, col).text = columns[col]
+            # doc.add_table(st.session_state.tmp_table.shape[0]+1, st.session_state.tmp_table.shape[1], style='Table Grid')
+
+            for i, row in enumerate(tmp_table.itertuples()):
+                table_row = table.add_row().cells # add new row to table
+                for col in range(len(columns)): # iterate over each column in row and add text
+                    table_row[col].text = str(row[col+1]) # avoid index by adding col+1
+            # save document
+            # output_bytes = docx.Document.save(doc, 'output.docx')
+            # st.download_button(label='Download Report', data=output_bytes, file_name='evidence.docx', mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+
+            bio = io.BytesIO()
+            doc.save(bio)
 
                 
     with col_d1:
