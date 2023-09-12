@@ -1195,7 +1195,7 @@ elif st.session_state.llm == "Llama-2-13b":
 with st.spinner("Downloading...."):
 # if st.button("Download Response", disabled=st.session_state.disabled):
 # Create a Word document with the table and some text
-    tmp_summary = ""
+    tmp_summary = []
     tmp_table = pd.DataFrame()
     if st.session_state.llm == "GPT-3.5":
         st.session_state.disabled=False
