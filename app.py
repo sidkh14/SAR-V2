@@ -344,7 +344,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 #Adding llm type-> st.session_state.llm
-st.session_state.llm = st.radio(":blue[]", ["","Open-AI","Open-Source"], horizontal=True)
+st.session_state.llm = st.radio(":blue[]", ["Open-AI","Open-Source"], horizontal=True)
 st.markdown("---")
 
 st.title("Suspicious Activity Reporting Assistant")
@@ -885,8 +885,6 @@ with st.spinner('Wait for it...'):
                 st.table(res_df_llama)
                 st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, res_df_llama], ignore_index=True)
             
-            else:
-                "Kindly choose a model from above."
             
 
 
