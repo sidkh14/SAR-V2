@@ -276,7 +276,7 @@ if "fin_opt" not in st.session_state:
 if "context_1" not in st.session_state:
     st.session_state.context_1 = ''
 if "llm" not in st.session_state:
-    st.session_state.llm = ''
+    st.session_state.llm = 'Open-AI'
 
 # reading files from local directory from fetch evidence button
 directoty_path = "data/"
