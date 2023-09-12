@@ -1426,7 +1426,7 @@ if st.button("Submit"):
 # # Allow the user to clear all stored conversation sessions
 if st.button("Reset Session"):
     reset_session_state()
-    pdf_files.clear()
+    # pdf_files.clear()
 
 # Footer
 st.markdown(
