@@ -772,7 +772,7 @@ with st.spinner('Wait for it...'):
                 query = "What is the victim's name?"
                 context_1 = docsearch.similarity_search(query, k=5)
                 prompt_1 = f'''You are a professional fraud analyst. Perform Name Enitity Recognition to identify the victim name as accurately as possible, given the context. The victim can also be referenced as the customer with whom the Fraud has taken place.
-                Victim can be identified from Cardholder Information.\n\n\
+                victim name can be identified from Cardholder Information.\n\n\
                         Question: {query}\n\
                         Context: {context_1}\n\
                         Response: (Give me response in one sentence. Do not give me any Explanation or Note)'''
@@ -1428,9 +1428,8 @@ if st.button("Submit"):
 if st.button("Reset Session"):
     reset_session_state()
     st.cache_data.clear()
-    # pdf_files_.clear()
-    # os.remove(temp_file_path)
-    # os.rmdir(tmp_dir_)
+    # pdf_files.clear()
+
 
 
 # Footer
