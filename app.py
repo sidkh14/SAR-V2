@@ -1272,7 +1272,7 @@ with st.spinner("Downloading...."):
             
             doc.add_heading('Summary', level=2)
             paragraph = doc.add_paragraph()
-            doc.add_paragraph(tmp_summary[0])
+            doc.add_paragraph(tmp_summary)
             paragraph = doc.add_paragraph()
             doc.add_heading('Key Insights', level=2)
             paragraph = doc.add_paragraph()
