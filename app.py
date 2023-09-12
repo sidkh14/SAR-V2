@@ -1197,17 +1197,17 @@ with st.spinner("Downloading...."):
 # Create a Word document with the table and some text
     if st.session_state.llm == "GPT-3.5":
         st.session_state.disabled=False
-        # st.session_state["tmp_summary"] = st.session_state["tmp_summary_gpt"]
-        # st.session_state["tmp_table"] = st.session_state["tmp_table_gpt"]
-        tmp_summary = st.session_state["tmp_summary_gpt"]
-        tmp_table = st.session_state["tmp_table_gpt"]
+        st.session_state["tmp_summary"] = st.session_state["tmp_summary_gpt"]
+        st.session_state["tmp_table"] = st.session_state["tmp_table_gpt"]
+        # tmp_summary = st.session_state["tmp_summary_gpt"]
+        # tmp_table = st.session_state["tmp_table_gpt"]
     
     elif st.session_state.llm == "Llama-2-13b":
         st.session_state.disabled=False
-        # st.session_state["tmp_summary"] = st.session_state["tmp_summary_llama"]
-        # st.session_state["tmp_table"] = st.session_state["tmp_table_llama"]
-        tmp_summary = st.session_state["tmp_summary_llama"]
-        tmp_table = st.session_state["tmp_table_llama"]
+        st.session_state["tmp_summary"] = st.session_state["tmp_summary_llama"]
+        st.session_state["tmp_table"] = st.session_state["tmp_table_llama"]
+        # tmp_summary = st.session_state["tmp_summary_llama"]
+        # tmp_table = st.session_state["tmp_table_llama"]
 
 
     try:
@@ -1275,12 +1275,12 @@ with st.spinner("Downloading...."):
         
         doc.add_heading('Summary', level=2)
         paragraph = doc.add_paragraph()
-        doc.add_paragraph(tmp_summary)
+        doc.add_paragraph(st.session_state["tmp_summary"])
         paragraph = doc.add_paragraph()
         doc.add_heading('Key Insights', level=2)
         paragraph = doc.add_paragraph()
-        tmp_table.drop_duplicates(inplace=True)
-        columns = list(tmp_table.columns)
+        st.session_state.tmp_table.drop_duplicates(inplace=True)
+        columns = list(st.session_state.tmp_table.columns)
         table = doc.add_table(rows=1, cols=len(columns), style="Table Grid")
         table.autofit = True
         for col in range(len(columns)):
@@ -1288,7 +1288,7 @@ with st.spinner("Downloading...."):
             table.cell(0, col).text = columns[col]
         # doc.add_table(st.session_state.tmp_table.shape[0]+1, st.session_state.tmp_table.shape[1], style='Table Grid')
         
-        for i, row in enumerate(tmp_table.itertuples()):
+        for i, row in enumerate(st.session_state.tmp_table.itertuples()):
             table_row = table.add_row().cells # add new row to table
             for col in range(len(columns)): # iterate over each column in row and add text
                 table_row[col].text = str(row[col+1]) # avoid index by adding col+1
