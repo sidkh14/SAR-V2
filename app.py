@@ -1206,7 +1206,7 @@ with st.spinner("Downloading...."):
         tmp_summary.append(st.session_state["tmp_summary_llama"])
         tmp_table = pd.concat([tmp_table, st.session_state["tmp_table_llama"]], ignore_index=True)
 
-    if tmp_summary,tmp_table is not None:
+    if tmp_summary is not None:
         try:
             # initiate the doc file
             doc = docx.Document()
