@@ -1198,10 +1198,11 @@ elif st.session_state.llm == "Open-Source":
 col_s1, col_d1, col_d2 = st.tabs(["Summarize","Download Report", "Download Case Package"])
 
 with col_s1:
-    if st.session_state.llm == "Open-AI":
-        st.session_state.disabled=False
-        with st.spinner('Summarization ...'):
-            if st.button("Summarize",disabled=st.session_state.disabled):
+    with st.spinner('Summarization ...'):
+        if st.button("Summarize",disabled=st.session_state.disabled):
+            if st.session_state.llm == "Open-AI":
+                st.session_state.disabled=False
+        
                 summ_dict_gpt = st.session_state.tmp_table_gpt.set_index('Question')['Answer'].to_dict()
                 # chat_history = resp_dict_obj['Summary']
                 memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=300)
@@ -1218,11 +1219,9 @@ with col_s1:
                 #     st.session_state["fin_opt"] = usr_review
                 st.write(st.session_state["tmp_summary_gpt"])
 
-    elif st.session_state.llm == "Open-Source":
-        st.session_state.disabled=False
-        with st.spinner('Summarization ...'):
-            if st.button("Summarize",disabled=st.session_state.disabled):
 
+            elif st.session_state.llm == "Open-Source":
+                st.session_state.disabled=False
                 template = """Write a detailed summary.
                 Return your response in a single paragraph.
                 ```{text}```
