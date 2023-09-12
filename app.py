@@ -276,7 +276,7 @@ if "fin_opt" not in st.session_state:
 if "context_1" not in st.session_state:
     st.session_state.context_1 = ''
 if "llm" not in st.session_state:
-    st.session_state.llm = 'Open-AI'
+    st.session_state.llm = ''
 
 # reading files from local directory from fetch evidence button
 directoty_path = "data/"
@@ -884,8 +884,8 @@ with st.spinner('Wait for it...'):
                 st.table(res_df_llama)
                 st.session_state["tmp_table_llama"] = pd.concat([st.session_state.tmp_table_llama, res_df_llama], ignore_index=True)
             
-            # else:
-            #     "Kindly choose a model from above."
+            else:
+                "Kindly choose a model from above."
             
 
 
