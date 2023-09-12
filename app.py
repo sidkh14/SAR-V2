@@ -1428,8 +1428,8 @@ if st.button("Submit"):
 if st.button("Reset Session"):
     reset_session_state()
     # pdf_files_.clear()
-    os.remove(temp_file_path)
-    os.rmdir(tmp_dir_)
+    # os.remove(temp_file_path)
+    # os.rmdir(tmp_dir_)
 
 
 # Footer
