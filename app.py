@@ -603,6 +603,7 @@ if selected_option == "SAR-2023-24680":
             pass
 
     #combining files in fetch evidence and upload evidence
+    pdf_files_ = []
     if temp_file_path:
         if pdf_files and fetched_files:
             file_names = [file.name for file in pdf_files]
@@ -1426,7 +1427,10 @@ if st.button("Submit"):
 # # Allow the user to clear all stored conversation sessions
 if st.button("Reset Session"):
     reset_session_state()
-    pdf_files.clear()
+    pdf_files_.clear()
+    os.remove(temp_file_path)
+    os.rmdir(tmp_dir_)
+
 
 # Footer
 st.markdown(
