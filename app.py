@@ -1305,11 +1305,11 @@ with col_s1:
         runner.bold = True
         runner.italic = True
         suspect_info = {
-            "Name                                          - ": "Mike White",
+            "Name                                           ": "Mike White",
             "Address                                         ": "520, WintergreenCt,Vancaville,CA,95587",
-            "Phone                                           ": "NA",
-            "SSN                                             ": "NA",
-            "Relationship with Customer                      ": "NA"
+            "Phone                                            ": "NA",
+            "SSN                                               ": "NA",
+            "Relationship with Customer ": "NA"
         }
 
         for key, value in suspect_info.items():
