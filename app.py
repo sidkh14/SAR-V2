@@ -1358,7 +1358,7 @@ with st.spinner("Downloading...."):
                 file_paths.append(file_pth)
 
             
-            combined_doc_path = os.path.join(tmp_dir, "resulting_document.docx")
+            combined_doc_path = os.path.join(tmp_dir, "report.docx")
             doc.save(combined_doc_path)
 
         
