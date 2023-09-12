@@ -798,7 +798,7 @@ with st.spinner('Wait for it...'):
                 Please do not provide any post script after the Response.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
-                            Response: (Give me concise response in two words. Do not add any further Explanation,Note after the Response.)'''
+                            Response: (Give me concise response in two words. Do not add any Explanation,Note.)'''
                 response = llama_llm(llama_13b,prompt_1)
                 chat_history[query] = response
 
