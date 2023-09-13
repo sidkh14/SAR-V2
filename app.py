@@ -674,7 +674,12 @@ with col1:
     st.subheader('Pre-Set Questionnaire')
     # Create a Pandas DataFrame with your data
 
-    data = {'Questions': [" What is the victim's name?","What is the suspect's name?",' List the merchant name',' How was the bank notified?',' When was the bank notified?',' What is the fraud type?',' When did the fraud occur?',' Was the disputed amount greater than 5000 USD?',' What type of cards are involved?',' Was the police report filed?']}
+    data = {'Questions': ["Is there any potential Money Laundering activity based on the transaction statements",
+                          "What are the transaction that can be associated with Money Laundering activity?",
+                          "When is the Money laundering activity taking place?",
+                         "What type of Money laundering activity is taking place?",
+                          "What is the total amount associated with the money laundering activity?"]}
+    
     df_fixed = pd.DataFrame(data)
     df_fixed.index = df_fixed.index +1
 with col2:
