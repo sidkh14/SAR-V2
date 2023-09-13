@@ -42,10 +42,10 @@ from huggingface_hub import login
 os.environ["OPENAI_API_KEY"] = "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"
 
 # Setting Env
-if st.secrets["OPENAI_API_KEY"] is not None:
-    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
-else:
-    os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY")
+# if st.secrets["OPENAI_API_KEY"] is not None:
+#     os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+# else:
+#     os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY")
 
 @st.cache_data
 def show_pdf(file_path):
