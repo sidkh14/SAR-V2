@@ -1749,7 +1749,7 @@ elif selected_option_case_type == "AML":
             else: pass
     
          #This is the embedding model
-        model_name= "thenlper/gte-large"
+        model_name= "BAAI/bge-large-en"
         
         
         # Memory setup for gpt-3.5
