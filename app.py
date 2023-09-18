@@ -1841,7 +1841,8 @@ elif selected_option_case_type == "AML":
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
                                 that can be potentially associated with the Money Laundering activity. Money laundering \
                                 transactions often involve characteristics like large cash deposits, rapid movement of funds, \
-                                transactions with high-risk countries, structuring, or unexplained funds. Give precise response, \
+                                transactions with high-risk countries, structuring, or unexplained funds. Specifically, Every transaction above or \ 
+                                equal to $10,000 can be considered to be a potential money laundering transaction. Give precise response, \
                                 do not include any other unnecessary information.\n\n
                 
                                 Context: {context_1}\n\
