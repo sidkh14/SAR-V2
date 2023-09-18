@@ -1749,8 +1749,8 @@ elif selected_option_case_type == "AML":
             else: pass
     
          #This is the embedding model
-        model_name= "thenlper/gte-base"
-        
+        # model_name= "thenlper/gte-base"
+        model_name= "sentence-transformers/all-MiniLM-L6-v2"
         
         # Memory setup for gpt-3.5
         llm = ChatOpenAI(temperature=0.1)
@@ -1824,7 +1824,11 @@ elif selected_option_case_type == "AML":
     
                     query = "Is there any potential Money Laundering activity based on the transaction statements?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 = f'''You Are an Anti-Money Laundering Specialist, detect if any potential money laundering activity is taking place or not given the context. Money laundering transactions often involve characteristics like unusual transaction patterns that does not match with customer transaction history, large cash deposits equal and above $10,000 followed by a large amount transfer or Structuring, rapid movement of funds, transactions with high-risk countries, or unexplained funds. Answer in only Yes or No.\n\n\
+                    prompt_1 = f'''You Are an Anti-Money Laundering Specialist, detect if any potential money laundering 
+            activity is taking place or not given the context. Money laundering transactions often 
+            involve characteristics like unusual transaction patterns that does not match with customer transaction history, 
+            large cash deposits equal and above $10,000 followed by a large amount wire transfer equal to the total cash deposits, 
+            rapid movement of funds, transactions with high-risk countries, or unexplained funds. Answer in less than 10 words.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: (Give me response in one sentence. Do not give me any Explanation or Note)'''
