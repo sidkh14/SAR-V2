@@ -1841,8 +1841,8 @@ elif selected_option_case_type == "AML":
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
                                 that can be potentially associated with the Money Laundering activity. Money laundering \
                                 transactions often involve characteristics like large cash deposits, rapid movement of funds, \
-                                transactions with high-risk countries, structuring, or unexplained funds. Specifically, Every transaction above or \ 
-                                equal to $10,000 can be considered to be a potential money laundering transaction. Give precise response, \
+                                transactions with high-risk countries, structuring, or unexplained funds. Specifically, all transactions above or \ 
+                                equal to $10,000 are considered to be a potential money laundering transaction. Give precise response, \
                                 do not include any other unnecessary information.\n\n
                 
                                 Context: {context_1}\n\
@@ -1855,7 +1855,8 @@ elif selected_option_case_type == "AML":
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give all the dates when a money laundering activity is taking place given the context. Money laundering transactions often \
                                 involve characteristics like large cash deposits equal and above $10,000 followed by a large amount transfer or Structuring, \
-                                rapid movement of funds, transactions with high-risk countries, or unexplained funds. answer precisely\n\n\
+                                rapid movement of funds, transactions with high-risk countries, or unexplained funds. Specifically, all transactions above or \ 
+                                equal to $10,000 are considered to be a potential money laundering transaction. answer precisely\n\n\
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
 
