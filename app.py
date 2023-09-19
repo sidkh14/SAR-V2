@@ -93,7 +93,7 @@ def usellm(prompt):
     """
     service = UseLLM(service_url="https://usellm.org/api/llm")
     messages = [
-      Message(role="system", content="You are a fraud analyst, who is an expert at finding out suspicious activities"),
+      Message(role="system", content="You are a financial analyst, who is an expert at giving responses based on the context."),
       Message(role="user", content=f"{prompt}"),
       ]
     options = Options(messages=messages)
@@ -1824,11 +1824,13 @@ elif selected_option_case_type == "AML":
     
                     query = "Is there any potential Money Laundering activity based on the transaction statements?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 = f'''You Are an Anti-Money Laundering Specialist, detect if any potential money laundering 
-            activity is taking place or not given the context. Money laundering transactions often 
-            involve characteristics like unusual transaction patterns that does not match with customer transaction history, 
-            large cash deposits equal and above $10,000 followed by a large amount wire transfer totalling cash deposits, 
-            rapid movement of funds, transactions with high-risk countries, or unexplained funds. Answer in Yes or No only.\n\n\
+                    prompt_1 = f'''You Are an Anti-Money Laundering Specialist who is an expert in detecting Money-laundering. 
+                    A Money laundering activity can be determined based on the following transaction patterns-:
+                    1) If there are multiple transactions happening, greater than or equal to $10,000 in a short span of time.
+                    2) If there is a high-value international transaction happening which involves a high risk geographical location.
+                    3) If there is any money laundering pattern like structuring or smurfing, layering, placement, integration, etc observed within 
+                    the transactions statement.
+                    Provide your response in Yes or No only considering all of the factors above.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: (Give me response in one sentence. Do not give me any Explanation or Note)'''
