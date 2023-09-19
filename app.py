@@ -1825,7 +1825,7 @@ elif selected_option_case_type == "AML":
                     query = "Is there any potential Money Laundering activity based on the transaction statements?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 = f'''You Are an Anti-Money Laundering Specialist who is an expert in detecting Money-laundering. 
-                    A Money laundering activity can be determined based on the following transaction patterns-:
+                    A Money laundering activity can be detected if any of the following transaction patterns is observed-:
                     1) If there are multiple transactions happening, greater than or equal to $10,000 in a short span of time.
                     2) If there is a high-value international transaction happening which involves a high risk geographical location.
                     3) If there is any money laundering pattern like structuring or smurfing, layering, placement, integration, etc observed within 
