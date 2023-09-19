@@ -1828,7 +1828,7 @@ elif selected_option_case_type == "AML":
             activity is taking place or not given the context. Money laundering transactions often 
             involve characteristics like unusual transaction patterns that does not match with customer transaction history, 
             large cash deposits equal and above $10,000 followed by a large amount wire transfer totalling cash deposits, 
-            rapid movement of funds, transactions with high-risk countries, or unexplained funds. Answer in less than 10 words.\n\n\
+            rapid movement of funds, transactions with high-risk countries, or unexplained funds. Answer in Yes or No only.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: (Give me response in one sentence. Do not give me any Explanation or Note)'''
@@ -1840,9 +1840,8 @@ elif selected_option_case_type == "AML":
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
                                 that can be potentially associated with the Money Laundering activity. Money laundering \
-                                transactions often involve characteristics like large cash deposits, rapid movement of funds, \
-                                transactions with high-risk countries, structuring, or unexplained funds. Specifically, all transactions above or \ 
-                                equal to $10,000 are considered to be a potential money laundering transaction. Give precise response, \
+                                transactions often involve characteristics like large cash deposits, High value transactions greater than or equal to $10,000 \
+                                within a short span of time, transactions with high-risk countries, money laundered via structuring process. Give precise response, \
                                 do not include any other unnecessary information.\n\n
                 
                                 Context: {context_1}\n\
