@@ -1830,7 +1830,7 @@ elif selected_option_case_type == "AML":
                     2) If there is a high-value international transaction happening which involves a high risk geographical location.
                     3) If there is any money laundering pattern like structuring or smurfing, layering, placement, integration, etc observed within 
                     the transactions statement.
-                    Provide your response considering all of the factors above.\n\n\
+                    Provide your response as Yes if there is a hint of Money being Laundered considering all of the factors above.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: (Give me response in one sentence. Do not give me any Explanation or Note)'''
