@@ -1868,8 +1868,8 @@ elif selected_option_case_type == "AML":
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give the \
                                 type of money laundering activity that is taking place based on the transaction \
-                                summary. The type may include Layering, Structuring, Round-tripping etc. \
-                                give a precise answer, do not explain the type.\n\n\
+                                patterns observed. The type may include Layering, Structuring, Round-tripping etc. \
+                                Look carefully into the transactions statement and give a precise answer.\n\n\
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
 
