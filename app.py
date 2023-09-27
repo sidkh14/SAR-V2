@@ -1778,10 +1778,9 @@ elif selected_option_case_type == "AML":
 
                     query = "What is the Suspect Name involved in the suspicious activity?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 = f'''You Are a financial analyst who is an expert in detecting Suspicious activity. \n
-                    Perform Named Entity Recognition to find out a potential Suspect Name from the given transaction statements of a account. \n
+                    prompt_1 = f'''Perform Named Entity Recognition to find out a potential Suspect Name from the given transaction statements of a account. \n
                     A Customer name in the transaction statements can be referenced as a Suspect name if there is any potential suspicious activity which can be of the type \
-                    Fraud, Money laundering. Any Cash transaction amount above or equal to $10,000 can be a indication of Money Laundering activity.\n
+                    Fraud, Money laundering. Any Cash deposit transaction amount above or equal to $10,000 can be a indication of Money Laundering activity.\n
                     Give only the suspect name.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
