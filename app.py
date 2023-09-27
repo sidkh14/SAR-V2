@@ -1766,15 +1766,9 @@ elif selected_option_case_type == "AML":
 
                     query = "Is there any Suspicious Activity?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 = f'''You Are an Anti-Money Laundering Specialist who is an expert in detecting Money-laundering. \n
-                    You need to look closely into the credit card transaction statements as well as savings account transaction statements collectively and evaluate \
-                    them together to check for any potential suspicious money laundering activities. \n
-                    A Money laundering activity can be detected if any of the following transaction patterns is observed-:
-                    1) If there are cash transactions happening, greater than or equal to $10,000.
-                    2) If there is a high-value international transaction happening which involves movement of funds to or from a high risk geographical location(Ex- Mauritious, Syria, Nigeria,etc.).
-                    3) If there is any money laundering pattern like structuring or smurfing, layering, placement, integration, etc observed within 
-                    the credit card and savings bank account transactions statements collectively.
-                    Provide your response as Yes if there is a hint of Money being Laundered considering all of the factors above.\n\n\
+                    prompt_1 = f'''You are a financial analyst, go through the following savings account as well as credit card transactions statement \
+                    and detect if any potential Suspicious activity is taken place or not. Potential suspicious activity can be of the type Fraud or Money Laundering \
+                    Select the most appropriate Type while giving the response.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: '''
