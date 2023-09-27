@@ -1781,8 +1781,8 @@ elif selected_option_case_type == "AML":
                     prompt_1 = f'''You Are a financial analyst who is an expert in detecting Suspicious activity. \n
                     Perform Named Entity Recognition to find out a potential Suspect Name from the given transaction statements of a account. \n
                     A Customer name in the transaction statements can be referenced as a Suspect name if there is any potential suspicious activity which can be of the type \
-                    Fraud, Money laundering. Any transaction amount above $10,000 can be a indication of Money Laundering.\n
-                    Give only the Name of the Suspect.\n\n\
+                    Fraud, Money laundering. Any Cash transaction amount above or equal to $10,000 can be a indication of Money Laundering activity.\n
+                    Give only the suspect name.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
                             Response: '''
@@ -1791,7 +1791,7 @@ elif selected_option_case_type == "AML":
     
                     query = "Is there any potential Money Laundering activity based on the transaction statements?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 = f'''You Are an Anti-Money Laundering Specialist who is an expert in detecting Money-laundering. \n
+                    prompt_1 = f'''You Are an Anti-Money Laundering Specialist who is an expert in detecting Money-laundering activity. \n
                     You need to look closely into the credit card transaction statements as well as savings account transaction statements collectively and evaluate \
                     them together to check for any potential suspicious money laundering activities. \n
                     A Money laundering activity can be detected if any of the following transaction patterns is observed-:
