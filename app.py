@@ -1879,7 +1879,7 @@ elif selected_option_case_type == "AML":
                     try:
                         res_df_gpt = pd.DataFrame(list(chat_history_1.items()), columns=['Question','Answer'])
                         res_df_gpt.reset_index(drop=True, inplace=True)
-                        index_ = pd.Series([1,2,3,4,5])
+                        index_ = pd.Series([1,2,3,4,5, 6, 7])
                         res_df_gpt = res_df_gpt.set_index([index_])
                         # st.write(res_df_gpt)
                     except IndexError: 
