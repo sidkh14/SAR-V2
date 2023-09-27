@@ -1820,7 +1820,7 @@ elif selected_option_case_type == "AML":
                                 Cash deposits greater than or equal to 10000$ with source of funds not clear used to pay off credit card debt, etc\n \n
                                 Only include transactions which are greater than or equal to 10,000$ in your response. \n
                                 Give all such suspicious transactions grouped by transaction type(Credit card, savings account,etc.) along with dates, amounts from the context as your response \
-                                Do not repeat the above information and provide a to the point response.\n\n
+                                Do not include any credit card payment transaction in the response. Do not repeat the above information and provide a to the point response.\n\n
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
 
