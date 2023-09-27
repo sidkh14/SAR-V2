@@ -1781,7 +1781,7 @@ elif selected_option_case_type == "AML":
                     prompt_1 = f'''You Are a financial analyst who is an expert in detecting Suspicious activity. \n
                     Perform Named Entity Recognition to find out a potential Suspect Name from the given transaction statements of a account. \n
                     A Customer name in the transaction statements can be referenced as a Suspect name if there is any potential suspicious activity which can be of the type \
-                    Fraud, Money laundering.\n
+                    Fraud, Money laundering. Any transaction amount above $10,000 can be a indication of Money Laundering.\n
                     Give only the Name of the Suspect.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
