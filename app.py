@@ -1777,7 +1777,7 @@ elif selected_option_case_type == "AML":
 
                     query = "If there is any suspicious activity taking place, What is the Suspect Name?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 = f'''Perform Named Entity Recognition to find out a potential Suspect Name from the given transaction statements of a account. \n
+                    prompt_1 = f'''Perform Name Entity Recognition to find out the Suspect Name as accurately as possible, given the context \
                     Customer name is equal to the Suspect name if no specific suspect name is present. \
                     Give only the suspect name.\n\n\
                             Question: {query}\n\
@@ -1830,8 +1830,8 @@ elif selected_option_case_type == "AML":
                                 , transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.), any suspicion of money laundered via structuring , layering or intergration, process, \
                                 Cash deposits with source of funds not clear used to pay off debt, etc. \n
                                 Do not consider transactions less than 10000$ for creating the response. \n
-                                Give the dates only of all such suspicious transactions grouped by transaction type(Credit card, savings account,etc.) from the context as your response \
-                                Do not include any credit card payment transaction present in the savings transaction statement in your response. Do not repeat the above information and provide a to the point response. Also, do not include transactions less than 10000$ in your response.\n\n
+                                Give the dates only of all such suspicious transactions grouped by transaction type(Credit card Transaction, savings account transaction,etc.) from the context as your response \
+                                Do not include any credit card payment transaction present in the savings transaction statement in your response. Also, Do not repeat the above information and provide a to the point response. Also, do not include transactions less than 10000$ in your response.\n\n
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
 
