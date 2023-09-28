@@ -1823,17 +1823,24 @@ elif selected_option_case_type == "AML":
 
                     query = "When is the Money laundering activity taking place?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify all the dates on which transactions \
-                                that can be potentially associated with the Money Laundering activity both from Credit Card transaction statement as well as savings account statement collectively is happening. \n
-                                Money laundering transactions often involve characteristics like large cash deposits greater than or equal to $10,000 \
-                                Payments greater than or equal to 10000$ to an unrecognized entity with no specific  business purpose, \ 
-                                ,Credit card transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.), any suspicion of money laundered via structuring , layering or intergration, process, \
-                                Cash deposits with source of funds not clear used to pay off debt, etc. \n
-                                Do not consider transactions less than 10000$ for creating the response. \n
-                                Give the dates only of all such suspicious transactions grouped by transaction type(Credit card Transaction, savings account transaction,etc.) from the context as your response \
-                                Do not include any credit card payment transaction present in the savings transaction statement in your response. Also, Do not repeat the above information and provide a to the point response. Also, do not include transactions less than 10000$ in your response.\n\n
-                                Context: {context_1}\n\
-                                Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
+                    # prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify all the dates on which transactions \
+                    #             that can be potentially associated with the Money Laundering activity both from Credit Card transaction statement as well as savings account statement collectively is happening. \n
+                    #             Money laundering transactions often involve characteristics like large cash deposits greater than or equal to $10,000 \
+                    #             Payments greater than or equal to 10000$ to an unrecognized entity with no specific  business purpose, \ 
+                    #             ,Credit card transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.), any suspicion of money laundered via structuring , layering or intergration, process, \
+                    #             Cash deposits with source of funds not clear used to pay off debt, etc. \n
+                    #             Do not consider transactions less than 10000$ for creating the response. \n
+                    #             Give the dates only of all such suspicious transactions grouped by transaction type(Credit card Transaction, savings account transaction,etc.) from the context as your response \
+                    #             Do not include any credit card payment transaction present in the savings transaction statement in your response. Also, Do not repeat the above information and provide a to the point response. Also, do not include transactions less than 10000$ in your response.\n\n
+                    #             Context: {context_1}\n\
+                    #             Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
+
+                    prompt_1= f'''You Are an Anti-Money Laundering Specialist, Give all the dates on which the transactions that can be potentially associated with \
+                                  the Money laundering activity from the credit card transactions statement. Money Laundering activity often involves characteristics like \
+                                  large cash deposits or transfer greater or equal to $10,000 to an unrecognized entity with no specific business purpose, transactions \
+                                  involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.). Give the dates only of all such suspicious transactions.\
+                                  Context: {context_1}\n\
+                                  Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
 
                     response = usellm(prompt_1)
                     chat_history_1[query] = response
@@ -1919,7 +1926,7 @@ elif selected_option_case_type == "AML":
                     query = "When is the Money laundering activity taking place?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give all the dates when a money laundering activity is taking place given the context. Money laundering transactions often \
-                                involve characteristics like large cash deposits equal and above $10,000 followed by a large amount transfer or Structuring, \
+                                involve characteristics like large cash deposits in savings tansaction summary equal and above $10,000, \
                                 rapid movement of funds, transactions with high-risk countries, or unexplained source of funds. Specifically, all transactions above or \ 
                                 equal to $10,000 are considered to be a potential money laundering transaction. Answer the question considering the factors mentioned above with transaction details.\n\n\
                                 Context: {context_1}\n\
