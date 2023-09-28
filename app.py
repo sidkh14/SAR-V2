@@ -1778,7 +1778,7 @@ elif selected_option_case_type == "AML":
                     query = "If there is any suspicious activity taking place, What is the Suspect Name?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 = f'''Perform Named Entity Recognition to find out a potential Suspect Name from the given transaction statements of a account. \n
-                    Customer name can be taken as the Suspect name. \
+                    Customer name can be taken as the Suspect name if nothing specific is present. \
                     Give only the suspect name.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
