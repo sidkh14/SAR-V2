@@ -1778,7 +1778,7 @@ elif selected_option_case_type == "AML":
                     query = "If there is any suspicious activity taking place, What is the Suspect Name?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 = f'''Perform Name Entity Recognition to find out the Suspect Name as accurately as possible, given the context \
-                    Customer name is equal to the Suspect name if no specific suspect name is present. \
+                    Take Customer name as the Suspect name if no further information is provided. \
                     Give only the suspect name.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
@@ -1827,7 +1827,7 @@ elif selected_option_case_type == "AML":
                                 that can be potentially associated with the Money Laundering activity both from Credit Card transaction statement as well as savings account statement collectively is happening. \n
                                 Money laundering transactions often involve characteristics like large cash deposits greater than or equal to $10,000 \
                                 Payments greater than or equal to 10000$ to an unrecognized entity with no specific  business purpose, \ 
-                                , transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.), any suspicion of money laundered via structuring , layering or intergration, process, \
+                                ,Credit card transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.), any suspicion of money laundered via structuring , layering or intergration, process, \
                                 Cash deposits with source of funds not clear used to pay off debt, etc. \n
                                 Do not consider transactions less than 10000$ for creating the response. \n
                                 Give the dates only of all such suspicious transactions grouped by transaction type(Credit card Transaction, savings account transaction,etc.) from the context as your response \
