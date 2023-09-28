@@ -1727,7 +1727,7 @@ elif selected_option_case_type == "AML":
         # Create a Pandas DataFrame with your data
     
         data = {'Questions': ["Is there is any suspicious activity?",
-                              "What is the suspect name?",
+                              "If there is any suspicious activity taking place, What is the Suspect Name?",
           # "Is there any potential Money Laundering activity based on the transaction statements",
                           "What are the transaction that can be associated with Money Laundering activity?",
                           "When is the Money laundering activity taking place?",
@@ -1775,7 +1775,7 @@ elif selected_option_case_type == "AML":
                     response = usellm(prompt_1)
                     chat_history_1[query] = response
 
-                    query = "What is the Suspect Name?"
+                    query = "If there is any suspicious activity taking place, What is the Suspect Name?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 = f'''Perform Named Entity Recognition to find out a potential Suspect Name from the given transaction statements of a account. \n
                     Customer name can be taken as the Suspect name. \
@@ -1831,7 +1831,7 @@ elif selected_option_case_type == "AML":
                                 Cash deposits with source of funds not clear used to pay off debt, etc. \n
                                 Do not consider transactions less than 10000$ for creating the response. \n
                                 Give the dates only of all such suspicious transactions grouped by transaction type(Credit card, savings account,etc.) from the context as your response \
-                                Do not include any credit card payment transaction in your response. Do not repeat the above information and provide a to the point response. Also, do not include transactions less than 10000$ in your response.\n\n
+                                Do not include any credit card payment transaction present in the savings transaction statement in your response. Do not repeat the above information and provide a to the point response. Also, do not include transactions less than 10000$ in your response.\n\n
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
 
