@@ -1775,7 +1775,7 @@ elif selected_option_case_type == "AML":
                     response = usellm(prompt_1)
                     chat_history_1[query] = response
 
-                    query = "What is the Suspect Name, If there is any suspicious activity taking place?"
+                    query = "If there is any suspicious activity taking place, What is the Suspect Name?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 = f'''Perform Name Entity Recognition to find out the customer Name, given the savings account and credit \
                     card transaction statement.
