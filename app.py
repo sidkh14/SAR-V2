@@ -1728,7 +1728,7 @@ elif selected_option_case_type == "AML":
     
         data = {'Questions': ["Is there is any suspicious activity?",
                               "If there is any suspicious activity taking place, What is the Suspect Name?",
-                              "What type of accounts are involved in the suspicious activity?"
+                              "What type of accounts are involved in the suspicious activity?",
           # "Is there any potential Money Laundering activity based on the transaction statements",
                           "What are the transaction that can be associated with Money Laundering activity?",
                           "When is the Money laundering activity taking place?",
