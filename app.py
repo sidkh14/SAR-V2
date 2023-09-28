@@ -1777,20 +1777,20 @@ elif selected_option_case_type == "AML":
 
                     query = "If there is any suspicious activity taking place, What is the Suspect Name?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    # prompt_1 = f'''Perform Name Entity Recognition to find out the Suspect Name, given the savings account transaction statement and credit \
-                    # card transaction statement.
-                    # Customer name can be taken as the Suspect name. \
-                    # Give only the suspect name.\n\n\
-                    #         Question: {query}\n\
-                    #         Context: {context_1}\n\
-                    #         Response: '''
+                    prompt_1 = f'''Perform Name Entity Recognition to find out the Suspect Name, given the savings account and credit \
+                    card transaction statement.
+                    Customer name can be taken as the Suspect name. \
+                    Give only the name entity and nothing else.\n\n\
+                            Question: {query}\n\
+                            Context: {context_1}\n\
+                            Response: '''
 
-                    prompt_1=f'''You Are an Anti-Money Laundering Specialist, go through the credit card and savings account transaction statement and look for a suspicious \
-                    activity. Any transaction above or equal to $10,000 in the statement can be considered to be suspicious activity. \
-                    If there is any suspicious transaction present, give your response as yes, along with the customer name which can be considered as suspect name.\
-                    Question: {query}\n\
-                    Context: {context_1}\n\
-                    Response: '''
+                    # prompt_1=f'''You Are an Anti-Money Laundering Specialist, go through the credit card and savings account transaction statement and look for a suspicious \
+                    # activity. Any transaction above or equal to $10,000 in the statement can be considered to be suspicious activity. \
+                    # If there is any suspicious transaction present, give your response as yes, along with the customer name which can be considered as suspect name.\
+                    # Question: {query}\n\
+                    # Context: {context_1}\n\
+                    # Response: '''
                   
                     response = usellm(prompt_1)
                     chat_history_1[query] = response
