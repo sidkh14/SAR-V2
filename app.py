@@ -1728,6 +1728,7 @@ elif selected_option_case_type == "AML":
     
         data = {'Questions': ["Is there is any suspicious activity?",
                               "If there is any suspicious activity taking place, What is the Suspect Name?",
+                              "What type of accounts are involved in the suspicious activity?"
           # "Is there any potential Money Laundering activity based on the transaction statements",
                           "What are the transaction that can be associated with Money Laundering activity?",
                           "When is the Money laundering activity taking place?",
@@ -1767,6 +1768,18 @@ elif selected_option_case_type == "AML":
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 = f'''You are a financial analyst, who is an expert in detecting Fraud and money-laundering activities go through the following savings account as well as credit card transactions statement \
                     and detect if any Suspicious activity is taken place or not. Suspicious activity can be of the type Fraud or Money-Laundering. Any transaction amount in the statement above \
+                    or equal to $10,000 can be a indication of  Money-Laundering activity.\
+                    Select the most appropriate Type while giving the response.\n\n\
+                            Question: {query}\n\
+                            Context: {context_1}\n\
+                            Response: '''
+                    response = usellm(prompt_1)
+                    chat_history_1[query] = response
+
+                    query = "What type of accounts are involved in the suspicious activity?"
+                    context_1 = docsearch.similarity_search(query, k=5)
+                    prompt_1 = f'''You are a financial analyst, who is an expert in detecting Fraud and money-laundering activities go through the following savings account as well as credit card transactions statement \
+                    and give the different types of account involved(Ex-: Savings account, credit card account, etc.) Suspicious activity can be of the type Fraud or Money-Laundering. Any transaction amount in the statement above \
                     or equal to $10,000 can be a indication of  Money-Laundering activity.\
                     Select the most appropriate Type while giving the response.\n\n\
                             Question: {query}\n\
@@ -1888,7 +1901,7 @@ elif selected_option_case_type == "AML":
                     try:
                         res_df_gpt = pd.DataFrame(list(chat_history_1.items()), columns=['Question','Answer'])
                         res_df_gpt.reset_index(drop=True, inplace=True)
-                        index_ = pd.Series([1,2,3,4,5,6])
+                        index_ = pd.Series([1,2,3,4,5,6,7])
                         res_df_gpt = res_df_gpt.set_index([index_])
                         # st.write(res_df_gpt)
                     except IndexError: 
