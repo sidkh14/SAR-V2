@@ -1836,7 +1836,7 @@ elif selected_option_case_type == "AML":
                     #             Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
 
                     prompt_1= f'''You Are an Anti-Money Laundering Specialist, Give all the dates on which the transactions that can be potentially associated with \
-                                  the Money laundering activity from the credit card transactions statement. Money Laundering activity often involves characteristics like \
+                                  the Money laundering activity from the credit card transactions statement or the savings account transaction statement. Money Laundering activity often involves characteristics like \
                                   large cash deposits or transfer greater or equal to $10,000 to an unrecognized entity with no specific business purpose, transactions \
                                   involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.). Give the dates only of all such suspicious transactions.\
                                   Context: {context_1}\n\
