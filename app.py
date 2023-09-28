@@ -1766,8 +1766,8 @@ elif selected_option_case_type == "AML":
                     query = "Is there any Suspicious Activity?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 = f'''You are a financial analyst, who is an expert in detecting Fraud and money-laundering activities go through the following savings account as well as credit card transactions statement \
-                    and detect if any Suspicious activity is taken place or not. Suspicious activity can be of the type Fraud or  Laundering. Any transaction amount in the statement above \
-                    or equal to $10,000 can be a indication of  Laundering activity.\
+                    and detect if any Suspicious activity is taken place or not. Suspicious activity can be of the type Fraud or Money-Laundering. Any transaction amount in the statement above \
+                    or equal to $10,000 can be a indication of  Money-Laundering activity.\
                     Select the most appropriate Type while giving the response.\n\n\
                             Question: {query}\n\
                             Context: {context_1}\n\
