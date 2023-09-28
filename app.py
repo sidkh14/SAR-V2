@@ -1728,7 +1728,7 @@ elif selected_option_case_type == "AML":
     
         data = {'Questions': ["Is there is any suspicious activity?",
                               "What is the suspect name?",
-          "Is there any potential Money Laundering activity based on the transaction statements",
+          # "Is there any potential Money Laundering activity based on the transaction statements",
                           "What are the transaction that can be associated with Money Laundering activity?",
                           "When is the Money laundering activity taking place?",
                          "What type of Money laundering activity is taking place?",
@@ -1786,22 +1786,22 @@ elif selected_option_case_type == "AML":
                     response = usellm(prompt_1)
                     chat_history_1[query] = response
                   
-                    query = "Is there any potential Money Laundering activity based on the transaction statements?"
-                    context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 = f'''You Are an Anti-Money Laundering Specialist who is an expert in detecting Money-laundering. \n
-                    You need to look closely into the credit card transaction statements as well as savings account transaction statements collectively and evaluate \
-                    them together to check for any potential suspicious money laundering activities. \n
-                    A Money laundering activity can be detected if any of the following transaction patterns is observed-:
-                    1) If there are cash transactions happening, greater than or equal to $10,000.
-                    2) If there is a high-value international transaction happening which involves movement of funds to or from a high risk geographical location(Ex- Mauritious, Syria, Nigeria,etc.).
-                    3) If there is any money laundering pattern like structuring or smurfing, layering, placement, integration, etc observed within 
-                    the credit card and savings bank account transactions statements collectively.
-                    Provide your response as Yes if there is a hint of Money being Laundered considering all of the factors above.\n\n\
-                            Question: {query}\n\
-                            Context: {context_1}\n\
-                            Response: '''
-                    response = usellm(prompt_1)
-                    chat_history_1[query] = response
+                    # query = "Is there any potential Money Laundering activity based on the transaction statements?"
+                    # context_1 = docsearch.similarity_search(query, k=5)
+                    # prompt_1 = f'''You Are an Anti-Money Laundering Specialist who is an expert in detecting Money-laundering. \n
+                    # You need to look closely into the credit card transaction statements as well as savings account transaction statements collectively and evaluate \
+                    # them together to check for any potential suspicious money laundering activities. \n
+                    # A Money laundering activity can be detected if any of the following transaction patterns is observed-:
+                    # 1) If there are cash transactions happening, greater than or equal to $10,000.
+                    # 2) If there is a high-value international transaction happening which involves movement of funds to or from a high risk geographical location(Ex- Mauritious, Syria, Nigeria,etc.).
+                    # 3) If there is any money laundering pattern like structuring or smurfing, layering, placement, integration, etc observed within 
+                    # the credit card and savings bank account transactions statements collectively.
+                    # Provide your response as Yes if there is a hint of Money being Laundered considering all of the factors above.\n\n\
+                    #         Question: {query}\n\
+                    #         Context: {context_1}\n\
+                    #         Response: '''
+                    # response = usellm(prompt_1)
+                    # chat_history_1[query] = response
     
     
                     query = "What are the transaction that can be associated with Money Laundering activity?"
@@ -1872,7 +1872,7 @@ elif selected_option_case_type == "AML":
                     try:
                         res_df_gpt = pd.DataFrame(list(chat_history_1.items()), columns=['Question','Answer'])
                         res_df_gpt.reset_index(drop=True, inplace=True)
-                        index_ = pd.Series([1,2,3,4,5,6,7])
+                        index_ = pd.Series([1,2,3,4,5,6])
                         res_df_gpt = res_df_gpt.set_index([index_])
                         # st.write(res_df_gpt)
                     except IndexError: 
