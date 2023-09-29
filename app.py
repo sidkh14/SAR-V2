@@ -1874,7 +1874,7 @@ elif selected_option_case_type == "AML":
                                 patterns observed in credit card and savings account transaction statements. The type may include Layering, Structuring, Round-tripping, international routing of money through unrecognised entity etc. \
                                 Look carefully into the transactions statements mentioned above and give a precise answer with explanation of why you think a specific type of money laundering is happening.\n\n\
                                 Context: {context_1}\n\
-                                Response: (Give me a concise response in not more than 50 words.Do not give me any Explanation,Note)'''
+                                Response: '''
 
                     response = usellm(prompt_1)
                     chat_history_1[query] = response
