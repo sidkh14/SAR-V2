@@ -1871,8 +1871,8 @@ elif selected_option_case_type == "AML":
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give the \
                                 type of money laundering activity that is taking place based on the transaction \
-                                patterns observed in credit card and savings account transaction statements. The type may include Layering, Structuring, Round-tripping etc. \
-                                Look carefully into the transactions statements mentioned above and give a precise answer with explanation of why you think a specific type of money laundering is happening..\n\n\
+                                patterns observed in credit card and savings account transaction statements. The type may include Layering, Structuring, Round-tripping, international routing of money through unrecognised entity etc. \
+                                Look carefully into the transactions statements mentioned above and give a precise answer with explanation of why you think a specific type of money laundering is happening.\n\n\
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response in not more than 50 words.Do not give me any Explanation,Note)'''
 
