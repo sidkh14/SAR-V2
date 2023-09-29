@@ -1877,7 +1877,7 @@ elif selected_option_case_type == "AML":
                     #             Response: '''
 
                     prompt_1=f'''You Are an Anti-Money Laundering Specialist, carefully observed the transaction pattern from both the credit card and savings account transaction statement \
-                    and give the type of money laundering activity that is taking place. The type may include Structuring or smurfing, layering, round tripping, etc.\ 
+                    combined and give the type of money laundering activity that is taking place. The type may include Structuring or smurfing, layering, round tripping, etc.\ 
                     give a precise answer with explanation of why you think a specific type of money laundering is happening.\n\n
                     Context: {context_1}\n\
                     Response: '''
