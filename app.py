@@ -1869,13 +1869,19 @@ elif selected_option_case_type == "AML":
 
                     query = "What type of Money laundering activity is taking place?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give the \
-                                type of money laundering activity that is taking place based on the transaction \
-                                patterns observed in credit card and savings account transaction statements combined. The type may include Layering, Structuring, Round-tripping, etc. \
-                                Look carefully into the transactions statements mentioned above and give a precise answer with explanation of why you think a specific type of money laundering is happening.\n\n\
-                                Context: {context_1}\n\
-                                Response: '''
+                    # prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, give the \
+                    #             type of money laundering activity that is taking place based on the transaction \
+                    #             patterns observed in credit card and savings account transaction statements combined. The type may include Layering, Structuring, Round-tripping, etc. \
+                    #             Look carefully into the transactions statements mentioned above and give a precise answer with explanation of why you think a specific type of money laundering is happening.\n\n\
+                    #             Context: {context_1}\n\
+                    #             Response: '''
 
+                    prompt_1=f'''You Are an Anti-Money Laundering Specialist, carefully observed the transaction pattern from both the credit card and savings account transaction statement \
+                    and give the type of money laundering activity that is taking place. The type may include Structuring or smurfing, layering, round tripping, etc.\ 
+                    give a precise answer with explanation of why you think a specific type of money laundering is happening.\n\n
+                    Context: {context_1}\n\
+                    Response: '''
+                  
                     response = usellm(prompt_1)
                     chat_history_1[query] = response
 
