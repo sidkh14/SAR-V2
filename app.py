@@ -1833,7 +1833,7 @@ elif selected_option_case_type == "AML":
                                 transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.) \
                                 and are greater than $10000, any suspicion of money laundered via structuring , layering or intergration, process, \
                                 Cash deposits greater than or equal to 10000$ with source of funds not clear used to pay off credit card debt, etc\n
-                                Only include transactions which are greater than or equal to 10000$ in your response. \n
+                                Only include transactions which are greater than or equal to 10000$ from both the accounts in your response. \n
                                 Give all such suspicious transactions grouped by transaction type(Credit card, savings account,etc.) \
                                 along with dates, amounts from the context as your response \
                                 Do not include any credit card payment transaction (Ex- Towards ABC Credit Card payment) from savings account transaction statement in your response. Also, Do not repeat the above information and provide a to the point response.\n\n
