@@ -1812,7 +1812,7 @@ elif selected_option_case_type == "AML":
                     A Money laundering activity can be detected if any of the following transaction patterns is observed-:
                     1) If there are cash transactions happening, greater than or equal to $10,000.
                     2) If there is a high-value international transaction happening which involves movement of funds to or from a high risk geographical location(Ex- Mauritious, Syria, Nigeria,etc.).
-                    3) If there is any money laundering pattern like structuring or smurfing, layering, placement, integration, etc observed within 
+                    3) If there is any money laundering pattern like layering, structuring or smurfing, placement, integration, etc observed within 
                     the credit card and savings bank account transactions statements collectively.
                     Provide your response as Yes if there is a hint of Money being Laundered considering all of the factors above.\n\n\
                             Question: {query}\n\
