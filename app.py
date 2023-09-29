@@ -1760,39 +1760,39 @@ elif selected_option_case_type == "AML":
                 if st.session_state.llm == "Open-AI":
                     chat_history_1 = {}
 
-                    query = "Is there any Suspicious Activity?"
-                    context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 = f'''You are a financial analyst, who is an expert in detecting Fraud and money-laundering activities go through the following savings account as well as credit card transactions statement \
-                    and detect if any Suspicious activity is taken place or not. Suspicious activity can be of the type Fraud or Money-Laundering. Any transaction amount in the statement above \
-                    or equal to $10,000 can be a indication of  Money-Laundering activity.\
-                    Select the most appropriate Type while giving the response.\n\n\
-                            Question: {query}\n\
-                            Context: {context_1}\n\
-                            Response: '''
-                    response = usellm(prompt_1)
-                    chat_history_1[query] = response
+                    # query = "Is there any Suspicious Activity?"
+                    # context_1 = docsearch.similarity_search(query, k=5)
+                    # prompt_1 = f'''You are a financial analyst, who is an expert in detecting Fraud and money-laundering activities go through the following savings account as well as credit card transactions statement \
+                    # and detect if any Suspicious activity is taken place or not. Suspicious activity can be of the type Fraud or Money-Laundering. Any transaction amount in the statement above \
+                    # or equal to $10,000 can be a indication of  Money-Laundering activity.\
+                    # Select the most appropriate Type while giving the response.\n\n\
+                    #         Question: {query}\n\
+                    #         Context: {context_1}\n\
+                    #         Response: '''
+                    # response = usellm(prompt_1)
+                    # chat_history_1[query] = response
 
-                    query = "What type of accounts are involved in the suspicious activity?"
-                    context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 = f'''You are a financial analyst, who is an expert in detecting Fraud and money-laundering activities go through the following savings account as well as credit card transactions statement \
-                    and give the different types of account involved(Ex-: Savings account, credit card account, etc.) Suspicious activity can be of the type Fraud or Money-Laundering. Any transaction amount in the statement above \
-                    or equal to $10,000 can be a indication of  Money-Laundering activity.\
-                    Select the most appropriate Type while giving the response.\n\n\
-                            Question: {query}\n\
-                            Context: {context_1}\n\
-                            Response: '''
-                    response = usellm(prompt_1)
-                    chat_history_1[query] = response
+                    # query = "What type of accounts are involved in the suspicious activity?"
+                    # context_1 = docsearch.similarity_search(query, k=5)
+                    # prompt_1 = f'''You are a financial analyst, who is an expert in detecting Fraud and money-laundering activities go through the following savings account as well as credit card transactions statement \
+                    # and give the different types of account involved(Ex-: Savings account, credit card account, etc.) Suspicious activity can be of the type Fraud or Money-Laundering. Any transaction amount in the statement above \
+                    # or equal to $10,000 can be a indication of  Money-Laundering activity.\
+                    # Select the most appropriate Type while giving the response.\n\n\
+                    #         Question: {query}\n\
+                    #         Context: {context_1}\n\
+                    #         Response: '''
+                    # response = usellm(prompt_1)
+                    # chat_history_1[query] = response
 
-                    query = "If there is any suspicious activity taking place, What is the Suspect Name?"
-                    context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 = f'''Perform Name Entity Recognition to find out the customer Name, given the savings account and credit \
-                    card transaction statement.
-                    Customer name can be taken as the Suspect name. \
-                    Give only the name entity and nothing else.\n\n\
-                            Question: {query}\n\
-                            Context: {context_1}\n\
-                            Response: '''
+                    # query = "If there is any suspicious activity taking place, What is the Suspect Name?"
+                    # context_1 = docsearch.similarity_search(query, k=5)
+                    # prompt_1 = f'''Perform Name Entity Recognition to find out the customer Name, given the savings account and credit \
+                    # card transaction statement.
+                    # Customer name can be taken as the Suspect name. \
+                    # Give only the name entity and nothing else.\n\n\
+                    #         Question: {query}\n\
+                    #         Context: {context_1}\n\
+                    #         Response: '''
 
                     # prompt_1=f'''You Are an Anti-Money Laundering Specialist, go through the credit card and savings account transaction statement and look for a suspicious \
                     # activity. Any transaction above or equal to $10,000 in the statement can be considered to be suspicious activity. \
@@ -1801,25 +1801,26 @@ elif selected_option_case_type == "AML":
                     # Context: {context_1}\n\
                     # Response: '''
                   
-                    response = usellm(prompt_1)
-                    chat_history_1[query] = response
-                  
-                    # query = "Is there any potential Money Laundering activity based on the transaction statements?"
-                    # context_1 = docsearch.similarity_search(query, k=5)
-                    # prompt_1 = f'''You Are an Anti-Money Laundering Specialist who is an expert in detecting Money-laundering. \n
-                    # You need to look closely into the credit card transaction statements as well as savings account transaction statements collectively and evaluate \
-                    # them together to check for any potential suspicious money laundering activities. \n
-                    # A Money laundering activity can be detected if any of the following transaction patterns is observed-:
-                    # 1) If there are cash transactions happening, greater than or equal to $10,000.
-                    # 2) If there is a high-value international transaction happening which involves movement of funds to or from a high risk geographical location(Ex- Mauritious, Syria, Nigeria,etc.).
-                    # 3) If there is any money laundering pattern like structuring or smurfing, layering, placement, integration, etc observed within 
-                    # the credit card and savings bank account transactions statements collectively.
-                    # Provide your response as Yes if there is a hint of Money being Laundered considering all of the factors above.\n\n\
-                    #         Question: {query}\n\
-                    #         Context: {context_1}\n\
-                    #         Response: '''
                     # response = usellm(prompt_1)
                     # chat_history_1[query] = response
+                  
+                    query = "Is there any potential Money Laundering activity based on the transaction statements?"
+                    context_1 = docsearch.similarity_search(query, k=5)
+                    prompt_1 = f'''You Are an Anti-Money Laundering Specialist who is an expert in detecting Money-laundering. \n
+                    You need to look closely into the credit card transaction statements as well as savings account transaction statements collectively and evaluate \
+                    them together to check for any potential suspicious money laundering activities. \n
+                    A Money laundering activity can be detected if any of the following transaction patterns is observed-:
+                    1) If there are cash transactions happening, greater than or equal to $10,000.
+                    2) If there is a high-value international transaction happening which involves movement of funds to or from a high risk geographical location(Ex- Mauritious, Syria, Nigeria,etc.).
+                    3) If there is any money laundering pattern like structuring or smurfing, layering, placement, integration, etc observed within 
+                    the credit card and savings bank account transactions statements collectively.
+                    Provide your response as Yes if there is a hint of Money being Laundered considering all of the factors above.\n\n\
+                            Question: {query}\n\
+                            Context: {context_1}\n\
+                            Response: '''
+                    response = usellm(prompt_1)
+                    query_d="Is there any evidence of unusual activity?"
+                    chat_history_1[query_d] = response
     
     
                     query = "What are the transaction that can be associated with Money Laundering activity?"
@@ -1839,8 +1840,8 @@ elif selected_option_case_type == "AML":
                     response = usellm(prompt_1)
                     chat_history_1[query] = response
 
-                    query = "When is the Money laundering activity taking place?"
-                    context_1 = docsearch.similarity_search(query, k=5)
+                    # query = "When is the Money laundering activity taking place?"
+                    # context_1 = docsearch.similarity_search(query, k=5)
                     # prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify all the dates on which transactions \
                     #             that can be potentially associated with the Money Laundering activity both from Credit Card transaction statement as well as savings account statement collectively is happening. \n
                     #             Money laundering transactions often involve characteristics like large cash deposits greater than or equal to $10,000 \
@@ -1853,15 +1854,15 @@ elif selected_option_case_type == "AML":
                     #             Context: {context_1}\n\
                     #             Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
 
-                    prompt_1= f'''You Are an Anti-Money Laundering Specialist, Give all the dates on which the transactions that can be potentially associated with \
-                                  the Money laundering activity from the credit card transactions statement or the savings account transaction statement. Money Laundering activity often involves characteristics like \
-                                  large cash deposits or transfer greater or equal to $10,000 to an unrecognized entity with no specific business purpose, transactions \
-                                  involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.). Give the dates only of all such suspicious transactions.\
-                                  Context: {context_1}\n\
-                                  Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
+                    # prompt_1= f'''You Are an Anti-Money Laundering Specialist, Give all the dates on which the transactions that can be potentially associated with \
+                    #               the Money laundering activity from the credit card transactions statement or the savings account transaction statement. Money Laundering activity often involves characteristics like \
+                    #               large cash deposits or transfer greater or equal to $10,000 to an unrecognized entity with no specific business purpose, transactions \
+                    #               involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.). Give the dates only of all such suspicious transactions.\
+                    #               Context: {context_1}\n\
+                    #               Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
 
-                    response = usellm(prompt_1)
-                    chat_history_1[query] = response
+                    # response = usellm(prompt_1)
+                    # chat_history_1[query] = response
 
                     query = "What type of Money laundering activity is taking place?"
                     context_1 = docsearch.similarity_search(query, k=5)
