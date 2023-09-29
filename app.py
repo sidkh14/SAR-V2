@@ -1726,14 +1726,10 @@ elif selected_option_case_type == "AML":
         st.subheader('Pre-Set Questionnaire')
         # Create a Pandas DataFrame with your data
     
-        data = {'Questions': ["Is there is any suspicious activity?",
-                              "If there is any suspicious activity taking place, What is the Suspect Name?",
-                              "What type of accounts are involved in the suspicious activity?",
-          # "Is there any potential Money Laundering activity based on the transaction statements",
+        data = {'Questions': ["Is there any evidence of unusual activity?",
                           "What are the transaction that can be associated with Money Laundering activity?",
-                          "When is the Money laundering activity taking place?",
                          "What type of Money laundering activity is taking place?",
-                          "What is the total amount associated with the money laundering activity?"]}
+                          "What is the total amount associated with the Money laundering activity?"]}
         df_fixed = pd.DataFrame(data)
         df_fixed.index = df_fixed.index +1
     with col2:
@@ -1901,7 +1897,7 @@ elif selected_option_case_type == "AML":
                     try:
                         res_df_gpt = pd.DataFrame(list(chat_history_1.items()), columns=['Question','Answer'])
                         res_df_gpt.reset_index(drop=True, inplace=True)
-                        index_ = pd.Series([1,2,3,4,5,6,7])
+                        index_ = pd.Series([1,2,3,4])
                         res_df_gpt = res_df_gpt.set_index([index_])
                         # st.write(res_df_gpt)
                     except IndexError: 
