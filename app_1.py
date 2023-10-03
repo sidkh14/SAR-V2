@@ -1804,7 +1804,7 @@ elif selected_option_case_type == "AML":
                     # response = usellm(prompt_1)
                     # chat_history_1[query] = response
                   
-                    query = "Is there any potential Money Laundering activity based on the transaction statements?"
+                    query = "Is there any Money Laundering activity based on the transaction statements?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 = f'''You Are an Anti-Money Laundering Specialist who is an expert in detecting Money-laundering activity. \n
                     You sholud closely look into the credit card transaction statement as well as savings account transaction statement collectively and evaluate \
