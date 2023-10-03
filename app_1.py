@@ -1820,6 +1820,8 @@ elif selected_option_case_type == "AML":
                             Response: '''
                     response = usellm(prompt_1)
                     query_d="Is there any evidence of unusual activity?"
+                    st.write(query_d)
+                    st.write(response)
                     chat_history_1[query_d] = response
     
     
@@ -1841,6 +1843,8 @@ elif selected_option_case_type == "AML":
                                 Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
 
                     response = usellm(prompt_1)
+                    st.write(query)
+                    st.write(response)
                     chat_history_1[query] = response
 
                     # query = "When is the Money laundering activity taking place?"
@@ -1883,6 +1887,8 @@ elif selected_option_case_type == "AML":
                     Response: '''
                   
                     response = usellm(prompt_1)
+                    st.write(query)
+                    st.write(response)
                     chat_history_1[query] = response
 
                     query = "What is the total amount associated with the money laundering activity?"
@@ -1901,6 +1907,8 @@ elif selected_option_case_type == "AML":
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
                     
                     response = usellm(prompt_1)
+                    st.write(query)
+                    st.write(response)
                     chat_history_1[query] = response
 
     
