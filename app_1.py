@@ -1820,7 +1820,8 @@ elif selected_option_case_type == "AML":
                             Response: '''
                     response = usellm(prompt_1)
                     query_d="Is there any evidence of unusual activity?"
-                    st.markdown(**query_d**)
+                    query_d=f'**{query_d}**'
+                    st.markdown(query_d)
                     st.write(response)
                     chat_history_1[query_d] = response
     
@@ -1843,7 +1844,8 @@ elif selected_option_case_type == "AML":
                                 Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
 
                     response = usellm(prompt_1)
-                    st.markdown(**query**)
+                    query=f'**{query}**'
+                    st.markdown(query)
                     st.write(response)
                     chat_history_1[query] = response
 
@@ -1887,7 +1889,8 @@ elif selected_option_case_type == "AML":
                     Response: '''
                   
                     response = usellm(prompt_1)
-                    st.markdown(**query**)
+                    query=f'**{query}**'
+                    st.markdown(query)
                     st.write(response)
                     chat_history_1[query] = response
 
@@ -1907,7 +1910,8 @@ elif selected_option_case_type == "AML":
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
                     
                     response = usellm(prompt_1)
-                    st.markdown(**query**)
+                    query_d=f'**{query}**'
+                    st.markdown(query)
                     st.write(response)
                     chat_history_1[query] = response
 
