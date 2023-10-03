@@ -1809,7 +1809,7 @@ elif selected_option_case_type == "AML":
                     prompt_1 = f'''You Are an Anti-Money Laundering Specialist who is an expert in detecting Money-laundering activities. \n
                     You sholud look closely into the credit card transaction statement as well as savings account transaction statement collectively and evaluate \
                     them together to check for any potential suspicious money laundering activities. \n
-                    A Money laundering activity can be detected if any of the following transaction patterns is observed-:
+                    Money laundering activity can be detected if any of the following transaction patterns is observed-:
                     1) If there are cash transactions happening, greater than or equal to $10,000.
                     2) If there is a high-value international transaction happening which involves movement of funds to or from a high risk geographical location(Ex- Mauritious, Syria, Nigeria,etc.).
                     3) If there is any money laundering pattern like structuring or smurfing, layering, placement, integration, etc observed within 
@@ -1829,7 +1829,7 @@ elif selected_option_case_type == "AML":
                     query = "What are the transaction that can be associated with Money Laundering activity?"
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
-                                that can be potentially associated with Money Laundering activity both from Credit Card \
+                                that can be potentially associated with the Money Laundering activity both from Credit Card \
                                 transaction statement as well as savings account statement collectively. \n
                                 Money laundering transactions often involve characteristics like large cash deposits greater than or equal to $10,000 \
                                 Payments greater than or equal to $10000 to an unrecognized entity with no specific business purpose (Ex- Advisories, consultancies,etc.)\
@@ -1839,7 +1839,7 @@ elif selected_option_case_type == "AML":
                                 Only include transactions which are greater than or equal to 10000$ from both the accounts in your response. \n
                                 Give all such suspicious transactions grouped by transaction type(Credit card, savings account,etc.) \
                                 along with dates, amounts from the context as your response \
-                                Do not include any credit card payment transaction (Ex- Towards ABC Credit Card payment) from savings account transaction statement in your response. Also, Do not repeat the above information and provide a to the point response.\n\n
+                                Do not include any credit card payment transaction (Ex- Towards ABC Credit Card payment) from savings account transaction statement in your response. Also, Do not repeat the above information and provide to the point response.\n\n
                                 Context: {context_1}\n\
                                 Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
 
