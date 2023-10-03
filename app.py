@@ -1887,18 +1887,25 @@ elif selected_option_case_type == "AML":
 
                     query = "What is the total amount associated with the money laundering activity?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
-                                that can be potentially associated with the Money Laundering activity both from Credit Card transaction statement as well as savings account statements collectively. \n
-                                Money laundering transactions often involve characteristics like large cash deposits greater than or equal to $10,000, \
-                                Payments greater than or equal to 10000$ to an unrecognized entity with no specific  business purpose, \ 
-                                , transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.) and are greater than 10000$, any suspicion of money laundered via structuring , layering or intergration, process, \
-                                Cash deposits greater than or equal to 10000$ with source of funds not clear used to pay off credit card debt, etc\n \n
-                                Only include transactions which are greater than or equal to 10,000$ in your response. \n
-                                Add the dollar amount associated with all such suspicious transactions to get the total amount associated \
-                                with the money laundering activity.
-                                Only include the total amount in your response .\n\n\
-                                Context: {context_1}\n\
-                                Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
+                    # prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
+                    #             that can be potentially associated with the Money Laundering activity both from Credit Card transaction statement as well as savings account statements collectively. \n
+                    #             Money laundering transactions often involve characteristics like large cash deposits greater than or equal to $10,000, \
+                    #             Payments greater than or equal to 10000$ to an unrecognized entity with no specific  business purpose, \ 
+                    #             , transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.) and are greater than 10000$, any suspicion of money laundered via structuring , layering or intergration, process, \
+                    #             Cash deposits greater than or equal to 10000$ with source of funds not clear used to pay off credit card debt, etc\n \n
+                    #             Only include transactions which are greater than or equal to 10,000$ in your response. \n
+                    #             Add the dollar amount associated with all such suspicious transactions to get the total amount associated \
+                    #             with the money laundering activity.
+                    #             Only include the total amount in your response .\n\n\
+                    #             Context: {context_1}\n\
+                    #             Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
+
+                    prompt_1=f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
+                                 that can be potentially associated with the Money Laundering activity both from Credit Card transaction \
+                                 statement as well as savings account statements collectively. Basically collect all the Cash deposit transa0ctions, \
+                                 add them up, and give this amount as your response. Only include the total amount in your response. \n\n\
+                                 Context: {context_1}\n\
+                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
                     
                     response = usellm(prompt_1)
                     chat_history_1[query] = response
