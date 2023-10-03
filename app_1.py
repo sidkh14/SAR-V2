@@ -1806,10 +1806,10 @@ elif selected_option_case_type == "AML":
                   
                     query = "Is there any potential Money Laundering activity based on the transaction statements?"
                     context_1 = docsearch.similarity_search(query, k=5)
-                    prompt_1 = f'''You Are an Anti-Money Laundering Specialist who is an expert in detecting Money-laundering activities. \n
-                    You sholud look closely into the credit card transaction statement as well as savings account transaction statement collectively and evaluate \
+                    prompt_1 = f'''You Are an Anti-Money Laundering Specialist who is an expert in detecting Money-laundering. \n
+                    You sholud closely look into the credit card transaction statement as well as savings account transaction statement collectively and evaluate \
                     them together to check for any potential suspicious money laundering activities. \n
-                    Money laundering activity can be detected if any of the following transaction patterns is observed-:
+                    A Money laundering activity can be detected if any of the following transaction patterns is observed-:
                     1) If there are cash transactions happening, greater than or equal to $10,000.
                     2) If there is a high-value international transaction happening which involves movement of funds to or from a high risk geographical location(Ex- Mauritious, Syria, Nigeria,etc.).
                     3) If there is any money laundering pattern like structuring or smurfing, layering, placement, integration, etc observed within 
