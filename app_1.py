@@ -1820,7 +1820,7 @@ elif selected_option_case_type == "AML":
                             Response: '''
                     response = usellm(prompt_1)
                     query_d="Is there any evidence of unusual activity?"
-                    st.write(query_d)
+                    st.markdown(query_d)
                     st.write(response)
                     chat_history_1[query_d] = response
     
@@ -1843,7 +1843,7 @@ elif selected_option_case_type == "AML":
                                 Response: (Give me a concise response .Do not give me any Explanation,Note, etc.)'''
 
                     response = usellm(prompt_1)
-                    st.write(query)
+                    st.markdown(query)
                     st.write(response)
                     chat_history_1[query] = response
 
@@ -1887,7 +1887,7 @@ elif selected_option_case_type == "AML":
                     Response: '''
                   
                     response = usellm(prompt_1)
-                    st.write(query)
+                    st.markdown(query)
                     st.write(response)
                     chat_history_1[query] = response
 
@@ -1907,21 +1907,21 @@ elif selected_option_case_type == "AML":
                                 Response: (Give me a concise response in one sentence.Do not give me any Explanation,Note)'''
                     
                     response = usellm(prompt_1)
-                    st.write(query)
+                    st.markdown(query)
                     st.write(response)
                     chat_history_1[query] = response
 
     
-                    try:
-                        res_df_gpt = pd.DataFrame(list(chat_history_1.items()), columns=['Question','Answer'])
-                        res_df_gpt.reset_index(drop=True, inplace=True)
-                        index_ = pd.Series([1,2,3,4])
-                        res_df_gpt = res_df_gpt.set_index([index_])
-                        # st.write(res_df_gpt)
-                    except IndexError: 
-                        pass
-                    st.table(res_df_gpt)
-                    st.session_state["tmp_table_gpt_aml"] = pd.concat([st.session_state.tmp_table_gpt_aml, res_df_gpt], ignore_index=True)
+                    # try:
+                    #     res_df_gpt = pd.DataFrame(list(chat_history_1.items()), columns=['Question','Answer'])
+                    #     res_df_gpt.reset_index(drop=True, inplace=True)
+                    #     index_ = pd.Series([1,2,3,4])
+                    #     res_df_gpt = res_df_gpt.set_index([index_])
+                    #     # st.write(res_df_gpt)
+                    # except IndexError: 
+                    #     pass
+                    # st.table(res_df_gpt)
+                    # st.session_state["tmp_table_gpt_aml"] = pd.concat([st.session_state.tmp_table_gpt_aml, res_df_gpt], ignore_index=True)
                 
                 
                 elif st.session_state.llm == "Open-Source":
