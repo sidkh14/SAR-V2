@@ -1827,7 +1827,7 @@ elif selected_option_case_type == "AML":
                     context_1 = docsearch.similarity_search(query, k=5)
                     prompt_1 =  f'''You Are an Anti-Money Laundering Specialist, Identify the transactions \
                                 that can be potentially associated with the Money Laundering activity both from Credit Card \
-                                transaction statement as well as savings account statement collectively. \n
+                                transaction statement as well as savings account statements collectively. \n
                                 Money laundering transactions often involve characteristics like large cash deposits greater than or equal to $10,000 \
                                 Payments greater than or equal to $10000 to an unrecognized entity with no specific business purpose (Ex- Advisories, consultancies,etc.)\
                                 transactions involving movement of funds to or from high-risk locations(Ex- Mauritious, Syria, Nigeria,etc.) \
